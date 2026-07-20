@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ABC Prospect</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <main class="shell">
+    <header><h1>ABC Prospect</h1><button id="logout" class="secondary hidden" type="button">Sair</button></header>
+    <section id="message" class="message hidden" role="alert"></section>
+
+    <section id="login-panel" class="card narrow">
+      <h2>Acesso interno</h2>
+      <form id="login-form">
+        <label>Email <input id="email" type="email" autocomplete="username" required maxlength="320"></label>
+        <label>Senha <input id="password" type="password" autocomplete="current-password" required maxlength="1024"></label>
+        <button type="submit">Entrar</button>
+      </form>
+    </section>
+
+    <section id="app-panel" class="hidden">
+      <div class="grid">
+        <section class="card">
+          <h2 id="form-title">Cadastrar empresa</h2>
+          <form id="company-form">
+            <input id="company-id" type="hidden">
+            <label>Nome da empresa <input id="name" required maxlength="200"></label>
+            <label>Categoria <select id="category" required></select></label>
+            <div class="row">
+              <label>Cidade <input id="city" required maxlength="120"></label>
+              <label>UF <input id="state" required maxlength="2" pattern="[A-Za-z]{2}"></label>
+            </div>
+            <label>Origem <select id="source" required></select></label>
+            <label>URL da origem <input id="source-url" type="url" maxlength="2048" placeholder="https://..."></label>
+            <label>CNPJ opcional <input id="tax-id" inputmode="numeric" maxlength="18"></label>
+            <div class="actions"><button type="submit">Guardar</button><button id="cancel-edit" class="secondary hidden" type="button">Cancelar edição</button></div>
+          </form>
+        </section>
+
+        <section class="card table-card">
+          <h2>Empresas</h2>
+          <div class="table-wrap"><table><thead><tr><th>Empresa</th><th>Local</th><th>Estado</th><th>Ações</th></tr></thead><tbody id="companies"></tbody></table></div>
+          <p id="empty">Nenhuma empresa cadastrada.</p>
+        </section>
+      </div>
+    </section>
+  </main>
+  <script src="/static/app.js" defer></script>
+</body>
+</html>
