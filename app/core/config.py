@@ -15,6 +15,12 @@ class Settings(BaseSettings):
     app_secret_key: str = Field(min_length=32)
     session_https_only: bool = False
     session_max_age_seconds: int = Field(default=28_800, ge=300, le=86_400)
+    google_places_api_key: str | None = None
+    google_places_timeout_seconds: float = Field(default=5.0, ge=1, le=15)
+    google_places_max_retries: int = Field(default=2, ge=0, le=3)
+    google_places_page_size: int = Field(default=10, ge=1, le=20)
+    google_places_max_pages: int = Field(default=2, ge=1, le=3)
+    google_places_requests_per_minute: int = Field(default=5, ge=1, le=20)
 
     @property
     def is_production(self) -> bool:

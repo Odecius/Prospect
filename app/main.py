@@ -4,7 +4,11 @@ from starlette.middleware.sessions import SessionMiddleware
 
 from app.api.authentication import router as authentication_router
 from app.api.companies import router as companies_router
+from app.api.contacts import router as contacts_router
+from app.api.external_search import router as external_search_router
 from app.api.health import router as health_router
+from app.api.pipeline import router as pipeline_router
+from app.api.scores import router as scores_router
 from app.api.web import router as web_router
 from app.core.config import get_settings
 from app.core.logging import configure_logging
@@ -32,6 +36,10 @@ def create_app() -> FastAPI:
     application.include_router(health_router)
     application.include_router(authentication_router)
     application.include_router(companies_router)
+    application.include_router(contacts_router)
+    application.include_router(external_search_router)
+    application.include_router(scores_router)
+    application.include_router(pipeline_router)
     application.include_router(web_router)
     application.mount("/static", StaticFiles(directory="app/static"), name="static")
     return application

@@ -7,7 +7,8 @@
   <link rel="stylesheet" href="/static/styles.css">
 </head>
 <body>
-  <main class="shell">
+  <a class="skip-link" href="#main-content">Ir para o conteúdo</a>
+  <main id="main-content" class="shell">
     <header><h1>ABC Prospect</h1><button id="logout" class="secondary hidden" type="button">Sair</button></header>
     <section id="message" class="message hidden" role="alert"></section>
 
@@ -21,6 +22,28 @@
     </section>
 
     <section id="app-panel" class="hidden">
+      <section class="card toolbar" aria-label="Pesquisa de empresas">
+        <form id="search-form">
+          <label>Pesquisar <input id="search-query" maxlength="200" placeholder="Nome, cidade ou CNPJ"></label>
+          <label>UF <input id="search-state" maxlength="2" pattern="[A-Za-z]{2}"></label>
+          <label>Ordenar <select id="search-sort"><option value="newest">Mais recentes</option><option value="name">Nome</option><option value="city">Cidade</option><option value="oldest">Mais antigas</option></select></label>
+          <label class="checkbox"><input id="include-archived" type="checkbox"> Incluir arquivadas</label>
+          <button type="submit">Pesquisar</button>
+        </form>
+        <div class="pager"><button id="previous-page" class="secondary" type="button">Anterior</button><span id="page-status" aria-live="polite"></span><button id="next-page" class="secondary" type="button">Próxima</button></div>
+      </section>
+      <section class="card external-search" aria-labelledby="external-search-title">
+        <h2 id="external-search-title">Pesquisa externa autorizada</h2>
+        <p>Resultados temporários fornecidos por <strong translate="no">Google Maps</strong>. Revise antes de vincular; somente o Place ID será armazenado.</p>
+        <form id="external-search-form">
+          <label>Categoria ou termo <input id="external-term" required maxlength="120"></label>
+          <label>Cidade <input id="external-city" required maxlength="120"></label>
+          <label>UF <input id="external-state" required maxlength="2" pattern="[A-Za-z]{2}"></label>
+          <button type="submit">Pesquisar no Google Maps</button>
+        </form>
+        <div id="external-results" class="external-results" aria-live="polite"></div>
+        <button id="external-next" class="secondary hidden" type="button">Próxima página externa</button>
+      </section>
       <div class="grid">
         <section class="card">
           <h2 id="form-title">Cadastrar empresa</h2>
@@ -34,6 +57,8 @@
             </div>
             <label>Origem <select id="source" required></select></label>
             <label>URL da origem <input id="source-url" type="url" maxlength="2048" placeholder="https://..."></label>
+            <label>Identificador na origem (opcional) <input id="source-external-id" maxlength="300"></label>
+            <label>Nome observado na origem (opcional) <input id="source-raw-name" maxlength="300"></label>
             <label>CNPJ opcional <input id="tax-id" inputmode="numeric" maxlength="18"></label>
             <div class="actions"><button type="submit">Guardar</button><button id="cancel-edit" class="secondary hidden" type="button">Cancelar edição</button></div>
           </form>
@@ -45,8 +70,30 @@
           <p id="empty">Nenhuma empresa cadastrada.</p>
         </section>
       </div>
+      <div class="grid lower-grid">
+        <section class="card">
+          <h2>Contatos</h2>
+          <p id="contact-company">Selecione uma empresa na lista.</p>
+          <form id="contact-form" class="hidden">
+            <input id="contact-company-id" type="hidden">
+            <label>Tipo <select id="contact-type"><option value="PHONE">Telefone</option><option value="EMAIL">Email</option><option value="WEBSITE">Website</option><option value="INSTAGRAM">Instagram</option></select></label>
+            <label>Valor <input id="contact-value" required maxlength="500"></label>
+            <label>Nome da pessoa (opcional) <input id="person-name" maxlength="120"></label>
+            <label>Cargo (opcional) <input id="job-title" maxlength="120"></label>
+            <label class="checkbox"><input id="contact-primary" type="checkbox"> Contato principal</label>
+            <button type="submit">Adicionar contato</button>
+          </form>
+          <ul id="contacts" class="record-list"></ul>
+        </section>
+        <section class="card">
+          <h2>Revisão de duplicidades</h2>
+          <p>As correspondências nunca são mescladas automaticamente.</p>
+          <div id="duplicate-candidates" class="record-list"></div>
+        </section>
+      </div>
     </section>
   </main>
+  <footer><img src="/static/assets/abc-solutions-footer.png" alt="ABC Solutions"><p>Developed by Abc Solutions | Built with quality and care</p><p><a href="/privacy">Privacidade</a> · <a href="/terms">Termos</a></p></footer>
   <script src="/static/app.js" defer></script>
 </body>
 </html>

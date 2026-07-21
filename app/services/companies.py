@@ -4,7 +4,15 @@ from datetime import UTC, datetime
 
 from sqlalchemy.exc import IntegrityError
 
-from app.database.models import Category, Company, CompanySourceRef, DataSource, PipelineStatus, User
+from app.database.models import (
+    Category,
+    CommercialActivity,
+    Company,
+    CompanySourceRef,
+    DataSource,
+    PipelineStatus,
+    User,
+)
 from app.domain.normalization import normalize_cnpj, normalize_state_code, normalize_text
 from app.repositories.companies import CompanyRepository
 
@@ -34,6 +42,8 @@ class CompanyInput:
     source_id: uuid.UUID
     tax_id: str | None = None
     source_url: str | None = None
+    source_external_id: str | None = None
+    source_raw_name: str | None = None
     confirm_possible_duplicate: bool = False
 
 
@@ -49,6 +59,28 @@ class CompanyService:
 
     def list_companies(self) -> list[Company]:
         return self.repository.list_companies()
+
+    def search_companies(
+        self,
+        query: str | None,
+        category_id: uuid.UUID | None,
+        state_code: str | None,
+        pipeline_status: str | None,
+        include_archived: bool,
+        sort: str,
+        page: int,
+        page_size: int,
+    ) -> tuple[list[Company], int]:
+        normalized_query = normalize_text(query) if query else None
+        normalized_state = normalize_state_code(state_code) if state_code else None
+        if pipeline_status:
+            try:
+                pipeline_status = PipelineStatus(pipeline_status).value
+            except ValueError as error:
+                raise CompanyValidationError("Estado do pipeline inválido.") from error
+        return self.repository.search_companies(
+            normalized_query, category_id, normalized_state, pipeline_status, include_archived, sort, page, page_size
+        )
 
     def get_company(self, company_id: uuid.UUID) -> Company | None:
         return self.repository.get_company(company_id)
@@ -71,6 +103,10 @@ class CompanyService:
             raise CompanyValidationError("Origem ativa obrigatória.")
         if data.source_url and not data.source_url.startswith(("http://", "https://")):
             raise CompanyValidationError("A URL da origem deve começar com http:// ou https://.")
+        if data.source_external_id and len(data.source_external_id.strip()) > 300:
+            raise CompanyValidationError("Identificador externo excede o limite.")
+        if data.source_raw_name and len(data.source_raw_name.strip()) > 300:
+            raise CompanyValidationError("Nome observado excede o limite.")
         return name, city, state_code, tax_id, category, source
 
     def _check_duplicates(
@@ -114,6 +150,8 @@ class CompanyService:
                     company_id=company.id,
                     data_source_id=data.source_id,
                     source_url=data.source_url,
+                    external_id=data.source_external_id.strip() if data.source_external_id else None,
+                    raw_name=data.source_raw_name.strip() if data.source_raw_name else name,
                     observed_at=datetime.now(UTC),
                 )
             )
@@ -142,6 +180,8 @@ class CompanyService:
                 company_id=company.id,
                 data_source_id=data.source_id,
                 source_url=data.source_url,
+                external_id=data.source_external_id.strip() if data.source_external_id else None,
+                raw_name=data.source_raw_name.strip() if data.source_raw_name else name,
                 observed_at=datetime.now(UTC),
             )
         )
@@ -152,8 +192,19 @@ class CompanyService:
         company = self.repository.get_company(company_id)
         if company is None:
             return None
+        previous = company.pipeline_status
         company.archived_at = datetime.now(UTC)
         company.pipeline_status = PipelineStatus.ARCHIVED
         company.updated_by_user_id = actor.id
+        self.repository.add(
+            CommercialActivity(
+                company_id=company.id,
+                activity_type="STATUS_CHANGE",
+                previous_status=previous.value,
+                new_status=PipelineStatus.ARCHIVED.value,
+                notes="Arquivamento solicitado pelo utilizador.",
+                performed_by_user_id=actor.id,
+            )
+        )
         self.repository.commit()
         return company

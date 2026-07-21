@@ -14,11 +14,16 @@ def test_postgresql_engine_configuration() -> None:
     engine.dispose()
 
 
-def test_sqlalchemy_metadata_contains_only_authorized_sprint_three_entities() -> None:
+def test_sqlalchemy_metadata_contains_authorized_sprint_four_entities() -> None:
     assert set(Base.metadata.tables) == {
         "users",
         "categories",
         "data_sources",
         "companies",
         "company_source_refs",
+        "contacts",
+        "duplicate_candidates",
+        "company_merge_audits",
+        "opportunity_scores",
+        "commercial_activities",
     }

@@ -1,5 +1,6 @@
 import re
 import unicodedata
+from urllib.parse import urlsplit, urlunsplit
 
 
 def normalize_text(value: str) -> str:
@@ -58,3 +59,31 @@ def normalize_cnpj(value: str | None) -> str | None:
         if check_digit != int(digits[length]):
             raise ValueError("CNPJ inválido.")
     return digits
+
+
+def normalize_contact(contact_type: str, value: str) -> str:
+    raw = value.strip()
+    if not raw or len(raw) > 500:
+        raise ValueError("Contato inválido.")
+    if contact_type == "PHONE":
+        digits = re.sub(r"\D", "", raw)
+        if len(digits) < 10 or len(digits) > 15:
+            raise ValueError("Telefone inválido.")
+        return f"+{digits}"
+    if contact_type == "EMAIL":
+        normalized = raw.casefold()
+        if not re.fullmatch(r"[^@\s]+@[^@\s]+\.[^@\s]+", normalized):
+            raise ValueError("Email inválido.")
+        return normalized
+    if contact_type == "WEBSITE":
+        parsed = urlsplit(raw if "://" in raw else f"https://{raw}")
+        if parsed.scheme not in {"http", "https"} or not parsed.hostname:
+            raise ValueError("Website inválido.")
+        host = parsed.hostname.casefold().removeprefix("www.")
+        return urlunsplit(("https", host, parsed.path.rstrip("/"), "", ""))
+    if contact_type == "INSTAGRAM":
+        handle = raw.rstrip("/").split("/")[-1].removeprefix("@").casefold()
+        if not re.fullmatch(r"[a-z0-9._]{1,30}", handle):
+            raise ValueError("Perfil do Instagram inválido.")
+        return handle
+    raise ValueError("Tipo de contato inválido.")
