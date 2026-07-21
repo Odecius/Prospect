@@ -229,3 +229,27 @@ As decisões iniciais de duplicidade, taxonomia e privacidade foram aprovadas em
 **Alternativas consideradas:** taxonomia livre ou extensa; inclusão imediata de contatos; bloqueio por qualquer semelhança; mesclagem automática.
 
 **Impacto:** CNPJ exato repetido bloqueia o cadastro; nome igual na mesma cidade/UF gera aviso confirmável; contatos e sinais avançados ficam para a Sprint 4. A base legal definitiva e os prazos permanecem sujeitos a validação jurídica antes da produção. A especificação completa está em `docs/sprint-3-policies.md`.
+
+## 2026-07-21 — Autonomia de execução e Sprint 4
+
+**Descrição:** o responsável autorizou o avanço autónomo das sprints sem novas confirmações funcionais rotineiras. A proposta conservadora da Sprint 4 foi aprovada; interrupções continuam obrigatórias para segurança, privacidade, credenciais, dados reais, ações destrutivas ou efeitos externos relevantes.
+
+**Motivo:** reduzir interrupções sem eliminar os limites de segurança e proteção de dados.
+
+**Impacto:** contatos corporativos, fontes avançadas, candidatos persistentes e mesclagem auditada podem ser implementados com dados fictícios. Uso de dados pessoais reais e produção permanecem bloqueados até validação jurídica profissional.
+
+## 2026-07-21 — Autonomia até 70%, score v1 e pipeline
+
+**Descrição:** o responsável autorizou avanço sem aprovações ordinárias até o último marco que não exceda 70%. Foram adotados score humano `v1-human-40-30-30` e matriz conservadora de pipeline documentados nas Sprints 6 e 7.
+
+**Motivo:** permitir evolução contínua mantendo explicabilidade, histórico e revisão humana.
+
+**Impacto:** Sprints 5–8 podem ser concluídas até 60%. A Sprint 9 não pode presumir uma fonte externa: seleção, termos, base legal, credenciais e quotas constituem bloqueio grave e exigem decisão específica.
+
+## 2026-07-21 — Google Places API (New)
+
+**Descrição:** Google Places API (New), endpoint Text Search oficial, foi aprovada como primeira fonte externa. Resultados são temporários e somente o Place ID é persistido após revisão humana.
+
+**Motivo:** reduzir entrada manual usando uma API oficial sem scraping, importação em massa ou armazenamento incompatível com as políticas Google.
+
+**Impacto:** a chave permanece exclusivamente no backend; Field Mask explícita, paginação, timeout, retries e rate limit controlam custo. Rating, endereço, website e demais conteúdos Google não são gravados. Produção exige quotas, alertas, restrição de chave e validação jurídica profissional.

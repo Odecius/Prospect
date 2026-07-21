@@ -87,6 +87,8 @@ Os pesos poderão ser recalibrados antes de uma sprint começar, desde que o tot
 
 **Critérios de aceite:** CNPJ e referências repetidos são tratados; casos ambíguos não são mesclados automaticamente; proveniência e decisões permanecem rastreáveis; fluxo completo da Fase 2 é aprovado.
 
+**Situação:** concluída e aceita em 2026-07-21. Contatos normalizados, proveniência avançada, candidatos persistentes, revisão humana, mesclagem auditada, API, interface, migration reversível e PostgreSQL real foram validados; o progresso geral incorporado é 29%.
+
 ## Sprint 5 — Pesquisa e filtros
 
 **Roadmap:** Fase 3.
@@ -96,6 +98,8 @@ Os pesos poderão ser recalibrados antes de uma sprint começar, desde que o tot
 **Entregas:** pesquisa textual; filtros combináveis; ordenação; paginação; índices; preservação dos filtros na navegação.
 
 **Critérios de aceite:** resultados corretos e reproduzíveis; consultas cumprem o volume de teste acordado; paginação e filtros possuem testes.
+
+**Situação:** concluída e aceita em 2026-07-21; progresso geral 36%.
 
 ## Sprint 6 — Score de oportunidade
 
@@ -109,6 +113,8 @@ Os pesos poderão ser recalibrados antes de uma sprint começar, desde que o tot
 
 **Critérios de aceite:** exemplos são validados; avaliações antigas não são sobrescritas; ausência de dados é explícita; resultado é explicável e testado.
 
+**Situação:** concluída e aceita em 2026-07-21 com fórmula `v1-human-40-30-30`; progresso geral 44%.
+
 ## Sprint 7 — Histórico e pipeline
 
 **Roadmap:** Fase 5.
@@ -121,6 +127,8 @@ Os pesos poderão ser recalibrados antes de uma sprint começar, desde que o tot
 
 **Critérios de aceite:** toda ação possui ator e horário; transições inválidas são recusadas; `DO_NOT_CONTACT` impede abordagem; arquivamento preserva histórico.
 
+**Situação:** concluída e aceita em 2026-07-21; progresso geral 52%.
+
 ## Sprint 8 — Interface interna
 
 **Roadmap:** Fase 6.
@@ -130,6 +138,8 @@ Os pesos poderão ser recalibrados antes de uma sprint começar, desde que o tot
 **Entregas:** navegação; formulários acessíveis; estados visuais; responsividade; CSS; branding e selo oficial.
 
 **Critérios de aceite:** fluxos funcionam por teclado; desktop, tablet e celular são verificados; não há overflow; branding, alt text e assinatura estão corretos.
+
+**Situação:** concluída e aceita em 2026-07-21, validada em 375, 768 e 1440 px; progresso geral 60%.
 
 ## Sprint 9 — Fontes externas autorizadas
 
@@ -142,6 +152,8 @@ Os pesos poderão ser recalibrados antes de uma sprint começar, desde que o tot
 **Entregas:** primeiro adaptador aprovado; limites; retry/backoff; proveniência; importação revisável.
 
 **Critérios de aceite:** termos e quotas são respeitados; falhas não corrompem dados; importações e mesclagens exigem confirmação humana.
+
+**Situação:** concluída e aceita em 2026-07-21 com Google Places API (New), pesquisa temporária, limites, atribuição, revisão humana e persistência exclusiva do Place ID; progresso geral 67%.
 
 ## Sprint 10 — Auditoria de websites
 

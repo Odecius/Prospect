@@ -1,5 +1,33 @@
 # Changelog
 
+## 2026-07-21 — Google Places API (New) (Sprint 9)
+
+- implementadas abstração de provedor, cliente HTTP oficial, serviço e API interna;
+- adicionadas busca por termo/cidade/UF/região, paginação assinada, timeout, retry e limite de chamadas;
+- adicionada revisão humana com vinculação exclusiva do Place ID, sem persistir conteúdo Google restrito;
+- adicionadas atribuição Google Maps, páginas de termos/privacidade e documentação de custo/conformidade;
+- adicionada migration reversível da fonte Google e testes totalmente simulados;
+- progresso geral elevado de 60% para 67%.
+
+## 2026-07-21 — Pesquisa, score, pipeline e interface (Sprints 5–8)
+
+- adicionadas pesquisa normalizada, filtros, ordenação, paginação e índices;
+- adicionado score humano v1, explicável, versionado e histórico;
+- adicionadas atividades, próximos passos e transições auditadas com proteção `DO_NOT_CONTACT`;
+- consolidada a interface responsiva, acessível e com branding oficial local;
+- validados 31 testes, Ruff, PostgreSQL, migrations e breakpoints móvel, tablet e desktop;
+- progresso geral elevado de 29% para 60%; Sprint 9 bloqueada por avaliação jurídica e técnica obrigatória da fonte.
+
+## 2026-07-21 — Contatos, fontes e duplicidade (Sprint 4)
+
+- adicionados contatos corporativos normalizados para telefone, email, website e Instagram, com invalidação lógica e contato principal por tipo;
+- ampliada a proveniência com identificador externo, nome observado e última verificação;
+- adicionados candidatos persistentes de duplicidade, sinais explicáveis e revisão humana obrigatória;
+- implementada mesclagem explícita e auditada, sem exclusão física, preservando contatos e fontes conflitantes no cadastro arquivado;
+- adicionadas API e interface operacional para contatos, revisão e mesclagem;
+- validados Ruff, 23 testes, ciclo reversível da migration `20260721_0003`, PostgreSQL real e endpoint de saúde;
+- incorporados os 8% da Sprint 4, totalizando 29% do Produto Interno.
+
 ## 2026-07-20 — Cadastro essencial (Sprint 3)
 
 - aprovadas e documentadas as políticas conservadoras de taxonomia, privacidade/LGPD e duplicidade;

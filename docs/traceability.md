@@ -15,15 +15,16 @@ Este documento conecta decisões aprovadas às especificações e fases do ABC P
 | Cadastro manual antes de fontes externas | `companies`, `categories`, `data_sources`, `company_source_refs` e `contacts` | 2 | Aprovada |
 | Nenhum envio em massa | Atividades e mensagens exigem revisão e ação humana | 5 e 9 | Aprovada |
 | Foco inicial no Brasil | `country_code=BR`, cidade e UF obrigatórias | 2 | Aprovada |
-| Score explicável e histórico | `opportunity_scores` versionados e opcionais para a empresa | 4 | Aprovada |
+| Score explicável e histórico | `opportunity_scores` versionados e opcionais para a empresa | 4 | Implementada — v1 humana |
 | Duplicidade em camadas | CNPJ e referência de fonte fortes; candidatos ambíguos revisados por pessoa | 2 | Aprovada; regras operacionais pendentes |
 | Branding oficial | Asset local, rodapé responsivo, alt text e assinatura oficial | 6 | Aprovada |
 | Autenticação local inicial | `users.password_hash`, Argon2, sessão e CSRF | 1 | Aprovada |
 | Campos mínimos do cadastro | Nome, categoria, cidade, UF e origem; demais campos opcionais | 2 | Aprovada |
-| Estados iniciais do funil | `pipeline_status` controlado e iniciado em `NEW` | 2 e 5 | Aprovada; transições detalhadas pendentes |
+| Estados iniciais do funil | `pipeline_status` controlado e iniciado em `NEW` | 2 e 5 | Implementada; matriz conservadora |
 | Interface operacional mínima | Formulários mínimos antecipados; consolidação visual mantida na Fase 6 | 2–6 | Aprovada |
 | Conclusão do produto interno | Fases 1–13 representam 100%; SaaS é projeto futuro | 13 | Aprovada |
 | Fase 1A restrita à infraestrutura | FastAPI, `/health`, OpenAPI, PostgreSQL/SQLAlchemy, Alembic sem revisions, Docker, testes e logs | 1A | Aprovada |
+| Google Places API (New) | Provedor desacoplado, resultados temporários e Place ID persistente | 7 | Implementada conservadoramente |
 
 ## Regras essenciais por entidade
 
@@ -44,9 +45,9 @@ Este documento conecta decisões aprovadas às especificações e fases do ABC P
 | Fase | Decisão ainda necessária | O que permanece liberado |
 |---:|---|---|
 | 2 | Duplicidade inicial, taxonomia e privacidade | Conclusão e validação da Fase 1 |
-| 4 | Fórmula, pesos, faixas e dados ausentes do score | Cadastro, pesquisa e filtros sem score |
-| 5 | Transições, reaberturas, atividades e encerramentos | Fases 1–4 aprovadas |
-| 7 | Avaliação jurídica e técnica de cada fonte | Operação manual interna |
+| 4 | Nenhuma; fórmula v1 documentada | Cadastro, pesquisa, filtros e score histórico |
+| 5 | Nenhuma; matriz conservadora documentada | Atividades e pipeline auditado |
+| 7 | Google Places avaliada; validação jurídica de produção ainda necessária | Pesquisa externa revisável e operação manual interna |
 | 10 | Armazenamento, acesso, expiração e direitos das demonstrações | Fases 1–9 aprovadas |
 | 12 | Infraestrutura, acesso, backups, RPO e RTO | Desenvolvimento e testes locais |
 | 13 | Métricas e período de validação | Fases anteriores aprovadas |

@@ -3,8 +3,8 @@
 ## Resumo para retomada
 
 - Projeto: ABC Prospect.
-- Estado: Sprints 1 a 3 concluídas e validadas com Docker Desktop e PostgreSQL real. Cadastro essencial, taxonomia inicial, origem, duplicidade forte, auditoria básica e interface operacional estão implementados.
-- Objetivo imediato: Sprint 4 — contatos, fontes avançadas e candidatos persistentes de duplicidade, após aprovação detalhada do escopo.
+- Estado: Sprints 1 a 9 concluídas e validadas, totalizando 67%. Google Places API (New) está integrada sem chamadas reais nos testes e somente Place ID é persistido.
+- Objetivo imediato: Sprint 10, auditoria controlada de websites; antes de produção, concluir quotas, faturação, restrição da chave e validação jurídica Google/LGPD.
 - Operação pendente: a pessoa responsável deve criar a conta administrativa real pelo comando documentado em `docs/setup.md`; a conta fictícia usada nos testes foi removida.
 - Arquitetura escolhida: monólito modular FastAPI + PostgreSQL.
 - Interface planejada: operação mínima nas fases iniciais; consolidação responsiva e branding na Fase 6, com Jinja2, HTML, CSS e JavaScript simples.
@@ -23,6 +23,7 @@ Leia `AI_GUIDELINES.md`, `PROJECT_CONTEXT.md`, `docs/glossary.md` e `docs/busine
 - Não fazer commit, push ou deploy sem solicitação explícita.
 - Não criar integrações externas nem assumir permissão de scraping.
 - Não armazenar segredos ou dados reais em exemplos/testes.
+- Avançar sprints sem solicitar aprovações ordinárias; interromper somente diante de segurança, privacidade, credenciais, perda de dados ou efeito externo relevante.
 
 ## Branding
 

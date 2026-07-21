@@ -4,6 +4,13 @@ Este arquivo acompanha ações concretas próximas. A sequência de produto est�
 
 ## Alta prioridade — próxima fase
 
+- [x] Revisar e aprovar `docs/sprint-4-proposal.md`.
+- [x] Implementar e validar a Sprint 4: contatos, fontes avançadas, revisão e mesclagem auditada.
+- [x] Implementar a Sprint 5: pesquisa e filtros.
+- [x] Implementar as Sprints 6–8: score, pipeline e interface consolidada.
+- [x] Aprovar e implementar Google Places API (New) na Sprint 9 com persistência conservadora.
+- [ ] Configurar quotas, alertas de faturação, restrições da chave e validação jurídica profissional antes da produção.
+
 - [x] Concluir e aprovar a revisão cruzada da documentação.
 - [x] Remover da tentativa inicial tudo que excede o escopo da Fase 1A.
 - [x] Implementar a infraestrutura técnica autorizada da Fase 1A.

@@ -87,3 +87,6 @@ Logs não devem incluir senhas, tokens, cookies, cabeçalhos de autorização, c
 - [ ] Backup e restauração testados.
 - [ ] HTTPS, logs e menor privilégio validados.
 - [ ] Integrações externas avaliadas individualmente antes da Fase 7.
+- [x] Google Places API (New) avaliada individualmente; chave somente no backend, resultados temporários e Place ID como única persistência.
+
+As páginas públicas `/privacy` e `/terms` são exceções mínimas à autenticação para cumprir transparência e políticas da fonte. Não expõem dados comerciais nem configuração.

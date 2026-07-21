@@ -107,23 +107,23 @@ No cadastro manual, a origem obrigatória será representada por uma referência
 
 **Finalidade:** registrar avaliações de oportunidade explicáveis ao longo do tempo.
 
-**Obrigatórios:** `id`, `company_id`, `score_value`, `score_version`, `components` (JSONB), `calculated_at`, `created_at`.
+**Obrigatórios:** `id`, `company_id`, `formula_version`, `components` (JSONB), `explanation`, `calculated_by_user_id`, `calculated_at`.
 
-**Opcionais:** `reason_summary`, `website_audit_id`, `calculated_by_user_id`.
+**Opcionais:** `total`, que permanece nulo enquanto algum componente estiver ausente.
 
 **Relacionamentos:** empresa; auditoria e usuário opcionais.
 
 **Índices e restrições:** empresa/data; valor em faixa aprovada; versão obrigatória; componentes validados; avaliações históricas não são sobrescritas. O score atual será obtido pela avaliação mais recente válida.
 
-O score não é necessário para criar, editar, qualificar ou pesquisar uma empresa. Ele será calculado somente na Fase 4, depois que a fórmula, os pesos, as faixas e o tratamento de dados ausentes forem aprovados. Até então, empresas existirão normalmente sem registros em `opportunity_scores`.
+O score não é necessário para criar, editar, qualificar ou pesquisar uma empresa. A fórmula v1 humana usa adequação 40%, reputação 30% e lacuna digital 30%; consulte `docs/sprint-6-score-policy.md`.
 
 ## Atividades comerciais (`commercial_activities`)
 
 **Finalidade:** registrar o histórico cronológico de pesquisa, tentativa de contato, resposta, reunião e mudança de etapa.
 
-**Obrigatórios:** `id`, `company_id`, `activity_type`, `occurred_at`, `created_by_user_id`, `created_at`.
+**Obrigatórios:** `id`, `company_id`, `activity_type`, `notes`, `performed_by_user_id`, `created_at`.
 
-**Opcionais:** `contact_id`, `channel`, `summary`, `outcome`, `next_action_at`, `metadata` limitada e validada.
+**Opcionais:** `previous_status`, `new_status`, `outcome` e `next_action_at`.
 
 **Relacionamentos:** empresa, usuário e contato opcional.
 
@@ -190,9 +190,9 @@ Cadastros incompletos não devem ser bloqueados apenas por nomes iguais. A polí
 ## Pontos pendentes
 
 - necessidade futura de papéis além do usuário administrador inicial;
-- escala e fórmula do score;
+- avaliação futura da fórmula do score com uso real;
 - taxonomia e governança de categorias;
-- transições e regras de reabertura do funil;
+- eventual ajuste da matriz de transições após uso real;
 - política de retenção/exclusão;
 - limites de similaridade e regras de merge;
 - armazenamento futuro de documentos de proposta.
