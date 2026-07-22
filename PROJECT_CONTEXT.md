@@ -6,7 +6,7 @@ O ABC Prospect será uma aplicação interna da ABC Solutions para organizar a i
 
 ## Estado
 
-Em 2026-07-22, as Sprints 1 a 10 estão implementadas e validadas, totalizando 74%. Além da infraestrutura, autenticação e cadastro, existem contatos, duplicidade revisável, pesquisa, score explicável, pipeline, interface responsiva, Google Places API (New) e auditoria controlada da página inicial de websites. As migrations formam uma cadeia linear até `20260722_0008`.
+Em 2026-07-22, as Sprints 1 a 11 estão implementadas e validadas, totalizando 80%. Além da infraestrutura, autenticação e cadastro, existem contatos, duplicidade revisável, pesquisa, score explicável, pipeline, interface responsiva, Google Places API (New), auditoria controlada de websites e rascunhos de IA revisáveis. As migrations formam uma cadeia linear até `20260722_0009`.
 
 ## Usuário e mercado iniciais
 

@@ -28,6 +28,13 @@ class Settings(BaseSettings):
     website_audit_max_redirects: int = Field(default=3, ge=0, le=5)
     website_audit_requests_per_minute: int = Field(default=5, ge=1, le=20)
     website_audit_domain_cooldown_seconds: int = Field(default=60, ge=30, le=3600)
+    ai_drafts_enabled: bool = False
+    openai_api_key: str | None = None
+    openai_model: str = "gpt-5.6-luna"
+    openai_timeout_seconds: float = Field(default=15.0, ge=3, le=30)
+    openai_max_retries: int = Field(default=1, ge=0, le=2)
+    openai_max_output_tokens: int = Field(default=300, ge=100, le=800)
+    ai_drafts_requests_per_minute: int = Field(default=3, ge=1, le=10)
 
     @property
     def is_production(self) -> bool:
@@ -40,6 +47,10 @@ class Settings(BaseSettings):
     @property
     def website_audit_available(self) -> bool:
         return self.website_audit_enabled and (not self.is_production or self.website_audit_egress_controlled)
+
+    @property
+    def ai_drafts_available(self) -> bool:
+        return self.ai_drafts_enabled and bool(self.openai_api_key)
 
 
 @lru_cache

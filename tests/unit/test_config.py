@@ -10,6 +10,8 @@ def test_settings_load_infrastructure_values() -> None:
     assert settings.session_max_age_seconds == 28_800
     assert settings.secure_session_cookie is False
     assert settings.website_audit_available is True
+    assert settings.ai_drafts_available is False
+    assert settings.openai_model == "gpt-5.6-luna"
 
 
 def test_production_audit_requires_confirmed_egress_control() -> None:

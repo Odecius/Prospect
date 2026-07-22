@@ -116,12 +116,65 @@ function renderCompanies() {
     score.addEventListener("click", () => evaluateCompany(company)); actions.append(score);
     const status = document.createElement("button"); status.type = "button"; status.className = "secondary"; status.textContent = "Mudar estado";
     status.addEventListener("click", () => transitionCompany(company)); actions.append(status);
+    const drafts = document.createElement("button"); drafts.type = "button"; drafts.className = "secondary"; drafts.textContent = "Rascunhos IA";
+    drafts.addEventListener("click", () => selectCompanyDrafts(company)); actions.append(drafts);
     if (!company.archived) {
       const archive = document.createElement("button"); archive.type = "button"; archive.className = "danger"; archive.textContent = "Arquivar";
       archive.addEventListener("click", () => archiveCompany(company)); actions.append(archive);
     }
     row.append(actions); tbody.append(row);
   }
+}
+
+async function selectCompanyDrafts(company) {
+  selectedCompany = company;
+  byId("ai-draft-company").textContent = `Empresa selecionada: ${company.name}`;
+  const drafts = await api(`/api/companies/${company.id}/message-drafts`);
+  const container = byId("message-drafts"); container.replaceChildren();
+  if (!company.archived && company.pipeline_status !== "DO_NOT_CONTACT") {
+    const generate = document.createElement("button"); generate.type = "button";
+    generate.textContent = "Gerar novo rascunho para revisão";
+    generate.addEventListener("click", () => generateMessageDraft(company)); container.append(generate);
+  }
+  if (!drafts.length) { const empty = document.createElement("p"); empty.textContent = "Nenhum rascunho registrado."; container.append(empty); }
+  for (const draft of drafts) container.append(renderMessageDraft(draft, company));
+}
+
+function renderMessageDraft(draft, company) {
+  const card = document.createElement("article"); card.className = "candidate";
+  const heading = document.createElement("strong"); heading.textContent = `${draft.status} — ${draft.model}`; card.append(heading);
+  const content = draft.reviewed_content || draft.generated_content;
+  const subject = document.createElement("p"); subject.textContent = `Assunto: ${content.subject}`; card.append(subject);
+  const body = document.createElement("p"); body.className = "draft-body"; body.textContent = content.body; card.append(body);
+  const note = document.createElement("small"); note.textContent = "Rascunho interno; não enviado automaticamente."; card.append(note);
+  if (draft.status === "DRAFT" && company.pipeline_status !== "DO_NOT_CONTACT") {
+    const approve = document.createElement("button"); approve.type = "button"; approve.textContent = "Revisar e aprovar";
+    approve.addEventListener("click", () => reviewMessageDraft(draft, company, "APPROVED")); card.append(approve);
+    const reject = document.createElement("button"); reject.type = "button"; reject.className = "danger"; reject.textContent = "Rejeitar";
+    reject.addEventListener("click", () => reviewMessageDraft(draft, company, "REJECTED")); card.append(reject);
+  }
+  return card;
+}
+
+async function generateMessageDraft(company) {
+  if (!window.confirm("Gerar rascunho usando somente dados empresariais mínimos?")) return;
+  try {
+    await api(`/api/companies/${company.id}/message-drafts`, { method: "POST" });
+    notify("Rascunho gerado. Revise antes de qualquer uso."); await selectCompanyDrafts(company);
+  } catch (error) { notify(error.body?.detail || "Geração de IA indisponível."); }
+}
+
+async function reviewMessageDraft(draft, company, decision) {
+  const reason = window.prompt("Justificativa da revisão:"); if (!reason) return;
+  const payload = { decision, reason };
+  if (decision === "APPROVED") {
+    const subject = window.prompt("Revise o assunto:", draft.generated_content.subject); if (!subject) return;
+    const body = window.prompt("Revise o corpo:", draft.generated_content.body); if (!body) return;
+    payload.subject = subject; payload.body = body;
+  }
+  await api(`/api/message-drafts/${draft.id}/review`, { method: "POST", body: JSON.stringify(payload) });
+  notify(decision === "APPROVED" ? "Rascunho aprovado, mas não enviado." : "Rascunho rejeitado.");
+  await selectCompanyDrafts(company);
 }
 
 async function evaluateCompany(company) {

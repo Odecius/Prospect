@@ -179,6 +179,8 @@ Os pesos poderão ser recalibrados antes de uma sprint começar, desde que o tot
 
 **Critérios de aceite:** nenhuma mensagem é enviada automaticamente; dados enviados ao provedor são conhecidos; revisão humana é obrigatória e auditável.
 
+**Situação:** concluída e aceita em 2026-07-22 com OpenAI Responses API desativada por padrão, `store=false`, contexto empresarial minimizado, saída estruturada, histórico imutável e revisão humana sem qualquer operação de envio; progresso geral 80%.
+
 ## Sprint 12 — Demo Websites
 
 **Roadmap:** Fase 10.

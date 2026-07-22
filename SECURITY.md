@@ -13,6 +13,16 @@ As Sprints 1 a 10 implementam infraestrutura, autenticação, entidades comercia
 - HTML e cabeçalhos brutos não são armazenados;
 - em produção, a funcionalidade exige `WEBSITE_AUDIT_EGRESS_CONTROLLED=true` e controle de saída efetivo para defesa em profundidade contra DNS rebinding.
 
+## Rascunhos assistidos por IA
+
+- integração desativada por padrão e credencial somente no backend;
+- `store=false`, sem tools, memória, arquivos, navegação ou execução em background;
+- somente dados empresariais mínimos e sinais booleanos permitidos saem da aplicação;
+- contatos, notas livres, CNPJ, URLs e conteúdo remoto não são enviados;
+- saída estruturada é validada novamente pelo servidor;
+- rascunhos nunca são enviados pelo sistema e `DO_NOT_CONTACT` bloqueia geração e aprovação;
+- conteúdo e credenciais não entram em logs técnicos.
+
 ## Credenciais e configuração
 
 - segredos nunca serão versionados;
@@ -98,5 +108,6 @@ Logs não devem incluir senhas, tokens, cookies, cabeçalhos de autorização, c
 - [ ] Integrações externas avaliadas individualmente antes da Fase 7.
 - [x] Google Places API (New) avaliada individualmente; chave somente no backend, resultados temporários e Place ID como única persistência.
 - [x] Auditoria de websites limitada e protegida contra destinos internos; controle de saída permanece requisito de produção.
+- [x] IA avaliada com minimização, `store=false`, saída estruturada e revisão humana; validação jurídica e limites financeiros permanecem requisitos de produção.
 
 As páginas públicas `/privacy` e `/terms` são exceções mínimas à autenticação para cumprir transparência e políticas da fonte. Não expõem dados comerciais nem configuração.

@@ -118,3 +118,7 @@ O rodapé apresenta o selo oficial ABC Solutions centralizado, responsivo e com 
 ## Complexidade deliberadamente evitada
 
 Não serão introduzidos microsserviços, Kubernetes, Redis, filas, SPA ou abstrações de integração sem um caso de uso aprovado e medido.
+
+## IA para rascunhos
+
+O fluxo segue `API -> MessageDraftService -> MessageDraftProvider -> OpenAIResponsesClient`. O serviço controla minimização, `DO_NOT_CONTACT`, estados e persistência; o adaptador conhece somente o protocolo externo. Não há fila, agente, tool calling, memória ou mecanismo de envio.

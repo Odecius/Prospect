@@ -1,5 +1,17 @@
 # Changelog
 
+## 2026-07-22 — Rascunhos comerciais assistidos por IA (Sprint 11)
+
+- adicionado adaptador desacoplado para OpenAI Responses API com `gpt-5.6-luna` configurável;
+- configurados `store=false`, saída estruturada estrita, limite de tokens, timeout, retry e rate limit;
+- minimizado o contexto externo para nome/categoria/localidade e sinais booleanos permitidos;
+- adicionados rascunhos imutáveis com modelo, prompt, uso, ator e snapshot auditável;
+- implementadas revisão, edição, aprovação e rejeição humanas sem qualquer mecanismo de envio;
+- `DO_NOT_CONTACT` bloqueia geração e aprovação;
+- integração permanece desativada sem chave e configuração explícita;
+- adicionadas API, interface, migration, política e testes com provedor simulado;
+- progresso geral elevado de 74% para 80%.
+
 ## 2026-07-22 — Auditoria controlada de websites (Sprint 10)
 
 - adicionados snapshots imutáveis de auditoria vinculados ao website cadastrado e ao ator;

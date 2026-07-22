@@ -26,6 +26,7 @@ Este documento conecta decisões aprovadas às especificações e fases do ABC P
 | Fase 1A restrita à infraestrutura | FastAPI, `/health`, OpenAPI, PostgreSQL/SQLAlchemy, Alembic sem revisions, Docker, testes e logs | 1A | Aprovada |
 | Google Places API (New) | Provedor desacoplado, resultados temporários e Place ID persistente | 7 | Implementada conservadoramente |
 | Auditoria controlada de websites | Snapshot imutável, consulta única e bloqueio de destinos internos | 8 | Implementada conservadoramente |
+| IA somente para rascunhos | Contexto minimizado, `store=false`, revisão humana e nenhum envio | 9 | Implementada conservadoramente |
 
 ## Regras essenciais por entidade
 
@@ -38,7 +39,7 @@ Este documento conecta decisões aprovadas às especificações e fases do ABC P
 | `opportunity_scores` | Ausência de score não impede operações da empresa | Score posterior; Fase 4 |
 | `commercial_activities` | Ator e horário preservados; transições controladas | Histórico comercial; Fase 5 |
 | `website_audits` | Somente métricas e sinais; conteúdo remoto não é persistido | Auditoria de websites; Fase 8 |
-| `generated_messages` | Nenhuma mensagem sai sem revisão e ação humana | Revisão humana; Fase 9 |
+| `generated_messages` | Estados limitados a rascunho/aprovação/rejeição; não existe envio | Revisão humana; Fase 9 |
 | `demo_artifacts` | Revisão, expiração, remoção e direitos rastreáveis | Demonstrações; Fase 10 |
 | `proposals` | Numeração e versões auditáveis | Propostas; Fase 11 |
 

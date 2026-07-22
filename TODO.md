@@ -10,6 +10,8 @@ Este arquivo acompanha ações concretas próximas. A sequência de produto est�
 - [x] Implementar as Sprints 6–8: score, pipeline e interface consolidada.
 - [x] Aprovar e implementar Google Places API (New) na Sprint 9 com persistência conservadora.
 - [x] Definir e implementar a auditoria controlada de websites da Sprint 10.
+- [x] Definir e implementar rascunhos de IA com revisão humana na Sprint 11.
+- [ ] Configurar chave restrita, teto de custo, alertas e validação jurídica antes de habilitar IA em produção.
 - [ ] Confirmar proxy ou controle de saída antes de habilitar auditorias em produção.
 - [ ] Configurar quotas, alertas de faturação, restrições da chave e validação jurídica profissional antes da produção.
 
@@ -42,7 +44,7 @@ Este arquivo acompanha ações concretas próximas. A sequência de produto est�
 
 - [ ] Avaliar provedores e termos de uso para fontes externas.
 - [x] Definir metodologia de auditoria de websites.
-- [ ] Avaliar IA com revisão humana e proteção de dados.
+- [x] Avaliar IA com revisão humana e proteção de dados.
 - [ ] Avaliar eventual projeto SaaS somente após a conclusão formal da Fase 13.
 
 ## Concluído

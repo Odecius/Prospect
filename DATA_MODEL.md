@@ -131,15 +131,15 @@ O score não é necessário para criar, editar, qualificar ou pesquisar uma empr
 
 ## Mensagens geradas (`generated_messages`)
 
-**Finalidade:** armazenar rascunhos futuros produzidos com assistência de IA, sempre sujeitos a revisão humana.
+**Finalidade:** armazenar rascunhos produzidos com assistência de IA, sempre sujeitos a revisão humana.
 
-**Obrigatórios:** `id`, `company_id`, `channel`, `status`, `content`, `prompt_template_version`, `created_at`, `created_by_user_id`.
+**Obrigatórios:** `id`, `company_id`, `status`, `draft_type`, `provider`, `model`, `prompt_version`, `generated_content`, `input_snapshot`, `usage`, `requested_by_user_id`, `created_at`.
 
-**Opcionais:** `contact_id`, `provider`, `model`, `input_fingerprint`, `reviewed_at`, `reviewed_by_user_id`, `rejection_reason`, `sent_activity_id`.
+**Opcionais:** `reviewed_content`, `reviewed_at`, `reviewed_by_user_id`, `review_reason`.
 
-**Relacionamentos:** empresa, contato, autores/revisores e atividade de envio opcional.
+**Relacionamentos:** empresa e usuários solicitante/revisor. Não existe relacionamento de envio.
 
-**Índices e restrições:** empresa/status/data; status controlado; envio exige revisão humana registrada; não armazenar prompts com segredos ou dados excessivos; nenhuma implementação no MVP inicial.
+**Índices e restrições:** empresa/data; estados `DRAFT`, `APPROVED` e `REJECTED`; revisão imutável; `DO_NOT_CONTACT` bloqueia geração e aprovação; não existem estados ou operações de envio.
 
 ## Propostas (`proposals`)
 

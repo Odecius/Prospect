@@ -132,6 +132,16 @@ As decisões seguem o formato do `ABC-Development-Standard`. Itens ainda não ap
 
 **Consequência:** A produção exige controle de saída confirmado; resultados descrevem apenas o instante e a página observados.
 
+## D-017 — IA limitada a rascunhos revisáveis
+
+**Estado:** Implementada em 2026-07-22.
+
+**Decisão:** Usar OpenAI Responses API com `gpt-5.6-luna`, `store=false`, saída estruturada e contexto empresarial minimizado. O sistema pode gerar, editar durante a revisão, aprovar ou rejeitar; não pode enviar mensagens.
+
+**Motivo:** Obter assistência de redação com custo controlado sem delegar decisão comercial nem ampliar a coleta de dados pessoais.
+
+**Consequência:** A funcionalidade permanece desativada sem chave/configuração e bloqueada para `DO_NOT_CONTACT`; uso em produção exige validação jurídica e financeira.
+
 ## 2026-07-19 — Documentação com responsabilidades separadas
 
 **Descrição:** Documentos de raiz guardam decisões e especificações; `docs/` contém instruções operacionais concisas e referencia os documentos canônicos.

@@ -66,6 +66,12 @@ class WebsiteAuditStatus(str, enum.Enum):
     FAILED = "FAILED"
 
 
+class MessageDraftStatus(str, enum.Enum):
+    DRAFT = "DRAFT"
+    APPROVED = "APPROVED"
+    REJECTED = "REJECTED"
+
+
 class User(Base):
     __tablename__ = "users"
 
@@ -254,3 +260,28 @@ class WebsiteAudit(Base):
     error_code: Mapped[str | None] = mapped_column(String(60))
     performed_by_user_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("users.id", ondelete="RESTRICT"), nullable=False)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), nullable=False)
+
+
+class GeneratedMessage(Base):
+    __tablename__ = "generated_messages"
+
+    id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    company_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("companies.id", ondelete="CASCADE"), nullable=False)
+    status: Mapped[MessageDraftStatus] = mapped_column(
+        Enum(MessageDraftStatus, name="message_draft_status", native_enum=True),
+        default=MessageDraftStatus.DRAFT,
+        nullable=False,
+    )
+    draft_type: Mapped[str] = mapped_column(String(40), nullable=False)
+    provider: Mapped[str] = mapped_column(String(40), nullable=False)
+    model: Mapped[str] = mapped_column(String(80), nullable=False)
+    prompt_version: Mapped[str] = mapped_column(String(40), nullable=False)
+    generated_content: Mapped[dict] = mapped_column(JSONB, nullable=False)
+    reviewed_content: Mapped[dict | None] = mapped_column(JSONB)
+    input_snapshot: Mapped[dict] = mapped_column(JSONB, nullable=False)
+    usage: Mapped[dict] = mapped_column(JSONB, nullable=False)
+    requested_by_user_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("users.id", ondelete="RESTRICT"), nullable=False)
+    reviewed_by_user_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("users.id", ondelete="RESTRICT"))
+    review_reason: Mapped[str | None] = mapped_column(String(500))
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), nullable=False)
+    reviewed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))

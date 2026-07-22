@@ -17,6 +17,8 @@ def test_interface_contains_accessible_navigation_branding_and_operational_contr
     assert 'translate="no">Google Maps' in response.text
     assert 'id="website-audit-title"' in response.text
     assert "Não executa JavaScript" in response.text
+    assert 'id="ai-draft-title"' in response.text
+    assert "Nada é enviado" in response.text
 
 
 def test_public_transparency_pages_are_available() -> None:
@@ -25,5 +27,8 @@ def test_public_transparency_pages_are_available() -> None:
         terms = client.get("/terms")
     assert privacy.status_code == 200
     assert "Google Places API" in privacy.text
+    assert "store=false" in privacy.text
+    assert "Política de Privacidade da OpenAI" in privacy.text
     assert terms.status_code == 200
     assert "Termos da Google Maps Platform" in terms.text
+    assert "nunca são enviados automaticamente" in terms.text

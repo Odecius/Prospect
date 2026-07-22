@@ -14,7 +14,7 @@ A prospecção manual dispersa informações entre buscas, anotações e contato
 
 ## Status atual
 
-As Sprints 1 a 10 estão implementadas e validadas, totalizando 74% do Produto Interno. Além da fundação, autenticação e cadastro, a aplicação oferece contatos, duplicidade revisável, pesquisa, score explicável, pipeline, interface responsiva, Google Places API (New) e auditoria controlada da página inicial de websites cadastrados.
+As Sprints 1 a 11 estão implementadas e validadas, totalizando 80% do Produto Interno. Além da fundação, autenticação e cadastro, a aplicação oferece contatos, duplicidade revisável, pesquisa, score explicável, pipeline, interface responsiva, Google Places API (New), auditoria controlada de websites e rascunhos comerciais assistidos por IA com revisão humana obrigatória.
 
 ## Stack planejada
 
@@ -44,7 +44,7 @@ React e outros frameworks frontend não fazem parte do plano inicial.
 - coleta automatizada ou scraping de plataformas externas;
 - envio automático ou em massa de mensagens;
 - geração de websites, demonstrações ou propostas;
-- IA generativa;
+- envio automático ou em massa de conteúdo gerado por IA;
 - microsserviços, Kubernetes, Redis e filas;
 - oferta pública ou modelo SaaS antes de um novo projeto formal;
 - deploy de produção antes da Fase 12.
