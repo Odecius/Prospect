@@ -14,7 +14,7 @@ A prospecção manual dispersa informações entre buscas, anotações e contato
 
 ## Status atual
 
-As Sprints 1 a 11 estão implementadas e validadas, totalizando 80% do Produto Interno. Além da fundação, autenticação e cadastro, a aplicação oferece contatos, duplicidade revisável, pesquisa, score explicável, pipeline, interface responsiva, Google Places API (New), auditoria controlada de websites e rascunhos comerciais assistidos por IA com revisão humana obrigatória.
+As Sprints 1 a 12 estão implementadas e validadas, totalizando 85% do Produto Interno. Além da fundação, autenticação e cadastro, a aplicação oferece contatos, duplicidade revisável, pesquisa, score explicável, pipeline, interface responsiva, Google Places API (New), auditoria controlada de websites e mensagens, diagnósticos e rascunhos de proposta assistidos por IA com revisão humana obrigatória.
 
 ## Stack planejada
 
@@ -71,7 +71,7 @@ O MVP estará concluído quando uma pessoa autenticada puder:
 9. operar com bloqueios como `DO_NOT_CONTACT` efetivamente aplicados;
 10. utilizar o sistema de forma segura e estável.
 
-Os itens 1–4 e 8–9 já possuem base implementada; mensagens comerciais revisáveis também estão disponíveis. Diagnóstico, rascunho de proposta e consolidação para uso interno real permanecem nas Sprints 12–15. O progresso aceito continua em 80%.
+Os itens 1–9 possuem base implementada. Dashboard/exportação controlada, preparação operacional e validação de uso real permanecem nas Sprints 13–15. O progresso aceito é 85%.
 
 ## Arquitetura e dados
 

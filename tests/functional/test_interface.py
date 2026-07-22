@@ -31,4 +31,4 @@ def test_public_transparency_pages_are_available() -> None:
     assert "Política de Privacidade da OpenAI" in privacy.text
     assert terms.status_code == 200
     assert "Termos da Google Maps Platform" in terms.text
-    assert "nunca são enviados automaticamente" in terms.text
+    assert "nunca são enviados ou publicados automaticamente" in terms.text

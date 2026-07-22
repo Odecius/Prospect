@@ -31,9 +31,12 @@ class DraftServiceFake:
         self.draft.company_id = company_id
         return [self.draft]
 
-    def generate(self, company_id: uuid.UUID, actor: User) -> GeneratedMessage:
+    def generate(
+        self, company_id: uuid.UUID, actor: User, draft_type: str = "COMMERCIAL_INTRODUCTION"
+    ) -> GeneratedMessage:
         self.draft.company_id = company_id
         self.draft.requested_by_user_id = actor.id
+        self.draft.draft_type = draft_type
         return self.draft
 
     def review(self, _draft_id: uuid.UUID, data: object, actor: User) -> GeneratedMessage:
@@ -67,3 +70,14 @@ def test_generate_list_and_review_drafts() -> None:
     assert listed.json()[0]["generated_content"]["body"] == "Corpo"
     assert reviewed.status_code == 200
     assert reviewed.json()["status"] == "REJECTED"
+
+
+def test_generate_commercial_diagnostic() -> None:
+    company_id = uuid.uuid4()
+    with client() as test_client:
+        response = test_client.post(
+            f"/api/companies/{company_id}/message-drafts",
+            json={"draft_type": "COMMERCIAL_DIAGNOSTIC"},
+        )
+    assert response.status_code == 201
+    assert response.json()["draft_type"] == "COMMERCIAL_DIAGNOSTIC"

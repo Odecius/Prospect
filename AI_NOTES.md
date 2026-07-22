@@ -3,8 +3,8 @@
 ## Resumo para retomada
 
 - Projeto: ABC Prospect.
-- Estado: Sprints 1 a 11 concluídas e validadas, totalizando 80%. Google Places, auditoria controlada de websites e rascunhos comerciais assistidos estão implementados sem chamadas reais nos testes.
-- Objetivo imediato: Sprint 12, diagnóstico comercial e rascunho de proposta com revisão humana; antes de produção, concluir controles de custo, saída de rede e validações jurídicas aplicáveis.
+- Estado: Sprints 1 a 12 concluídas e validadas, totalizando 85%. Google Places, auditoria controlada de websites e conteúdo comercial assistido estão implementados sem chamadas reais nos testes.
+- Objetivo imediato: Sprint 13, dashboard, segmentação e exportação manual; antes de produção, concluir controles de custo, saída de rede e validações jurídicas aplicáveis.
 - Operação pendente: a pessoa responsável deve criar a conta administrativa real pelo comando documentado em `docs/setup.md`; a conta fictícia usada nos testes foi removida.
 - Arquitetura escolhida: monólito modular FastAPI + PostgreSQL.
 - Interface planejada: operação mínima nas fases iniciais; consolidação responsiva e branding na Fase 6, com Jinja2, HTML, CSS e JavaScript simples.

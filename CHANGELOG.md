@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-07-22 — Diagnóstico e rascunho de proposta (Sprint 12)
+
+- adicionados `COMMERCIAL_DIAGNOSTIC` e `PROPOSAL_DRAFT` ao workflow humano existente;
+- incorporados score minimizado e referências locais das evidências utilizadas;
+- ajustado o prompt por finalidade, proibindo preço, prazo, website, código, publicação e envio inventados;
+- adicionadas ações separadas na interface, mantendo edição, aprovação e rejeição auditáveis;
+- preservados `DO_NOT_CONTACT`, limites, `store=false` e ausência de chamadas reais nos testes;
+- reutilizada a tabela existente, sem migration ou entidade desnecessária;
+- progresso geral elevado de 80% para 85%.
+
 ## 2026-07-22 — Correção de escopo e planejamento do MVP
 
 - auditados código, migrations, modelos, serviços, endpoints, interface, testes e documentação contra o escopo de prospecção;

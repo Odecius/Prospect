@@ -193,6 +193,8 @@ Os pesos poderão ser recalibrados antes de uma sprint começar, desde que o tot
 
 **Critérios de aceite:** nenhum conteúdo é enviado ou publicado; toda afirmação é revisável e ligada a dados conhecidos; `DO_NOT_CONTACT` bloqueia geração e aprovação; versões e atores são auditáveis; dados pessoais e conteúdo remoto não são enviados desnecessariamente.
 
+**Situação:** concluída e aceita em 2026-07-22 reutilizando `generated_messages`, com três tipos controlados, score minimizado, referências locais de evidência, interface de revisão, bloqueio de tipos fora do escopo e nenhuma migration ou operação de envio/publicação; progresso geral 85%.
+
 ## Sprint 13 — Dashboard, segmentação e exportação manual
 
 **Roadmap:** Fase 11.

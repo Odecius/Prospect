@@ -26,7 +26,7 @@ Somente estes dados empresariais podem sair do ABC Prospect:
 - sinais booleanos da auditoria mais recente do website, quando existentes;
 - tipo fixo de rascunho e idioma.
 
-Não são enviados nomes de pessoas, emails, telefones, histórico comercial, notas livres, CNPJ, Place ID, URLs, conteýo do website, scores completos ou dados sensíveis. Valores empresariais são tratados como dados não confiáveis e nunca como instruções.
+Não são enviados nomes de pessoas, emails, telefones, histórico comercial, notas livres, CNPJ, Place ID, URLs, conteúdo do website, scores completos ou dados sensíveis. Valores empresariais são tratados como dados não confiáveis e nunca como instruções. A Sprint 12 permite somente o resumo numérico do score documentado em `sprint-12-commercial-content-policy.md`; explicações livres continuam proibidas.
 
 ## Fluxo humano
 
@@ -40,7 +40,7 @@ Não são enviados nomes de pessoas, emails, telefones, histórico comercial, no
 
 ## Retenção e produção
 
-Rascunhos seguem a retenção configurável do histórico comercial. Conteýo não deve aparecer em logs técnicos. A funcionalidade permanece desativada por padrão e exige chave restrita, limite de custo, alerta de faturamento, contrato/termos revisados e validação jurídica profissional antes do uso comercial em produção.
+Rascunhos seguem a retenção configurável do histórico comercial. Conteúdo não deve aparecer em logs técnicos. A funcionalidade permanece desativada por padrão e exige chave restrita, limite de custo, alerta de faturamento, contrato/termos revisados e validação jurídica profissional antes do uso comercial em produção.
 
 ## Limitações
 

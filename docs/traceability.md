@@ -28,6 +28,7 @@ Este documento conecta decisões aprovadas às especificações e fases do ABC P
 | Auditoria controlada de websites | Snapshot imutável, consulta única e bloqueio de destinos internos | 8 | Implementada conservadoramente |
 | IA somente para rascunhos | Contexto minimizado, `store=false`, revisão humana e nenhum envio | 9 | Implementada conservadoramente |
 | Limite entre prospecção e geração de websites | ABC Prospect não cria sites; eventual gerador é produto e repositório separados | Todas | Aprovada |
+| Diagnóstico e proposta como rascunhos | Tipos controlados, evidências locais e revisão sem envio/publicação | 10 | Implementada conservadoramente |
 
 ## Regras essenciais por entidade
 

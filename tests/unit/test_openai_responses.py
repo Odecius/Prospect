@@ -32,7 +32,9 @@ def test_responses_request_is_stateless_structured_and_minimized() -> None:
         )
 
     client = OpenAIResponsesClient("test-key", "gpt-5.6-luna", 5, 0, 300, httpx.MockTransport(handler))
-    result = client.generate({"company_name": "Empresa Fictícia", "city": "Recife"})
+    result = client.generate(
+        {"draft_type": "COMMERCIAL_INTRODUCTION", "company_name": "Empresa Fictícia", "city": "Recife"}
+    )
     assert captured["store"] is False
     assert captured["model"] == "gpt-5.6-luna"
     assert captured["max_output_tokens"] == 300

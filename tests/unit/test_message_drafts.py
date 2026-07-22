@@ -8,6 +8,7 @@ from app.database.models import (
     Company,
     GeneratedMessage,
     MessageDraftStatus,
+    OpportunityScore,
     PipelineStatus,
     User,
 )
@@ -34,6 +35,7 @@ class RepositoryFake:
             merged_into_company_id=None,
         )
         self.category = Category(id=self.company.category_id, name="Serviços profissionais")
+        self.score = None
         self.saved = None
 
     def get_company(self, _company_id: uuid.UUID) -> Company:
@@ -44,6 +46,9 @@ class RepositoryFake:
 
     def latest_website_audit(self, _company_id: uuid.UUID):
         return None
+
+    def latest_score(self, _company_id: uuid.UUID):
+        return self.score
 
     def get_draft(self, _draft_id: uuid.UUID) -> GeneratedMessage | None:
         return self.saved
@@ -75,6 +80,53 @@ def test_generation_sends_only_minimal_business_context() -> None:
         "state_code",
     }
     assert draft.reviewed_content is None
+    assert draft.generated_content["evidence_refs"] == ["company_profile"]
+
+
+@pytest.mark.parametrize("draft_type", ["COMMERCIAL_DIAGNOSTIC", "PROPOSAL_DRAFT"])
+def test_generation_supports_sprint_12_draft_types(draft_type: str) -> None:
+    repository = RepositoryFake()
+    draft = service(repository).generate(repository.company.id, User(id=uuid.uuid4()), draft_type)
+    assert draft.draft_type == draft_type
+    assert draft.input_snapshot["draft_type"] == draft_type
+    assert draft.prompt_version.endswith("-v1")
+
+
+def test_generation_rejects_unknown_draft_type() -> None:
+    repository = RepositoryFake()
+    with pytest.raises(MessageDraftValidationError, match="Tipo de rascunho inválido"):
+        service(repository).generate(repository.company.id, User(id=uuid.uuid4()), "WEBSITE_DEMO")
+
+
+def test_diagnostic_uses_only_explainable_score_evidence() -> None:
+    repository = RepositoryFake()
+    repository.score = OpportunityScore(
+        id=uuid.uuid4(),
+        company_id=repository.company.id,
+        total=72,
+        formula_version="v1-human-40-30-30",
+        components={
+            "fit": {"value": 80, "weight": 0.4, "missing": False},
+            "reputation": {"value": 70, "weight": 0.3, "missing": False},
+            "digital_gap": {"value": 65, "weight": 0.3, "missing": False},
+            "private_note": "não enviar",
+        },
+        explanation="Texto livre não deve sair.",
+        calculated_by_user_id=uuid.uuid4(),
+    )
+    draft = service(repository).generate(
+        repository.company.id, User(id=uuid.uuid4()), "COMMERCIAL_DIAGNOSTIC"
+    )
+    assert draft.input_snapshot["opportunity_score"] == {
+        "total": 72,
+        "formula_version": "v1-human-40-30-30",
+        "components": {"fit": 80, "reputation": 70, "digital_gap": 65},
+    }
+    assert "Texto livre" not in str(draft.input_snapshot)
+    assert draft.generated_content["evidence_refs"] == [
+        "company_profile",
+        f"opportunity_score:{repository.score.id}",
+    ]
 
 
 def test_do_not_contact_blocks_generation_and_review() -> None:

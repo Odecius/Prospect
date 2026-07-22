@@ -12,7 +12,7 @@ Este arquivo acompanha ações concretas próximas. A sequência de produto est�
 - [x] Definir e implementar a auditoria controlada de websites da Sprint 10.
 - [x] Definir e implementar rascunhos de IA com revisão humana na Sprint 11.
 - [x] Retirar geração de websites/demonstrações do roadmap ativo e registrar o limite arquitetural.
-- [ ] Definir e implementar diagnóstico comercial e rascunho de proposta da Sprint 12 sem envio ou publicação.
+- [x] Definir e implementar diagnóstico comercial e rascunho de proposta da Sprint 12 sem envio ou publicação.
 - [ ] Definir indicadores, limites e campos da exportação manual da Sprint 13.
 - [ ] Configurar chave restrita, teto de custo, alertas e validação jurídica antes de habilitar IA em produção.
 - [ ] Confirmar proxy ou controle de saída antes de habilitar auditorias em produção.

@@ -3,7 +3,7 @@ import uuid
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from app.database.models import Category, Company, GeneratedMessage, WebsiteAudit
+from app.database.models import Category, Company, GeneratedMessage, OpportunityScore, WebsiteAudit
 
 
 class MessageDraftRepository:
@@ -21,6 +21,14 @@ class MessageDraftRepository:
             select(WebsiteAudit)
             .where(WebsiteAudit.company_id == company_id)
             .order_by(WebsiteAudit.created_at.desc(), WebsiteAudit.id.desc())
+            .limit(1)
+        )
+
+    def latest_score(self, company_id: uuid.UUID) -> OpportunityScore | None:
+        return self.session.scalar(
+            select(OpportunityScore)
+            .where(OpportunityScore.company_id == company_id)
+            .order_by(OpportunityScore.calculated_at.desc(), OpportunityScore.id.desc())
             .limit(1)
         )
 

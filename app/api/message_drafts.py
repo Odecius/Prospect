@@ -43,6 +43,10 @@ class DraftReviewPayload(BaseModel):
     body: str | None = Field(default=None, max_length=1500)
 
 
+class DraftCreatePayload(BaseModel):
+    draft_type: str = Field(default="COMMERCIAL_INTRODUCTION", max_length=40)
+
+
 def get_message_draft_service(
     session: Annotated[Session, Depends(get_database_session)],
 ) -> MessageDraftService:
@@ -100,9 +104,11 @@ def create_message_draft(
     user: Annotated[User, Depends(require_current_user)],
     _csrf: Annotated[None, Depends(require_csrf_token)],
     service: Annotated[MessageDraftService, Depends(get_message_draft_service)],
+    payload: DraftCreatePayload | None = None,
 ) -> DraftResponse:
     try:
-        return response(service.generate(company_id, user))
+        draft_type = payload.draft_type if payload else "COMMERCIAL_INTRODUCTION"
+        return response(service.generate(company_id, user, draft_type))
     except MessageDraftValidationError as error:
         raise HTTPException(status_code=422, detail=str(error)) from error
     except OpenAIConfigurationError as error:

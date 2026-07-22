@@ -138,6 +138,8 @@ O escopo aprovado está em [`docs/phase-1b.md`](docs/phase-1b.md). A implementa�
 
 **Fora do escopo:** geração de sites, landing pages, código, logos, publicação, envio automático, precificação autônoma, assinatura ou aceite.
 
+**Situação:** concluída em 2026-07-22 pela Sprint 12, sem nova entidade e com revisão humana obrigatória.
+
 ## Fase 11 — Dashboard, segmentação e exportação manual
 
 **Objetivo:** consolidar a operação diária do MVP sem introduzir automação de contato.

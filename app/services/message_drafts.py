@@ -7,7 +7,11 @@ from app.database.models import GeneratedMessage, MessageDraftStatus, PipelineSt
 from app.repositories.message_drafts import MessageDraftRepository
 from app.services.external_search import ExternalSearchValidationError, RequestLimiter
 
-PROMPT_VERSION = "commercial-introduction-v1"
+DRAFT_TYPES = {
+    "COMMERCIAL_INTRODUCTION": "commercial-introduction-v1",
+    "COMMERCIAL_DIAGNOSTIC": "commercial-diagnostic-v1",
+    "PROPOSAL_DRAFT": "proposal-draft-v1",
+}
 
 
 class MessageDraftValidationError(Exception):
@@ -38,9 +42,13 @@ class MessageDraftService:
     def list_drafts(self, company_id: uuid.UUID) -> list[GeneratedMessage]:
         return self.repository.list_for_company(company_id)
 
-    def generate(self, company_id: uuid.UUID, actor: User) -> GeneratedMessage:
+    def generate(
+        self, company_id: uuid.UUID, actor: User, draft_type: str = "COMMERCIAL_INTRODUCTION"
+    ) -> GeneratedMessage:
         if not self.enabled:
             raise MessageDraftValidationError("Geração de rascunhos por IA não está configurada.")
+        if draft_type not in DRAFT_TYPES:
+            raise MessageDraftValidationError("Tipo de rascunho inválido.")
         try:
             self.limiter.consume(str(actor.id))
         except ExternalSearchValidationError as error:
@@ -48,13 +56,14 @@ class MessageDraftService:
         company = self._active_contactable_company(company_id)
         category = self.repository.get_category(company.category_id)
         context = {
-            "draft_type": "COMMERCIAL_INTRODUCTION",
+            "draft_type": draft_type,
             "language": "pt-BR",
             "company_name": company.legal_or_trade_name,
             "category": category.name if category else "Não informada",
             "city": company.city,
             "state_code": company.state_code,
         }
+        evidence_refs = ["company_profile"]
         audit = self.repository.latest_website_audit(company_id)
         if audit and audit.status is WebsiteAuditStatus.COMPLETED:
             allowed = {
@@ -67,18 +76,34 @@ class MessageDraftService:
                 "contact_form_signal",
             }
             context["website_signals"] = {key: bool(value) for key, value in audit.findings.items() if key in allowed}
+            evidence_refs.append(f"website_audit:{audit.id}")
+        score = self.repository.latest_score(company_id)
+        if score:
+            context["opportunity_score"] = {
+                "total": score.total,
+                "formula_version": score.formula_version,
+                "components": {
+                    key: component.get("value")
+                    for key, component in score.components.items()
+                    if key in {"fit", "reputation", "digital_gap"}
+                    and isinstance(component, dict)
+                    and (component.get("value") is None or isinstance(component.get("value"), int | float))
+                },
+            }
+            evidence_refs.append(f"opportunity_score:{score.id}")
         generated = self.provider.generate(context)
         draft = GeneratedMessage(
             company_id=company_id,
             status=MessageDraftStatus.DRAFT,
-            draft_type="COMMERCIAL_INTRODUCTION",
+            draft_type=draft_type,
             provider=generated.provider,
             model=generated.model,
-            prompt_version=PROMPT_VERSION,
+            prompt_version=DRAFT_TYPES[draft_type],
             generated_content={
                 "subject": generated.subject,
                 "body": generated.body,
                 "safety_notes": generated.safety_notes,
+                "evidence_refs": evidence_refs,
             },
             input_snapshot=context,
             usage=generated.usage,

@@ -132,9 +132,12 @@ async function selectCompanyDrafts(company) {
   const drafts = await api(`/api/companies/${company.id}/message-drafts`);
   const container = byId("message-drafts"); container.replaceChildren();
   if (!company.archived && company.pipeline_status !== "DO_NOT_CONTACT") {
-    const generate = document.createElement("button"); generate.type = "button";
-    generate.textContent = "Gerar novo rascunho para revisão";
-    generate.addEventListener("click", () => generateMessageDraft(company)); container.append(generate);
+    const types = [["COMMERCIAL_INTRODUCTION", "Mensagem"], ["COMMERCIAL_DIAGNOSTIC", "Diagnóstico"], ["PROPOSAL_DRAFT", "Proposta"]];
+    for (const [type, label] of types) {
+      const generate = document.createElement("button"); generate.type = "button";
+      generate.textContent = `Gerar ${label.toLowerCase()}`;
+      generate.addEventListener("click", () => generateMessageDraft(company, type)); container.append(generate);
+    }
   }
   if (!drafts.length) { const empty = document.createElement("p"); empty.textContent = "Nenhum rascunho registrado."; container.append(empty); }
   for (const draft of drafts) container.append(renderMessageDraft(draft, company));
@@ -142,10 +145,13 @@ async function selectCompanyDrafts(company) {
 
 function renderMessageDraft(draft, company) {
   const card = document.createElement("article"); card.className = "candidate";
-  const heading = document.createElement("strong"); heading.textContent = `${draft.status} — ${draft.model}`; card.append(heading);
+  const heading = document.createElement("strong"); heading.textContent = `${draft.draft_type} — ${draft.status} — ${draft.model}`; card.append(heading);
   const content = draft.reviewed_content || draft.generated_content;
   const subject = document.createElement("p"); subject.textContent = `Assunto: ${content.subject}`; card.append(subject);
   const body = document.createElement("p"); body.className = "draft-body"; body.textContent = content.body; card.append(body);
+  if (draft.generated_content.evidence_refs?.length) {
+    const evidence = document.createElement("small"); evidence.textContent = `Evidências: ${draft.generated_content.evidence_refs.join(", ")}`; card.append(evidence);
+  }
   const note = document.createElement("small"); note.textContent = "Rascunho interno; não enviado automaticamente."; card.append(note);
   if (draft.status === "DRAFT" && company.pipeline_status !== "DO_NOT_CONTACT") {
     const approve = document.createElement("button"); approve.type = "button"; approve.textContent = "Revisar e aprovar";
@@ -156,10 +162,10 @@ function renderMessageDraft(draft, company) {
   return card;
 }
 
-async function generateMessageDraft(company) {
+async function generateMessageDraft(company, draftType) {
   if (!window.confirm("Gerar rascunho usando somente dados empresariais mínimos?")) return;
   try {
-    await api(`/api/companies/${company.id}/message-drafts`, { method: "POST" });
+    await api(`/api/companies/${company.id}/message-drafts`, { method: "POST", body: JSON.stringify({ draft_type: draftType }) });
     notify("Rascunho gerado. Revise antes de qualquer uso."); await selectCompanyDrafts(company);
   } catch (error) { notify(error.body?.detail || "Geração de IA indisponível."); }
 }
