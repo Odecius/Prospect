@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-07-22 — Auditoria controlada de websites (Sprint 10)
+
+- adicionados snapshots imutáveis de auditoria vinculados ao website cadastrado e ao ator;
+- implementada consulta única da página inicial, sem JavaScript, assets, links ou comportamento de pentest;
+- adicionados bloqueio de redes privadas/reservadas, portas restritas, limite de redirecionamentos, timeout, tamanho máximo, rate limit e cooldown;
+- persistidos somente status, duração e sinais explicáveis, sem HTML ou cabeçalhos brutos;
+- auditoria automaticamente desativada em produção até confirmação de controle de saída;
+- adicionadas API, interface, migration reversível, política e testes;
+- progresso geral elevado de 67% para 74%.
+
 ## 2026-07-21 — Google Places API (New) (Sprint 9)
 
 - implementadas abstração de provedor, cliente HTTP oficial, serviço e API interna;

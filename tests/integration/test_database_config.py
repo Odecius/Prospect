@@ -26,4 +26,5 @@ def test_sqlalchemy_metadata_contains_authorized_sprint_four_entities() -> None:
         "company_merge_audits",
         "opportunity_scores",
         "commercial_activities",
+        "website_audits",
     }

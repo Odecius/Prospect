@@ -95,13 +95,13 @@ No cadastro manual, a origem obrigatória será representada por uma referência
 
 **Finalidade:** preservar avaliações pontuais da presença e qualidade do website.
 
-**Obrigatórios:** `id`, `company_id`, `audit_version`, `status`, `audited_at`, `created_at`.
+**Obrigatórios:** `id`, `company_id`, `contact_id`, `requested_url`, `status`, `findings`, `performed_by_user_id`, `created_at`.
 
-**Opcionais:** `website_url`, `overall_score`, `criteria_results` (JSONB versionado), `summary`, `error_code`, `duration_ms`.
+**Opcionais:** `final_url`, `http_status`, `error_code`, `duration_ms`.
 
-**Relacionamentos:** empresa; usuário ou processo responsável.
+**Relacionamentos:** empresa, contato `WEBSITE` e usuário responsável.
 
-**Índices e restrições:** empresa/data; status; score em faixa definida; JSON validado por versão; cada execução é imutável após finalizada, salvo correção auditada.
+**Índices e restrições:** empresa/data; estados `COMPLETED` e `FAILED`; cada execução é imutável. HTML, cabeçalhos brutos e score automático não são armazenados.
 
 ## Scores (`opportunity_scores`)
 

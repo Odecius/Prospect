@@ -114,13 +114,23 @@ As decisões seguem o formato do `ABC-Development-Standard`. Itens ainda não ap
 
 ## 2026-07-19 — Branding oficial no rodapé
 
-**Descrição:** A futura interface exibirá no rodapé o selo oficial ABC Solutions, centralizado e responsivo, com texto alternativo e a assinatura **“Developed by Abc Solutions | Built with quality and care”**.
+**Descrição:** A interface exibe no rodapé o selo oficial ABC Solutions, centralizado e responsivo, com texto alternativo e a assinatura **“Developed by Abc Solutions | Built with quality and care”**.
 
 **Motivo:** Cumprir a identidade visual oficial.
 
 **Alternativas consideradas:** Somente texto ou ausência de branding.
 
-**Impacto:** O asset `C:\Projetos\Abc\developed by abc solutions.png` será copiado para este repositório apenas na fase de interface. Nesta etapa ele não foi copiado.
+**Impacto:** O asset foi copiado para `app/static/assets/abc-solutions-footer.png` durante a Sprint 8 e sua origem está registrada.
+
+## D-016 — Auditoria de websites limitada à página inicial
+
+**Estado:** Implementada em 2026-07-22.
+
+**Decisão:** Auditar somente contatos `WEBSITE` ativos já cadastrados, com uma navegação controlada da página inicial. Persistir apenas métricas e sinais imutáveis, sem HTML, sem pentest e sem alteração automática de score ou pipeline.
+
+**Motivo:** Produzir evidência comercial explicável com baixo impacto e reduzir SSRF, carga indevida e interpretações excessivas.
+
+**Consequência:** A produção exige controle de saída confirmado; resultados descrevem apenas o instante e a página observados.
 
 ## 2026-07-19 — Documentação com responsabilidades separadas
 

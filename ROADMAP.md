@@ -26,9 +26,9 @@ A avaliação de uma possível evolução para SaaS é uma iniciativa futura ind
 
 Os demais entregáveis da Fase 1, incluindo autenticação mínima, dependem de autorização posterior e não fazem parte da Fase 1A.
 
-### Fase 1B — Autenticação local proposta
+### Fase 1B — Autenticação local
 
-O escopo proposto está em [`docs/phase-1b.md`](docs/phase-1b.md). A implementação ainda não está autorizada e depende da validação da Fase 1A com PostgreSQL real.
+O escopo aprovado está em [`docs/phase-1b.md`](docs/phase-1b.md). A implementação foi concluída e validada com PostgreSQL real em 2026-07-20.
 
 ## Fase 2 — Cadastro manual de empresas
 

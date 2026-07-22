@@ -2,7 +2,7 @@
 
 ## Estado atual
 
-Existem testes unitários, funcionais, de segurança e de configuração. Com o ambiente virtual ativo, execute `ruff check .`, `ruff format --check .` e `pytest -q`. A migration de autenticação foi aplicada, revertida e reaplicada no PostgreSQL real; criação administrativa e ciclo HTTP também foram exercitados com dados fictícios.
+Existem testes unitários, funcionais, de segurança e de configuração. Com o ambiente virtual ativo, execute `ruff check .`, `ruff format --check .` e `pytest -q`. As migrations são exercitadas em ciclo reversível no PostgreSQL real. Integrações externas e auditorias usam fakes nos testes e nunca acessam serviços reais por padrão.
 
 ## Pirâmide planejada
 

@@ -61,6 +61,11 @@ class DuplicateStatus(str, enum.Enum):
     CLOSED = "CLOSED"
 
 
+class WebsiteAuditStatus(str, enum.Enum):
+    COMPLETED = "COMPLETED"
+    FAILED = "FAILED"
+
+
 class User(Base):
     __tablename__ = "users"
 
@@ -228,5 +233,24 @@ class CommercialActivity(Base):
     outcome: Mapped[str | None] = mapped_column(String(120))
     notes: Mapped[str] = mapped_column(String(1000), nullable=False)
     next_action_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    performed_by_user_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("users.id", ondelete="RESTRICT"), nullable=False)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), nullable=False)
+
+
+class WebsiteAudit(Base):
+    __tablename__ = "website_audits"
+
+    id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    company_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("companies.id", ondelete="CASCADE"), nullable=False)
+    contact_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("contacts.id", ondelete="RESTRICT"), nullable=False)
+    requested_url: Mapped[str] = mapped_column(Text, nullable=False)
+    final_url: Mapped[str | None] = mapped_column(Text)
+    status: Mapped[WebsiteAuditStatus] = mapped_column(
+        Enum(WebsiteAuditStatus, name="website_audit_status", native_enum=True), nullable=False
+    )
+    http_status: Mapped[int | None] = mapped_column(Integer)
+    duration_ms: Mapped[int | None] = mapped_column(Integer)
+    findings: Mapped[dict] = mapped_column(JSONB, nullable=False)
+    error_code: Mapped[str | None] = mapped_column(String(60))
     performed_by_user_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("users.id", ondelete="RESTRICT"), nullable=False)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), nullable=False)

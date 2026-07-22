@@ -15,6 +15,8 @@ def test_interface_contains_accessible_navigation_branding_and_operational_contr
     assert "Developed by Abc Solutions | Built with quality and care" in response.text
     assert 'id="external-search-form"' in response.text
     assert 'translate="no">Google Maps' in response.text
+    assert 'id="website-audit-title"' in response.text
+    assert "Não executa JavaScript" in response.text
 
 
 def test_public_transparency_pages_are_available() -> None:

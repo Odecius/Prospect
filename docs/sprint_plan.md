@@ -165,6 +165,8 @@ Os pesos poderão ser recalibrados antes de uma sprint começar, desde que o tot
 
 **Critérios de aceite:** auditorias são reproduzíveis; falhas técnicas são diferenciadas de ausência ou baixa qualidade; nenhum comportamento de pentest é introduzido.
 
+**Situação:** concluída e aceita em 2026-07-22 com consulta exclusiva da página inicial cadastrada, limites de rede e tamanho, bloqueio de destinos privados, snapshots imutáveis e resultados explicáveis; progresso geral 74%.
+
 ## Sprint 11 — IA para rascunhos
 
 **Roadmap:** Fase 9.

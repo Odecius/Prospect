@@ -85,7 +85,7 @@ Configuração tipada, carregada de variáveis de ambiente. Arquivos `.env` são
 
 PostgreSQL será a fonte transacional. SQLAlchemy fará o mapeamento e Alembic controlará migrations pequenas, revisáveis e aplicadas explicitamente. Migrations não serão executadas automaticamente na inicialização da aplicação em produção.
 
-O desenho inicial está em [DATA_MODEL.md](DATA_MODEL.md). A Fase 1A foi encerrada com metadata vazia; após a aprovação da Fase 1B, foi adicionada uma única revision exclusiva para `users`. Migrations comerciais permanecem proibidas até a fase correspondente ser aprovada.
+O desenho vigente está em [DATA_MODEL.md](DATA_MODEL.md). As migrations são pequenas, explícitas e lineares; a cadeia validada alcança `20260722_0008`. Novas entidades permanecem proibidas até a sprint correspondente ser autorizada.
 
 ## Testes
 
@@ -105,7 +105,7 @@ O Compose local define a aplicação e um PostgreSQL isolado, com healthchecks, 
 
 Uma interface operacional mínima poderá acompanhar as fases iniciais quando for necessária para executar e validar o cadastro manual. Essa interface deve permanecer simples, acessível e renderizada no servidor, sem antecipar trabalho de identidade visual ou um sistema de design completo.
 
-A Fase 6 continua responsável pela consolidação da experiência interna: navegação, responsividade, estados visuais, acessibilidade abrangente e aplicação do branding oficial. A existência de formulários mínimos antes dessa fase não significa que os critérios de conclusão da Fase 6 estejam atendidos.
+A Fase 6 consolidou navegação, responsividade, estados visuais, acessibilidade e branding oficial. Novos fluxos devem preservar esses critérios.
 
 ## Preparação para Ubuntu Server
 
@@ -113,7 +113,7 @@ O deploy futuro deverá usar containers sem privilégios, proxy reverso com HTTP
 
 ## Interface e branding
 
-O rodapé da futura interface deverá apresentar o selo oficial ABC Solutions centralizado, responsivo e com texto alternativo descritivo. A assinatura é **“Developed by Abc Solutions | Built with quality and care”**. O asset somente será copiado na fase de implementação da interface.
+O rodapé apresenta o selo oficial ABC Solutions centralizado, responsivo e com texto alternativo descritivo. A assinatura é **“Developed by Abc Solutions | Built with quality and care”** e o asset é local.
 
 ## Complexidade deliberadamente evitada
 

@@ -10,6 +10,7 @@ from app.api.health import router as health_router
 from app.api.pipeline import router as pipeline_router
 from app.api.scores import router as scores_router
 from app.api.web import router as web_router
+from app.api.website_audits import router as website_audits_router
 from app.core.config import get_settings
 from app.core.logging import configure_logging
 
@@ -40,6 +41,7 @@ def create_app() -> FastAPI:
     application.include_router(external_search_router)
     application.include_router(scores_router)
     application.include_router(pipeline_router)
+    application.include_router(website_audits_router)
     application.include_router(web_router)
     application.mount("/static", StaticFiles(directory="app/static"), name="static")
     return application

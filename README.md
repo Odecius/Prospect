@@ -14,7 +14,7 @@ A prospecção manual dispersa informações entre buscas, anotações e contato
 
 ## Status atual
 
-As Sprints 1 a 3 estão implementadas e validadas com Docker Desktop e PostgreSQL real. A base contém autenticação administrativa local e o fluxo operacional mínimo para cadastrar, consultar, editar e arquivar empresas com categoria, cidade, UF, origem e estado inicial `NEW`.
+As Sprints 1 a 10 estão implementadas e validadas, totalizando 74% do Produto Interno. Além da fundação, autenticação e cadastro, a aplicação oferece contatos, duplicidade revisável, pesquisa, score explicável, pipeline, interface responsiva, Google Places API (New) e auditoria controlada da página inicial de websites cadastrados.
 
 ## Stack planejada
 
@@ -71,9 +71,9 @@ As instruções operacionais estão em `docs/`. O Compose, os healthchecks, o ac
 
 ## Branding
 
-A futura interface deverá exibir no rodapé o selo oficial da ABC Solutions, centralizado e responsivo, com texto alternativo descritivo e a assinatura **“Developed by Abc Solutions | Built with quality and care”**.
+A interface exibe no rodapé o selo oficial da ABC Solutions, centralizado e responsivo, com texto alternativo descritivo e a assinatura **“Developed by Abc Solutions | Built with quality and care”**.
 
-O asset de referência está atualmente em `C:\Projetos\Abc\developed by abc solutions.png`. Ele não foi copiado nesta fase; a futura cópia deverá ser mantida localmente neste repositório e sua origem registrada.
+O selo oficial está mantido localmente em `app/static/assets/abc-solutions-footer.png`, com origem registrada em `docs/branding.md`.
 
 ## Referência de desenvolvimento
 

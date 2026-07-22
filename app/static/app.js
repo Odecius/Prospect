@@ -148,6 +148,8 @@ async function selectCompanyContacts(company) {
   show(byId("contact-form"), !company.archived);
   const contacts = await api(`/api/companies/${company.id}/contacts`);
   const list = byId("contacts"); list.replaceChildren();
+  const auditOptions = byId("website-audit-options"); auditOptions.replaceChildren();
+  byId("website-audit-company").textContent = `Empresa selecionada: ${company.name}`;
   for (const contact of contacts) {
     const item = document.createElement("li");
     item.textContent = `${contact.contact_type}: ${contact.value}${contact.invalidated ? " (inválido)" : ""}`;
@@ -157,7 +159,45 @@ async function selectCompanyContacts(company) {
       item.append(invalidate);
     }
     list.append(item);
+    if (contact.contact_type === "WEBSITE" && !contact.invalidated && !company.archived) {
+      const auditButton = document.createElement("button"); auditButton.type = "button"; auditButton.className = "secondary";
+      auditButton.textContent = `Auditar ${contact.value}`;
+      auditButton.addEventListener("click", () => runWebsiteAudit(company, contact));
+      auditOptions.append(auditButton);
+    }
   }
+  if (!auditOptions.children.length) auditOptions.textContent = "Cadastre um contato WEBSITE ativo para habilitar a auditoria.";
+  await loadWebsiteAudits(company);
+}
+
+async function loadWebsiteAudits(company) {
+  const audits = await api(`/api/companies/${company.id}/website-audits`);
+  const container = byId("website-audits"); container.replaceChildren();
+  if (!audits.length) { container.textContent = "Nenhuma auditoria registrada para esta empresa."; return; }
+  for (const audit of audits) {
+    const card = document.createElement("article"); card.className = "candidate";
+    const heading = document.createElement("strong");
+    heading.textContent = `${audit.status} — ${new Date(audit.created_at).toLocaleString("pt-BR")}`; card.append(heading);
+    const summary = document.createElement("p");
+    summary.textContent = audit.status === "COMPLETED"
+      ? `HTTP ${audit.http_status}; ${audit.duration_ms} ms; HTTPS: ${audit.findings.uses_https ? "sim" : "não"}; responsivo declarado: ${audit.findings.viewport_present ? "sim" : "não"}.`
+      : `Falha controlada: ${audit.error_code}.`;
+    card.append(summary);
+    const note = document.createElement("small");
+    note.textContent = "Snapshot informativo; nenhuma decisão ou score foi alterado automaticamente."; card.append(note);
+    container.append(card);
+  }
+}
+
+async function runWebsiteAudit(company, contact) {
+  if (!window.confirm(`Auditar somente a página inicial de ${contact.value}?`)) return;
+  try {
+    const audit = await api(`/api/companies/${company.id}/website-audits`, {
+      method: "POST", body: JSON.stringify({ contact_id: contact.id })
+    });
+    notify(audit.status === "COMPLETED" ? "Auditoria concluída e registrada." : `Auditoria terminou com falha controlada: ${audit.error_code}.`);
+    await loadWebsiteAudits(company);
+  } catch (error) { notify(error.body?.detail || "Não foi possível auditar o website."); }
 }
 
 function companyName(id) { return companies.find((company) => company.id === id)?.name || id; }

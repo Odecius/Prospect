@@ -2,7 +2,16 @@
 
 ## Situação atual
 
-As Fases 1A e 1B implementam infraestrutura e autenticação administrativa local, sem interface ou entidades comerciais. Senhas usam Argon2, a sessão é assinada em cookie `HttpOnly` com `SameSite=Lax`, operações mutáveis autenticadas exigem CSRF e cookies são obrigatoriamente seguros em produção. A migration e o ciclo de autenticação foram validados com PostgreSQL/Docker real.
+As Sprints 1 a 10 implementam infraestrutura, autenticação, entidades comerciais e integrações controladas. Senhas usam Argon2, a sessão é assinada em cookie `HttpOnly` com `SameSite=Lax`, operações mutáveis autenticadas exigem CSRF e cookies são obrigatoriamente seguros em produção.
+
+## Auditoria de websites e SSRF
+
+- somente websites ativos já vinculados a empresas podem ser consultados;
+- protocolos, portas, destinos DNS, redirecionamentos, tempo e bytes são limitados;
+- redes locais, privadas, reservadas, multicast e link-local são bloqueadas;
+- nenhuma navegação secundária, execução de script ou varredura é permitida;
+- HTML e cabeçalhos brutos não são armazenados;
+- em produção, a funcionalidade exige `WEBSITE_AUDIT_EGRESS_CONTROLLED=true` e controle de saída efetivo para defesa em profundidade contra DNS rebinding.
 
 ## Credenciais e configuração
 
@@ -88,5 +97,6 @@ Logs não devem incluir senhas, tokens, cookies, cabeçalhos de autorização, c
 - [ ] HTTPS, logs e menor privilégio validados.
 - [ ] Integrações externas avaliadas individualmente antes da Fase 7.
 - [x] Google Places API (New) avaliada individualmente; chave somente no backend, resultados temporários e Place ID como única persistência.
+- [x] Auditoria de websites limitada e protegida contra destinos internos; controle de saída permanece requisito de produção.
 
 As páginas públicas `/privacy` e `/terms` são exceções mínimas à autenticação para cumprir transparência e políticas da fonte. Não expõem dados comerciais nem configuração.
