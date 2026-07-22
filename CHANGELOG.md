@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-07-22 — Gate de integração contínua
+
+- adicionado GitHub Actions para Ruff, pytest e ciclo completo de migrations em PostgreSQL descartável;
+- configuradas permissões mínimas de leitura, timeout e cancelamento de execuções obsoletas;
+- mantidas integrações externas desativadas e usadas somente credenciais efêmeras de CI;
+- validado localmente o ciclo banco vazio → head → base → head sem tocar no banco de desenvolvimento.
+
 ## 2026-07-22 — Diagnóstico e rascunho de proposta (Sprint 12)
 
 - adicionados `COMMERCIAL_DIAGNOSTIC` e `PROPOSAL_DRAFT` ao workflow humano existente;

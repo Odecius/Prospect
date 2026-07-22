@@ -4,6 +4,8 @@ Este arquivo acompanha ações concretas próximas. A sequência de produto est�
 
 ## Alta prioridade — próxima fase
 
+- [x] Adicionar CI de pull request com lint, testes e round trip das migrations em PostgreSQL descartável.
+
 - [x] Revisar e aprovar `docs/sprint-4-proposal.md`.
 - [x] Implementar e validar a Sprint 4: contatos, fontes avançadas, revisão e mesclagem auditada.
 - [x] Implementar a Sprint 5: pesquisa e filtros.

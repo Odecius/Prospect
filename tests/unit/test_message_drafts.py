@@ -114,9 +114,7 @@ def test_diagnostic_uses_only_explainable_score_evidence() -> None:
         explanation="Texto livre não deve sair.",
         calculated_by_user_id=uuid.uuid4(),
     )
-    draft = service(repository).generate(
-        repository.company.id, User(id=uuid.uuid4()), "COMMERCIAL_DIAGNOSTIC"
-    )
+    draft = service(repository).generate(repository.company.id, User(id=uuid.uuid4()), "COMMERCIAL_DIAGNOSTIC")
     assert draft.input_snapshot["opportunity_score"] == {
         "total": 72,
         "formula_version": "v1-human-40-30-30",

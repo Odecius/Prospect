@@ -21,6 +21,20 @@ Existem testes unitários, funcionais, de segurança e de configuração. Com o 
 - qualquer migration deve ser exercitada em banco limpo e em cenário de upgrade pertinente;
 - comandos reais só serão documentados depois de existirem e passarem localmente.
 
+## Gate automático de pull request
+
+O workflow `.github/workflows/ci.yml` executa em cada pull request:
+
+1. instalação reproduzível das dependências de desenvolvimento;
+2. `python -m ruff check .`;
+3. `python -m ruff format --check .`;
+4. `python -m pytest -q`;
+5. `alembic upgrade head` em PostgreSQL 17.5 descartável;
+6. `alembic downgrade base`;
+7. novo `alembic upgrade head` e confirmação da revisão atual.
+
+O job possui somente permissão de leitura do conteúdo, não recebe chaves reais e mantém IA e Google Places desativados. Um PR não deve ser mesclado enquanto esse gate estiver ausente, pendente ou falhando.
+
 ## Prioridades iniciais
 
 1. constraints de CNPJ e referências de fonte;
