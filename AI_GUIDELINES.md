@@ -27,6 +27,8 @@ Em conflito entre o padrão central e uma necessidade deste projeto, registrar o
 - Não presumir permissão para scraping, especialmente de Google Maps ou serviços semelhantes.
 - Não automatizar contato comercial em massa.
 - Não enviar mensagem comercial sem revisão e ação humana.
+- Não gerar websites, landing pages, código, logos, demonstrações, hosting ou publicação; isso pertence a outro produto e repositório.
+- IA pode somente sugerir mensagens, diagnósticos e rascunhos de proposta, sem aprovar, enviar, publicar ou decidir pelo usuário.
 
 ## Forma de trabalho
 

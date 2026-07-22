@@ -198,6 +198,16 @@ As decisões seguem o formato do `ABC-Development-Standard`. Itens ainda não ap
 
 **Impacto:** A possível evolução para SaaS é um projeto futuro independente, não uma Fase 14 obrigatória. Melhorias posteriores ao produto interno serão classificadas como manutenção ou novos projetos.
 
+## 2026-07-22 — Limite entre prospecção e geração de websites
+
+**Descrição:** O ABC Prospect é um sistema de prospecção e apoio comercial. Geração automática de websites ou demonstrações pertence a um produto futuro separado, com responsabilidade, arquitetura e repositório próprios.
+
+**Motivo:** manter o MVP focado no fluxo de identificar, qualificar, diagnosticar e apoiar a abordagem humana de prospects, evitando risco jurídico, operacional e arquitetural de um website builder.
+
+**Alternativas consideradas:** manter Demo Websites na Sprint 12; tratar a geração como módulo opcional do monólito; retirar integralmente esse produto do planejamento ativo.
+
+**Impacto:** a antiga Fase/Sprint de Demo Websites, `demo_artifacts`, publicação, hosting, templates de sites e permissões relacionadas deixam o roadmap ativo. A Sprint 12 passa a fechar a lacuna de diagnóstico comercial e rascunho de proposta; qualquer futuro gerador exigirá decisão, projeto e repositório independentes. Nenhum código, migration ou tabela implementada precisou ser removido.
+
 ## Decisões pendentes por fase
 
 As pendências abaixo bloqueiam somente a fase indicada e não impedem trabalhos aprovados de fases anteriores.
@@ -220,7 +230,7 @@ As decisões iniciais de duplicidade, taxonomia e privacidade foram aprovadas em
 
 ### Antes de iniciar a Fase 10
 
-1. **Demonstrações:** armazenamento, controle de acesso, expiração, remoção, publicação e direitos de uso.
+1. **Diagnóstico e proposta:** tipos estruturados, evidências mínimas, campos permitidos, formato de saída manual e validação jurídica de produção.
 
 ### Antes de iniciar a Fase 12
 

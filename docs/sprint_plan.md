@@ -30,8 +30,8 @@ O percentual representa entregas aceitas do Produto Interno, e não quantidade d
 | 9 | Fontes externas autorizadas | 7% | 67% |
 | 10 | Auditoria de websites | 7% | 74% |
 | 11 | IA para rascunhos | 6% | 80% |
-| 12 | Demo Websites | 5% | 85% |
-| 13 | Propostas comerciais | 5% | 90% |
+| 12 | Diagnóstico e rascunho de proposta | 5% | 85% |
+| 13 | Dashboard, segmentação e exportação manual | 5% | 90% |
 | 14 | Deploy seguro | 6% | 96% |
 | 15 | Validação comercial e encerramento | 4% | 100% |
 
@@ -181,29 +181,29 @@ Os pesos poderão ser recalibrados antes de uma sprint começar, desde que o tot
 
 **Situação:** concluída e aceita em 2026-07-22 com OpenAI Responses API desativada por padrão, `store=false`, contexto empresarial minimizado, saída estruturada, histórico imutável e revisão humana sem qualquer operação de envio; progresso geral 80%.
 
-## Sprint 12 — Demo Websites
+## Sprint 12 — Diagnóstico comercial e rascunho de proposta
 
 **Roadmap:** Fase 10.
 
-**Objetivo:** gerar demonstrações controladas para oportunidades selecionadas.
+**Objetivo:** converter dados empresariais, score e auditorias existentes em diagnóstico explicável e rascunho de proposta para revisão humana.
 
-**Dependências:** armazenamento, acesso, expiração, remoção e direitos aprovados.
+**Dependências:** taxonomia dos tipos de rascunho, campos permitidos, prompt versionado, critérios de fundamentação e formato de cópia manual definidos.
 
-**Entregas:** templates; criação isolada; revisão; expiração; remoção; atribuição de assets.
+**Entregas:** extensão conservadora de `generated_messages`; diagnóstico e proposta estruturados; referências às evidências utilizadas; revisão, edição, aprovação e rejeição; cópia manual; testes sem chamadas reais.
 
-**Critérios de aceite:** demonstração não se confunde com site oficial; publicação exige aprovação; direitos e ciclo de vida são rastreáveis.
+**Critérios de aceite:** nenhum conteúdo é enviado ou publicado; toda afirmação é revisável e ligada a dados conhecidos; `DO_NOT_CONTACT` bloqueia geração e aprovação; versões e atores são auditáveis; dados pessoais e conteúdo remoto não são enviados desnecessariamente.
 
-## Sprint 13 — Propostas comerciais
+## Sprint 13 — Dashboard, segmentação e exportação manual
 
 **Roadmap:** Fase 11.
 
-**Objetivo:** criar e acompanhar propostas versionadas.
+**Objetivo:** fechar o fluxo diário do MVP com visão operacional, filtros e saída manual controlada.
 
-**Dependências:** modelo comercial, numeração, estados, armazenamento e aprovação definidos.
+**Dependências:** indicadores, campos exportáveis, limites de volume, perfis autorizados e trilha de auditoria definidos.
 
-**Entregas:** propostas; versões; itens; valores; validade; documento protegido.
+**Entregas:** dashboard do funil e qualidade de dados; segmentação por filtros existentes; lista priorizada explicável; exportação CSV minimizada e cópia manual; registro do ator e horário.
 
-**Critérios de aceite:** valores e versões são auditáveis; envio exige revisão; acesso e armazenamento são protegidos.
+**Critérios de aceite:** totais são reconciliáveis; filtros e ordenação são reproduzíveis; exportação exige ação humana e autorização; não existe envio, campanha ou cadência; `DO_NOT_CONTACT` é destacado e preservado.
 
 ## Sprint 14 — Deploy seguro
 

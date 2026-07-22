@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-07-22 — Correção de escopo e planejamento do MVP
+
+- auditados código, migrations, modelos, serviços, endpoints, interface, testes e documentação contra o escopo de prospecção;
+- confirmado que nenhum gerador de websites, landing pages ou demos foi implementado;
+- removidos do planejamento ativo a Fase/Sprint Demo Websites, `demo_artifacts` e o modelo completo de propostas/documentos;
+- registrada a decisão de que eventual geração de websites pertence a produto, arquitetura e repositório separados;
+- redefinida a Sprint 12 para diagnóstico comercial e rascunho de proposta com revisão humana;
+- redefinida a Sprint 13 para dashboard, segmentação e exportação/cópia manual;
+- mantidos 80% concluídos e o total planejado em 100%, pois nenhum trabalho concluído foi invalidado.
+
 ## 2026-07-22 — Rascunhos comerciais assistidos por IA (Sprint 11)
 
 - adicionado adaptador desacoplado para OpenAI Responses API com `gpt-5.6-luna` configurável;

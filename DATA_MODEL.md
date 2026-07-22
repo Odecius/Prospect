@@ -33,7 +33,7 @@ Campos comuns previstos, quando aplicáveis: `id`, `created_at`, `updated_at` e 
 
 **Opcionais:** `legal_name`, `trade_name`, `tax_id_normalized` (CNPJ), `description`, `address_line`, `district`, `postal_code`, `latitude`, `longitude`, `rating`, `review_count`, `has_website`, `website_quality_status`, `notes`, `archived_at`.
 
-**Relacionamentos:** uma categoria obrigatória; uma ou mais referências de fonte, sendo ao menos uma obrigatória desde o cadastro; muitos contatos, auditorias, scores, atividades, mensagens, demonstrações e propostas.
+**Relacionamentos:** uma categoria obrigatória; uma ou mais referências de fonte, sendo ao menos uma obrigatória desde o cadastro; muitos contatos, auditorias, scores, atividades e rascunhos assistidos.
 
 **Índices:** CNPJ normalizado; nome normalizado; cidade/UF/categoria; status do funil; `rating`; `review_count`; `has_website`; busca textual combinada.
 
@@ -139,31 +139,7 @@ O score não é necessário para criar, editar, qualificar ou pesquisar uma empr
 
 **Relacionamentos:** empresa e usuários solicitante/revisor. Não existe relacionamento de envio.
 
-**Índices e restrições:** empresa/data; estados `DRAFT`, `APPROVED` e `REJECTED`; revisão imutável; `DO_NOT_CONTACT` bloqueia geração e aprovação; não existem estados ou operações de envio.
-
-## Propostas (`proposals`)
-
-**Finalidade:** versionar propostas comerciais futuras.
-
-**Obrigatórios:** `id`, `company_id`, `proposal_number`, `version`, `status`, `currency`, `created_at`, `created_by_user_id`.
-
-**Opcionais:** `contact_id`, `title`, `scope`, `amount`, `valid_until`, `document_path`, `approved_at`, `sent_at`, `accepted_at`, `rejected_at`.
-
-**Relacionamentos:** empresa, contato, usuário e possíveis atividades.
-
-**Índices e restrições:** `(proposal_number, version)` único; valor não negativo; moeda ISO; transições de estado validadas; arquivos fora do banco com armazenamento e acesso definidos antes da implementação.
-
-## Artefatos de demonstração (`demo_artifacts`)
-
-**Finalidade:** registrar futuras demonstrações associadas a oportunidades selecionadas, sem confundi-las com o website oficial da empresa.
-
-**Obrigatórios previstos:** `id`, `company_id`, `status`, `artifact_type`, `storage_reference`, `created_at`, `created_by_user_id`.
-
-**Opcionais previstos:** `title`, `template_version`, `expires_at`, `published_at`, `removed_at`, `reviewed_at`, `reviewed_by_user_id`, `rights_or_attribution_note`.
-
-**Relacionamentos:** empresa e usuários responsáveis pela criação e revisão.
-
-**Restrições:** publicação exige revisão humana; localização e acesso devem ser protegidos; expiração e remoção devem ser rastreáveis; direitos de marca, conteúdo e assets precisam ser registrados antes da publicação. O armazenamento definitivo será decidido somente na Fase 10.
+**Índices e restrições:** empresa/data; estados `DRAFT`, `APPROVED` e `REJECTED`; tipos ativos limitados a mensagens, diagnósticos comerciais e rascunhos de proposta aprovados; revisão imutável; `DO_NOT_CONTACT` bloqueia geração e aprovação; não existem estados ou operações de envio, publicação ou criação de website.
 
 ## Prevenção de empresas duplicadas
 

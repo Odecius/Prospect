@@ -37,13 +37,16 @@ React e outros frameworks frontend não fazem parte do plano inicial.
 - score de oportunidade simples, versionado e explicável;
 - histórico de atividades comerciais;
 - prevenção e tratamento de possíveis duplicidades;
+- diagnóstico comercial e rascunhos de proposta assistidos por IA, sempre sujeitos a revisão humana;
+- dashboard de prospecção, segmentação e exportação ou cópia manual;
 - interface responsiva com o selo oficial da ABC Solutions no rodapé.
 
 ## Fora do escopo inicial
 
 - coleta automatizada ou scraping de plataformas externas;
 - envio automático ou em massa de mensagens;
-- geração de websites, demonstrações ou propostas;
+- geração de websites, landing pages, demonstrações, código, logos ou qualquer publicação/hosting;
+- envio automático de mensagens ou propostas e tomada autônoma de decisões comerciais;
 - envio automático ou em massa de conteúdo gerado por IA;
 - microsserviços, Kubernetes, Redis e filas;
 - oferta pública ou modelo SaaS antes de um novo projeto formal;
@@ -51,7 +54,24 @@ React e outros frameworks frontend não fazem parte do plano inicial.
 
 ## Evolução planejada
 
-O desenvolvimento seguirá fases pequenas. As Fases 1 a 13 compõem o produto interno e a conclusão da Fase 13 representa 100% do escopo principal. A eventual evolução para SaaS é um projeto futuro independente. Consulte [ROADMAP.md](ROADMAP.md).
+O desenvolvimento seguirá fases pequenas. As Fases 1 a 13 compõem o produto interno e a conclusão da Fase 13 representa 100% do escopo principal. Um eventual gerador de websites ou demonstrações é outro produto, com responsabilidade, arquitetura e repositório próprios; não integra este roadmap nem seu percentual. A eventual evolução do ABC Prospect para SaaS também depende de um projeto futuro independente. Consulte [ROADMAP.md](ROADMAP.md).
+
+## Critérios de conclusão do MVP
+
+O MVP estará concluído quando uma pessoa autenticada puder:
+
+1. localizar ou cadastrar potenciais clientes;
+2. verificar a existência e a adequação básica da presença digital;
+3. classificar a oportunidade;
+4. consultar score acompanhado de justificativa;
+5. gerar diagnóstico comercial;
+6. gerar rascunho de proposta;
+7. editar, aprovar ou rejeitar o rascunho;
+8. consultar o histórico das ações;
+9. operar com bloqueios como `DO_NOT_CONTACT` efetivamente aplicados;
+10. utilizar o sistema de forma segura e estável.
+
+Os itens 1–4 e 8–9 já possuem base implementada; mensagens comerciais revisáveis também estão disponíveis. Diagnóstico, rascunho de proposta e consolidação para uso interno real permanecem nas Sprints 12–15. O progresso aceito continua em 80%.
 
 ## Arquitetura e dados
 

@@ -11,6 +11,9 @@ Este arquivo acompanha ações concretas próximas. A sequência de produto est�
 - [x] Aprovar e implementar Google Places API (New) na Sprint 9 com persistência conservadora.
 - [x] Definir e implementar a auditoria controlada de websites da Sprint 10.
 - [x] Definir e implementar rascunhos de IA com revisão humana na Sprint 11.
+- [x] Retirar geração de websites/demonstrações do roadmap ativo e registrar o limite arquitetural.
+- [ ] Definir e implementar diagnóstico comercial e rascunho de proposta da Sprint 12 sem envio ou publicação.
+- [ ] Definir indicadores, limites e campos da exportação manual da Sprint 13.
 - [ ] Configurar chave restrita, teto de custo, alertas e validação jurídica antes de habilitar IA em produção.
 - [ ] Confirmar proxy ou controle de saída antes de habilitar auditorias em produção.
 - [ ] Configurar quotas, alertas de faturação, restrições da chave e validação jurídica profissional antes da produção.
@@ -34,11 +37,11 @@ Este arquivo acompanha ações concretas próximas. A sequência de produto est�
 
 ## Média prioridade
 
-- [ ] Validar a fórmula inicial do score e seus pesos antes da Fase 4.
-- [ ] Definir transições detalhadas, reaberturas, atividades e encerramentos antes da Fase 5.
+- [x] Validar a fórmula inicial do score e seus pesos antes da Fase 4.
+- [x] Definir transições detalhadas, reaberturas, atividades e encerramentos antes da Fase 5.
 - [ ] Definir estratégia de backup e restauração para o servidor Ubuntu.
-- [ ] Desenhar a consolidação responsiva da interface para a Fase 6.
-- [ ] Copiar o selo oficial para um asset local somente na implementação da interface e registrar sua origem.
+- [x] Desenhar e validar a consolidação responsiva da interface da Fase 6.
+- [x] Copiar o selo oficial para asset local e registrar sua origem.
 
 ## Baixa prioridade / futuro
 
@@ -46,6 +49,7 @@ Este arquivo acompanha ações concretas próximas. A sequência de produto est�
 - [x] Definir metodologia de auditoria de websites.
 - [x] Avaliar IA com revisão humana e proteção de dados.
 - [ ] Avaliar eventual projeto SaaS somente após a conclusão formal da Fase 13.
+- [ ] Tratar eventual gerador de websites somente como produto futuro, com decisão e repositório separados.
 
 ## Concluído
 

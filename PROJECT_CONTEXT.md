@@ -25,7 +25,7 @@ Em 2026-07-22, as Sprints 1 a 11 estão implementadas e validadas, totalizando 8
 
 ## Limites atuais
 
-Permanecem fora do escopo: scraping, pentest, envio em massa e infraestrutura complexa. IA, demonstrações e propostas pertencem somente às sprints futuras correspondentes. O produto interno termina na Fase 13; SaaS é um projeto futuro independente.
+Permanecem fora do escopo: scraping, pentest, envio em massa, criação ou publicação de websites/landing pages/demonstrações e infraestrutura complexa. A IA atua somente como assistente comercial para mensagens, diagnósticos e rascunhos de proposta com revisão humana. O produto interno termina na Fase 13; qualquer gerador de websites pertence a produto e repositório futuros separados, e SaaS depende de projeto independente.
 
 ## Decisões operacionais vigentes
 

@@ -27,6 +27,7 @@ Este documento conecta decisões aprovadas às especificações e fases do ABC P
 | Google Places API (New) | Provedor desacoplado, resultados temporários e Place ID persistente | 7 | Implementada conservadoramente |
 | Auditoria controlada de websites | Snapshot imutável, consulta única e bloqueio de destinos internos | 8 | Implementada conservadoramente |
 | IA somente para rascunhos | Contexto minimizado, `store=false`, revisão humana e nenhum envio | 9 | Implementada conservadoramente |
+| Limite entre prospecção e geração de websites | ABC Prospect não cria sites; eventual gerador é produto e repositório separados | Todas | Aprovada |
 
 ## Regras essenciais por entidade
 
@@ -39,9 +40,7 @@ Este documento conecta decisões aprovadas às especificações e fases do ABC P
 | `opportunity_scores` | Ausência de score não impede operações da empresa | Score posterior; Fase 4 |
 | `commercial_activities` | Ator e horário preservados; transições controladas | Histórico comercial; Fase 5 |
 | `website_audits` | Somente métricas e sinais; conteúdo remoto não é persistido | Auditoria de websites; Fase 8 |
-| `generated_messages` | Estados limitados a rascunho/aprovação/rejeição; não existe envio | Revisão humana; Fase 9 |
-| `demo_artifacts` | Revisão, expiração, remoção e direitos rastreáveis | Demonstrações; Fase 10 |
-| `proposals` | Numeração e versões auditáveis | Propostas; Fase 11 |
+| `generated_messages` | Estados limitados a rascunho/aprovação/rejeição; não existe envio ou publicação | Revisão humana; Fases 9–10 |
 
 ## Bloqueios documentais por fase
 
@@ -51,7 +50,8 @@ Este documento conecta decisões aprovadas às especificações e fases do ABC P
 | 4 | Nenhuma; fórmula v1 documentada | Cadastro, pesquisa, filtros e score histórico |
 | 5 | Nenhuma; matriz conservadora documentada | Atividades e pipeline auditado |
 | 7 | Google Places avaliada; validação jurídica de produção ainda necessária | Pesquisa externa revisável e operação manual interna |
-| 10 | Armazenamento, acesso, expiração e direitos das demonstrações | Fases 1–9 aprovadas |
+| 10 | Tipos, evidências, campos permitidos, formato manual e validação jurídica | Fases 1–9 aprovadas |
+| 11 | Indicadores, campos exportáveis, volume, autorização e auditoria | Fases 1–10 aprovadas |
 | 12 | Infraestrutura, acesso, backups, RPO e RTO | Desenvolvimento e testes locais |
 | 13 | Métricas e período de validação | Fases anteriores aprovadas |
 

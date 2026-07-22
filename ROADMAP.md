@@ -126,29 +126,29 @@ O escopo aprovado está em [`docs/phase-1b.md`](docs/phase-1b.md). A implementa�
 
 **Fora do escopo:** envio automático, campanhas em massa e decisão autônoma.
 
-## Fase 10 — Geração de demonstrações
+## Fase 10 — Diagnóstico comercial e rascunho de proposta
 
-**Objetivo:** criar demonstrações simples e claramente identificadas para oportunidades selecionadas.
+**Objetivo:** transformar evidências já registradas em diagnóstico comercial explicável e rascunho de proposta para revisão humana.
 
-**Entregáveis:** templates aprovados; geração isolada; revisão humana; expiração/remoção; atribuição de assets.
+**Entregáveis:** tipos e prompts versionados; contexto empresarial minimizado; diagnóstico e proposta em formato estruturado; edição, aprovação e rejeição auditáveis; cópia manual.
 
-**Critérios de conclusão:** conteúdo não se confunde com site oficial do prospect; direitos de uso são respeitados; publicação requer aprovação.
+**Critérios de conclusão:** cada afirmação deriva de dados e auditorias identificáveis; nenhuma saída é enviada ou publicada; revisão humana é obrigatória; `DO_NOT_CONTACT` é respeitado; versões permanecem auditáveis.
 
-**Riscos:** uso indevido de marca/conteúdo, custo e exposição acidental.
+**Riscos:** alucinação, inferência indevida, exposição de dados, tom inadequado e proposta comercial inconsistente.
 
-**Fora do escopo:** publicação automática e substituição de produção do cliente.
+**Fora do escopo:** geração de sites, landing pages, código, logos, publicação, envio automático, precificação autônoma, assinatura ou aceite.
 
-## Fase 11 — Propostas comerciais
+## Fase 11 — Dashboard, segmentação e exportação manual
 
-**Objetivo:** gerar e acompanhar propostas versionadas.
+**Objetivo:** consolidar a operação diária do MVP sem introduzir automação de contato.
 
-**Entregáveis:** modelo; numeração/versões; itens e valores; PDF ou formato aprovado; estados e validade.
+**Entregáveis:** indicadores do funil e da qualidade dos dados; filtros úteis à prospecção; lista priorizada explicável; exportação limitada e cópia manual com auditoria e respeito ao acesso.
 
-**Critérios de conclusão:** valores e versões são auditáveis; documento é revisado antes de envio; acesso é protegido.
+**Critérios de conclusão:** indicadores reconciliam com os registros; filtros são reproduzíveis; exportações exigem ação humana, aplicam minimização e não incluem envio; `DO_NOT_CONTACT` permanece visível e respeitado.
 
-**Riscos:** inconsistência comercial, dados pessoais e documentos expostos.
+**Riscos:** exportação excessiva, interpretação incorreta dos indicadores e exposição de dados pessoais.
 
-**Fora do escopo:** assinatura eletrônica, faturamento e aceite automático.
+**Fora do escopo:** BI genérico, campanhas, cadências, disparos, CRM completo ou automação de decisões.
 
 ## Fase 12 — Deploy no servidor
 
@@ -175,6 +175,10 @@ O escopo aprovado está em [`docs/phase-1b.md`](docs/phase-1b.md). A implementa�
 **Fora do escopo:** expansão antes de evidência e automação baseada apenas em volume.
 
 Ao cumprir esses critérios, o ABC Prospect interno é considerado concluído. Melhorias posteriores serão tratadas como manutenção ou novos projetos, sem reabrir automaticamente o roadmap principal.
+
+## Produto futuro separado — geração de websites ou demonstrações
+
+Qualquer ferramenta para gerar websites, landing pages, demonstrações, código, logos, hosting ou publicação pertence a um produto futuro separado do ABC Prospect. Ela exigirá responsabilidade de produto, arquitetura, avaliação jurídica e repositório próprios. Não há sprint ativa, entidade, endpoint, migration ou percentual reservado para esse produto neste roadmap.
 
 ## Projeto futuro — Possível evolução para SaaS
 

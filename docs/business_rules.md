@@ -112,45 +112,24 @@ Nenhuma transição ainda pendente deve ser inferida apenas pela ordem da lista 
 - regras de reativação de registros arquivados;
 - tratamento de referências históricas quando houver pedido de exclusão.
 
-## Demonstrações
+## Diagnósticos e rascunhos de proposta
 
 ### Regras aprovadas
 
-- uma Demo Website deve ser identificada claramente como demonstração;
-- publicação exige revisão e ação humana;
-- a demonstração não pode se apresentar como website oficial da empresa;
-- direitos de marca, textos, imagens, templates e demais assets devem ser respeitados e rastreados;
-- criação, revisão, publicação, expiração e remoção devem ser auditáveis;
-- acesso deve permanecer restrito ao necessário.
+- diagnósticos e rascunhos pertencem a uma empresa e preservam versão, ator, horário e evidências utilizadas;
+- a IA só pode sugerir conteúdo comercial a partir do contexto minimizado permitido;
+- toda saída exige revisão humana e pode ser editada, aprovada ou rejeitada;
+- nenhuma aprovação representa envio, publicação, aceite ou decisão comercial final;
+- `DO_NOT_CONTACT` bloqueia geração e aprovação;
+- a saída não pode conter website, landing page, código, logo ou conteúdo para publicação automática.
 
 ### Pendente antes de iniciar a Fase 10
 
-- prazo padrão e condições de expiração;
-- armazenamento e formato de `storage_reference`;
-- processo de publicação e remoção;
-- política de acesso e compartilhamento;
-- tratamento de demonstrações vinculadas a empresas arquivadas ou `DO_NOT_CONTACT`.
-
-## Propostas
-
-### Regras aprovadas
-
-- propostas pertencem a uma empresa e possuem número e versão auditáveis;
-- valores não podem ser negativos e devem registrar moeda;
-- toda proposta deve possuir estado e validade quando aplicável;
-- revisão humana é obrigatória antes do envio;
-- versões enviadas não devem ser alteradas silenciosamente;
-- acesso ao documento deve ser protegido;
-- envio ou mudança de estado relevante deve gerar atividade comercial rastreável.
-
-### Pendente antes de iniciar a Fase 11
-
-- modelo comercial e itens obrigatórios;
-- regra de numeração;
-- estados e transições da proposta;
-- aprovação interna necessária;
-- formato, armazenamento e retenção do documento;
-- regras tributárias e comerciais aplicáveis.
+- tipos e schema estruturado dos rascunhos;
+- evidências mínimas e tratamento de informação ausente;
+- campos que podem ser enviados ao provedor;
+- formato e limites da cópia ou exportação manual;
+- validação jurídica profissional antes do uso comercial em produção.
 
 ## Contatos e atividades comerciais
 
@@ -171,7 +150,7 @@ O uso começa com um único administrador autenticado. Todas as operações de n
 
 ### Evolução futura pendente
 
-Se houver mais usuários, os papéis e permissões deverão ser aprovados antes da implementação. A futura matriz deve aplicar menor privilégio e, no mínimo, considerar separadamente visualização, edição, alteração de pipeline, mesclagem, revisão de mensagens, publicação de demonstrações, aprovação de propostas e administração.
+Se houver mais usuários, os papéis e permissões deverão ser aprovados antes da implementação. A futura matriz deve aplicar menor privilégio e, no mínimo, considerar separadamente visualização, edição, alteração de pipeline, mesclagem, revisão de conteúdo assistido, exportação manual e administração.
 
 ## LGPD e dados comerciais
 
@@ -196,4 +175,3 @@ Este documento descreve princípios de produto e engenharia, não substitui aval
 3. Somente depois da aprovação documental a implementação correspondente pode começar.
 4. Testes devem demonstrar cada regra implementada e suas condições de erro.
 5. Divergências entre documentação e implementação interrompem o trabalho até revisão e aprovação.
-

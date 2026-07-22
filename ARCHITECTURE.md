@@ -4,6 +4,8 @@
 
 Construir uma aplicação web interna simples, segura e evolutiva, mantendo API, regras de negócio, persistência e interface claramente separadas dentro de um único deploy.
 
+O limite de responsabilidade é estrito: o ABC Prospect apoia prospecção e trabalho comercial. Ele não cria websites, landing pages, demos, código, logos, hosting nem publicações. Um eventual gerador desse tipo será outro produto, com arquitetura e repositório próprios.
+
 ## Estilo adotado
 
 Será usado um **monólito modular** em FastAPI. Essa abordagem reduz custo operacional no MVP e preserva limites internos que permitem evolução sem introduzir microsserviços prematuramente.
@@ -85,7 +87,7 @@ Configuração tipada, carregada de variáveis de ambiente. Arquivos `.env` são
 
 PostgreSQL será a fonte transacional. SQLAlchemy fará o mapeamento e Alembic controlará migrations pequenas, revisáveis e aplicadas explicitamente. Migrations não serão executadas automaticamente na inicialização da aplicação em produção.
 
-O desenho vigente está em [DATA_MODEL.md](DATA_MODEL.md). As migrations são pequenas, explícitas e lineares; a cadeia validada alcança `20260722_0008`. Novas entidades permanecem proibidas até a sprint correspondente ser autorizada.
+O desenho vigente está em [DATA_MODEL.md](DATA_MODEL.md). As migrations são pequenas, explícitas e lineares; a cadeia validada alcança `20260722_0009`. Novas entidades permanecem proibidas até a sprint correspondente ser autorizada.
 
 ## Testes
 
@@ -122,3 +124,5 @@ Não serão introduzidos microsserviços, Kubernetes, Redis, filas, SPA ou abstr
 ## IA para rascunhos
 
 O fluxo segue `API -> MessageDraftService -> MessageDraftProvider -> OpenAIResponsesClient`. O serviço controla minimização, `DO_NOT_CONTACT`, estados e persistência; o adaptador conhece somente o protocolo externo. Não há fila, agente, tool calling, memória ou mecanismo de envio.
+
+Na Sprint 12, esse limite poderá ser estendido a diagnósticos comerciais e rascunhos de proposta estruturados, reutilizando o mesmo workflow humano e sem adicionar capacidade de envio, publicação ou criação de sites.
