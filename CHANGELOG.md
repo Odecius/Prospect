@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-07-23 — Dashboard e exportação manual (Sprint 13)
+
+- adicionados indicadores reconciliáveis de pipeline, website, score, auditoria e conteúdo aprovado;
+- ampliada a segmentação da interface por categoria, UF e estado do pipeline;
+- adicionada exportação CSV manual limitada a 500 empresas e somente sete campos empresariais mínimos;
+- protegidas células textuais contra fórmulas de planilha e preservado `DO_NOT_CONTACT`;
+- criada trilha `export_audits` com filtros, campos, quantidade, ator e horário, sem armazenar o arquivo;
+- adicionados migration reversível, testes unitários, funcionais e integração PostgreSQL real;
+- progresso geral elevado de 85% para 90%.
+
 ## 2026-07-22 — Gate de integração contínua
 
 - adicionado GitHub Actions para Ruff, pytest e ciclo completo de migrations em PostgreSQL descartável;

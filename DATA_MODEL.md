@@ -141,6 +141,16 @@ O score não é necessário para criar, editar, qualificar ou pesquisar uma empr
 
 **Índices e restrições:** empresa/data; estados `DRAFT`, `APPROVED` e `REJECTED`; tipos ativos limitados a mensagens, diagnósticos comerciais e rascunhos de proposta aprovados; revisão imutável; `DO_NOT_CONTACT` bloqueia geração e aprovação; não existem estados ou operações de envio, publicação ou criação de website.
 
+## Auditorias de exportação (`export_audits`)
+
+**Finalidade:** registrar operações manuais de exportação sem armazenar o arquivo produzido.
+
+**Obrigatórios:** `id`, `export_type`, `filters`, `fields`, `row_count`, `performed_by_user_id`, `created_at`.
+
+**Relacionamentos:** usuário responsável pela ação.
+
+**Restrições:** quantidade não negativa; filtros e campos minimizados; conteúdo do CSV não é persistido; não existe destino, envio ou agendamento associado.
+
 ## Prevenção de empresas duplicadas
 
 Estratégia em camadas:

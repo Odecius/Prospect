@@ -38,21 +38,26 @@ function setAuthenticated(authenticated) {
 }
 
 async function loadReferencesAndCompanies() {
-  const [categories, sources, searchResult, candidates] = await Promise.all([
-    api("/api/categories"), api("/api/sources"), searchCompanies(), api("/api/duplicate-candidates")
+  const [categories, sources, searchResult, candidates, dashboard] = await Promise.all([
+    api("/api/categories"), api("/api/sources"), searchCompanies(), api("/api/duplicate-candidates"),
+    api("/api/reporting/dashboard")
   ]);
   fillSelect(byId("category"), categories);
+  fillSelect(byId("search-category"), categories, "Todas");
   fillSelect(byId("source"), sources);
   companies = searchResult.items;
   renderCompanies();
   renderPager(searchResult);
   renderCandidates(candidates);
+  renderDashboard(dashboard);
 }
 
 async function searchCompanies() {
   const params = new URLSearchParams({ page: currentPage, page_size: 25, sort: byId("search-sort").value });
   if (byId("search-query").value) params.set("query", byId("search-query").value);
   if (byId("search-state").value) params.set("state_code", byId("search-state").value);
+  if (byId("search-category").value) params.set("category_id", byId("search-category").value);
+  if (byId("search-pipeline").value) params.set("pipeline_status", byId("search-pipeline").value);
   if (byId("include-archived").checked) params.set("include_archived", "true");
   return api(`/api/companies-search?${params}`);
 }
@@ -87,14 +92,54 @@ async function searchExternal(cursor = null) {
   show(byId("external-next"), Boolean(externalCursor));
 }
 
-function fillSelect(select, values) {
+function fillSelect(select, values, placeholder = null) {
+  const previous = select.value;
   select.replaceChildren();
+  if (placeholder) { const option = document.createElement("option"); option.value = ""; option.textContent = placeholder; select.append(option); }
   for (const value of values) {
     const option = document.createElement("option");
     option.value = value.id;
     option.textContent = value.name;
     select.append(option);
   }
+  if ([...select.options].some((option) => option.value === previous)) select.value = previous;
+}
+
+function renderDashboard(data) {
+  const metrics = [
+    ["Ativas", data.total_active], ["Sem website", data.without_website], ["Com score", data.with_score],
+    ["Auditadas", data.with_completed_audit], ["Conteúdo aprovado", data.with_approved_content],
+    ["Não contatar", data.do_not_contact]
+  ];
+  const container = byId("dashboard-metrics"); container.replaceChildren();
+  for (const [label, value] of metrics) {
+    const card = document.createElement("div"); card.className = "metric";
+    const number = document.createElement("strong"); number.textContent = value; card.append(number);
+    const text = document.createElement("span"); text.textContent = label; card.append(text); container.append(card);
+  }
+  const pipeline = byId("dashboard-pipeline"); pipeline.replaceChildren();
+  for (const [status, count] of Object.entries(data.by_pipeline).sort()) {
+    const item = document.createElement("span"); item.textContent = `${status}: ${count}`; pipeline.append(item);
+  }
+}
+
+async function exportCompanies() {
+  if (!window.confirm("Exportar até 500 empresas ativas do segmento atual? O arquivo não incluirá contatos, CNPJ ou notas.")) return;
+  const payload = {
+    query: byId("search-query").value || null,
+    category_id: byId("search-category").value || null,
+    state_code: byId("search-state").value || null,
+    pipeline_status: byId("search-pipeline").value || null
+  };
+  const response = await fetch("/api/reporting/companies.csv", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "X-CSRF-Token": csrfToken },
+    body: JSON.stringify(payload)
+  });
+  if (!response.ok) { const error = await response.json(); return notify(error.detail || "Exportação indisponível."); }
+  const url = URL.createObjectURL(await response.blob());
+  const link = document.createElement("a"); link.href = url; link.download = "abc-prospect-segmento.csv"; link.click();
+  URL.revokeObjectURL(url); notify("Exportação manual concluída e auditada.");
 }
 
 function renderCompanies() {
@@ -366,6 +411,7 @@ byId("previous-page").addEventListener("click", async () => { currentPage -= 1; 
 byId("next-page").addEventListener("click", async () => { currentPage += 1; await loadReferencesAndCompanies(); });
 byId("external-search-form").addEventListener("submit", async (event) => { event.preventDefault(); externalCursor = null; try { await searchExternal(); } catch (error) { notify(error.body?.detail || "Pesquisa externa indisponível."); } });
 byId("external-next").addEventListener("click", async () => { try { await searchExternal(externalCursor); } catch (error) { notify(error.body?.detail || "Não foi possível carregar a próxima página."); } });
+byId("export-companies").addEventListener("click", () => exportCompanies().catch(() => notify("Exportação indisponível.")));
 byId("cancel-edit").addEventListener("click", resetForm);
 byId("logout").addEventListener("click", async () => { await api("/auth/logout", { method: "POST" }); csrfToken = ""; setAuthenticated(false); });
 

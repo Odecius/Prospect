@@ -152,6 +152,8 @@ O escopo aprovado está em [`docs/phase-1b.md`](docs/phase-1b.md). A implementa�
 
 **Fora do escopo:** BI genérico, campanhas, cadências, disparos, CRM completo ou automação de decisões.
 
+**Situação:** concluída em 2026-07-23 pela Sprint 13, com exportação manual minimizada e auditada.
+
 ## Fase 12 — Deploy no servidor
 
 **Objetivo:** operar com segurança em Ubuntu Server.

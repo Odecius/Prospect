@@ -30,8 +30,9 @@ O workflow `.github/workflows/ci.yml` executa em cada pull request:
 3. `python -m ruff format --check .`;
 4. `python -m pytest -q`;
 5. `alembic upgrade head` em PostgreSQL 17.5 descartável;
-6. `alembic downgrade base`;
-7. novo `alembic upgrade head` e confirmação da revisão atual.
+6. testes de integração habilitados contra esse banco;
+7. `alembic downgrade base`;
+8. novo `alembic upgrade head` e confirmação da revisão atual.
 
 O job possui somente permissão de leitura do conteúdo, não recebe chaves reais e mantém IA e Google Places desativados. Um PR não deve ser mesclado enquanto esse gate estiver ausente, pendente ou falhando.
 

@@ -285,3 +285,15 @@ class GeneratedMessage(Base):
     review_reason: Mapped[str | None] = mapped_column(String(500))
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), nullable=False)
     reviewed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+
+
+class ExportAudit(Base):
+    __tablename__ = "export_audits"
+
+    id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    export_type: Mapped[str] = mapped_column(String(40), nullable=False)
+    filters: Mapped[dict] = mapped_column(JSONB, nullable=False)
+    fields: Mapped[list[str]] = mapped_column(JSONB, nullable=False)
+    row_count: Mapped[int] = mapped_column(Integer, nullable=False)
+    performed_by_user_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("users.id", ondelete="RESTRICT"), nullable=False)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), nullable=False)

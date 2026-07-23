@@ -37,6 +37,7 @@ jobs:
       AI_DRAFTS_ENABLED: "false"
       OPENAI_API_KEY: ""
       GOOGLE_PLACES_API_KEY: ""
+      RUN_DATABASE_TESTS: "true"
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -52,11 +53,12 @@ jobs:
         run: python -m ruff check .
       - name: Format check
         run: python -m ruff format --check .
+      - name: Prepare database
+        run: python -m alembic upgrade head
       - name: Test
         run: python -m pytest -q
       - name: Validate migration round trip
         run: |
-          python -m alembic upgrade head
           python -m alembic downgrade base
           python -m alembic upgrade head
           python -m alembic current

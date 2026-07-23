@@ -29,6 +29,7 @@ Este documento conecta decisões aprovadas às especificações e fases do ABC P
 | IA somente para rascunhos | Contexto minimizado, `store=false`, revisão humana e nenhum envio | 9 | Implementada conservadoramente |
 | Limite entre prospecção e geração de websites | ABC Prospect não cria sites; eventual gerador é produto e repositório separados | Todas | Aprovada |
 | Diagnóstico e proposta como rascunhos | Tipos controlados, evidências locais e revisão sem envio/publicação | 10 | Implementada conservadoramente |
+| Dashboard e exportação manual | Métricas reconciliáveis, minimização, limite e `export_audits` | 11 | Implementada conservadoramente |
 
 ## Regras essenciais por entidade
 
@@ -42,6 +43,7 @@ Este documento conecta decisões aprovadas às especificações e fases do ABC P
 | `commercial_activities` | Ator e horário preservados; transições controladas | Histórico comercial; Fase 5 |
 | `website_audits` | Somente métricas e sinais; conteúdo remoto não é persistido | Auditoria de websites; Fase 8 |
 | `generated_messages` | Estados limitados a rascunho/aprovação/rejeição; não existe envio ou publicação | Revisão humana; Fases 9–10 |
+| `export_audits` | Filtros, campos, quantidade, ator e horário; arquivo não armazenado | Exportação manual; Fase 11 |
 
 ## Bloqueios documentais por fase
 

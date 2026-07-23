@@ -207,6 +207,8 @@ Os pesos poderão ser recalibrados antes de uma sprint começar, desde que o tot
 
 **Critérios de aceite:** totais são reconciliáveis; filtros e ordenação são reproduzíveis; exportação exige ação humana e autorização; não existe envio, campanha ou cadência; `DO_NOT_CONTACT` é destacado e preservado.
 
+**Situação:** concluída e aceita em 2026-07-23 com indicadores reconciliáveis, filtros por categoria/UF/pipeline, exportação CSV limitada e minimizada, proteção contra fórmulas, trilha `export_audits`, teste PostgreSQL real e nenhum envio; progresso geral 90%.
+
 ## Sprint 14 — Deploy seguro
 
 **Roadmap:** Fase 12.

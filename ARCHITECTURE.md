@@ -87,7 +87,7 @@ Configuração tipada, carregada de variáveis de ambiente. Arquivos `.env` são
 
 PostgreSQL será a fonte transacional. SQLAlchemy fará o mapeamento e Alembic controlará migrations pequenas, revisáveis e aplicadas explicitamente. Migrations não serão executadas automaticamente na inicialização da aplicação em produção.
 
-O desenho vigente está em [DATA_MODEL.md](DATA_MODEL.md). As migrations são pequenas, explícitas e lineares; a cadeia validada alcança `20260722_0009`. Novas entidades permanecem proibidas até a sprint correspondente ser autorizada.
+O desenho vigente está em [DATA_MODEL.md](DATA_MODEL.md). As migrations são pequenas, explícitas e lineares; a cadeia validada alcança `20260723_0010`. Novas entidades permanecem proibidas até a sprint correspondente ser autorizada.
 
 ## Testes
 

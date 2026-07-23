@@ -22,10 +22,17 @@
     </section>
 
     <section id="app-panel" class="hidden">
+      <section class="card dashboard" aria-labelledby="dashboard-title">
+        <div class="dashboard-heading"><div><h2 id="dashboard-title">Dashboard de prospecção</h2><p>Indicadores internos; nenhum contato é realizado automaticamente.</p></div><button id="export-companies" class="secondary" type="button">Exportar segmento em CSV</button></div>
+        <div id="dashboard-metrics" class="metrics" aria-live="polite"></div>
+        <div id="dashboard-pipeline" class="pipeline-summary" aria-label="Empresas por estado do pipeline"></div>
+      </section>
       <section class="card toolbar" aria-label="Pesquisa de empresas">
         <form id="search-form">
           <label>Pesquisar <input id="search-query" maxlength="200" placeholder="Nome, cidade ou CNPJ"></label>
+          <label>Categoria <select id="search-category"></select></label>
           <label>UF <input id="search-state" maxlength="2" pattern="[A-Za-z]{2}"></label>
+          <label>Pipeline <select id="search-pipeline"><option value="">Todos</option><option>NEW</option><option>QUALIFIED</option><option>CONTACTED</option><option>REPLIED</option><option>MEETING</option><option>PROPOSAL_SENT</option><option>NEGOTIATION</option><option>WON</option><option>LOST</option><option>DO_NOT_CONTACT</option></select></label>
           <label>Ordenar <select id="search-sort"><option value="newest">Mais recentes</option><option value="name">Nome</option><option value="city">Cidade</option><option value="oldest">Mais antigas</option></select></label>
           <label class="checkbox"><input id="include-archived" type="checkbox"> Incluir arquivadas</label>
           <button type="submit">Pesquisar</button>
