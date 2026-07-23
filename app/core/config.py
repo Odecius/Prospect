@@ -1,6 +1,6 @@
 from functools import lru_cache
 
-from pydantic import Field
+from pydantic import Field, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -35,6 +35,20 @@ class Settings(BaseSettings):
     openai_max_retries: int = Field(default=1, ge=0, le=2)
     openai_max_output_tokens: int = Field(default=300, ge=100, le=800)
     ai_drafts_requests_per_minute: int = Field(default=3, ge=1, le=10)
+
+    @model_validator(mode="after")
+    def reject_unsafe_production_configuration(self) -> "Settings":
+        if not self.is_production:
+            return self
+
+        secret = self.app_secret_key.lower()
+        if any(marker in secret for marker in ("development", "change-me", "test-only")):
+            raise ValueError("APP_SECRET_KEY insegura para produção")
+        if not self.database_url.startswith(("postgresql://", "postgresql+psycopg://")):
+            raise ValueError("DATABASE_URL de produção deve usar PostgreSQL")
+        if "development-only-change-me" in self.database_url:
+            raise ValueError("DATABASE_URL contém credencial de desenvolvimento")
+        return self
 
     @property
     def is_production(self) -> bool:

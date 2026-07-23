@@ -19,6 +19,8 @@ Este arquivo acompanha ações concretas próximas. A sequência de produto est�
 - [ ] Configurar chave restrita, teto de custo, alertas e validação jurídica antes de habilitar IA em produção.
 - [ ] Confirmar proxy ou controle de saída antes de habilitar auditorias em produção.
 - [ ] Configurar quotas, alertas de faturação, restrições da chave e validação jurídica profissional antes da produção.
+- [x] Preparar Compose de produção conservador, readiness, cabeçalhos defensivos e runbook.
+- [ ] Aprovar servidor, acesso privado, proxy HTTPS, secret manager, RPO e RTO antes do primeiro deploy.
 
 - [x] Concluir e aprovar a revisão cruzada da documentação.
 - [x] Remover da tentativa inicial tudo que excede o escopo da Fase 1A.
@@ -41,7 +43,7 @@ Este arquivo acompanha ações concretas próximas. A sequência de produto est�
 
 - [x] Validar a fórmula inicial do score e seus pesos antes da Fase 4.
 - [x] Definir transições detalhadas, reaberturas, atividades e encerramentos antes da Fase 5.
-- [ ] Definir estratégia de backup e restauração para o servidor Ubuntu.
+- [x] Definir estratégia e testar backup/restauração em PostgreSQL descartável; parametrizar retenção no servidor.
 - [x] Desenhar e validar a consolidação responsiva da interface da Fase 6.
 - [x] Copiar o selo oficial para asset local e registrar sua origem.
 

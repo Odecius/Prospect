@@ -103,8 +103,8 @@ Logs não devem incluir senhas, tokens, cookies, cabeçalhos de autorização, c
 - [x] `.gitignore` e `.env.example` criados sem segredos reais.
 - [x] Threat model mínimo da autenticação realizado.
 - [ ] Retenção e base legal documentadas antes de concluir a Fase 2.
-- [ ] Backup e restauração testados.
-- [ ] HTTPS, logs e menor privilégio validados.
+- [x] Backup e restauração testados em PostgreSQL descartável; política operacional de retenção ainda pendente.
+- [x] Logs rotacionados, menor privilégio e requisitos de HTTPS preparados; proxy/certificado dependem do servidor.
 - [ ] Integrações externas avaliadas individualmente antes da Fase 7.
 - [x] Google Places API (New) avaliada individualmente; chave somente no backend, resultados temporários e Place ID como única persistência.
 - [x] Auditoria de websites limitada e protegida contra destinos internos; controle de saída permanece requisito de produção.

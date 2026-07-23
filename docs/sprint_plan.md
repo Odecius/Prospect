@@ -221,6 +221,8 @@ Os pesos poderão ser recalibrados antes de uma sprint começar, desde que o tot
 
 **Critérios de aceite:** restore e rollback são testados; PostgreSQL não é público; acesso é restrito; checklist pós-deploy passa.
 
+**Situação:** preparação de software concluída em 2026-07-23, incorporando 6% e elevando o progresso geral a 96%. Compose restritivo, imagem sem root, secrets obrigatórios, porta somente em localhost, PostgreSQL interno, readiness, cabeçalhos, rotação de logs, runbook e restauração em banco descartável foram validados. Nenhum deploy real foi executado; servidor, proxy HTTPS, acesso privado, secret manager, RPO/RTO e checklist no host permanecem portões operacionais explícitos.
+
 ## Sprint 15 — Validação comercial e encerramento
 
 **Roadmap:** Fase 13.

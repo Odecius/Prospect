@@ -166,6 +166,8 @@ O escopo aprovado está em [`docs/phase-1b.md`](docs/phase-1b.md). A implementa�
 
 **Fora do escopo:** Kubernetes, alta disponibilidade complexa e deploy multi-região.
 
+**Situação:** preparação de software concluída em 2026-07-23 pela Sprint 14. Artefatos e recuperação foram validados sem tocar servidor ou dados reais. O deploy efetivo depende das decisões externas e do checklist no host.
+
 ## Fase 13 — Validação comercial
 
 **Objetivo:** medir se o produto melhora a seleção e o acompanhamento de prospects.

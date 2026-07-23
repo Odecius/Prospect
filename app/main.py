@@ -15,6 +15,7 @@ from app.api.web import router as web_router
 from app.api.website_audits import router as website_audits_router
 from app.core.config import get_settings
 from app.core.logging import configure_logging
+from app.core.security_headers import SecurityHeadersMiddleware
 
 
 def create_app() -> FastAPI:
@@ -36,6 +37,7 @@ def create_app() -> FastAPI:
         same_site="lax",
         https_only=settings.secure_session_cookie,
     )
+    application.add_middleware(SecurityHeadersMiddleware, production=settings.is_production)
     application.include_router(health_router)
     application.include_router(authentication_router)
     application.include_router(companies_router)

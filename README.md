@@ -14,7 +14,7 @@ A prospecção manual dispersa informações entre buscas, anotações e contato
 
 ## Status atual
 
-As Sprints 1 a 13 estão implementadas e validadas, totalizando 90% do Produto Interno. Além da fundação, autenticação e cadastro, a aplicação oferece contatos, duplicidade revisável, pesquisa, score explicável, pipeline, interface responsiva, Google Places API (New), auditoria controlada de websites, conteúdo comercial assistido, dashboard e exportação CSV manual e auditada.
+As Sprints 1 a 14 estão implementadas e validadas, totalizando 96% do Produto Interno. Além da fundação, autenticação e cadastro, a aplicação oferece contatos, duplicidade revisável, pesquisa, score explicável, pipeline, interface responsiva, Google Places API (New), auditoria controlada de websites, conteúdo comercial assistido, dashboard e exportação CSV manual e auditada. A preparação operacional inclui configuração de produção restritiva, readiness, cabeçalhos defensivos e runbook; o deploy real continua bloqueado pelas decisões externas de infraestrutura.
 
 ## Stack planejada
 
@@ -71,7 +71,7 @@ O MVP estará concluído quando uma pessoa autenticada puder:
 9. operar com bloqueios como `DO_NOT_CONTACT` efetivamente aplicados;
 10. utilizar o sistema de forma segura e estável.
 
-Os itens 1–9 possuem base implementada, com dashboard e exportação manual controlada. Preparação operacional e validação de uso real permanecem nas Sprints 14–15. O progresso aceito é 90%.
+Os itens 1–9 possuem base implementada, com dashboard e exportação manual controlada. A preparação operacional de software foi concluída; o provisionamento real e a validação de uso permanecem dependentes de infraestrutura e da Sprint 15. O progresso aceito é 96%.
 
 ## Arquitetura e dados
 
@@ -87,7 +87,7 @@ Os itens 1–9 possuem base implementada, com dashboard e exportação manual co
 
 ## Operação e desenvolvimento
 
-As instruções operacionais estão em `docs/`. O Compose, os healthchecks, o acesso HTTP local, a migration de autenticação e o ciclo de login/sessão/logout foram validados com PostgreSQL real. O deployment permanece planejado para a Fase 12.
+As instruções operacionais estão em `docs/`. O Compose local e o de produção, os healthchecks, o acesso HTTP local, migrations, backup/restauração descartável e o ciclo de login/sessão/logout foram validados com PostgreSQL real. Nenhum deploy em servidor foi realizado.
 
 ## Branding
 

@@ -54,6 +54,18 @@ jobs:
         run: python -m ruff check .
       - name: Format check
         run: python -m ruff format --check .
+      - name: Validate production container artifacts
+        env:
+          APP_IMAGE: abc-prospect:ci
+          APP_VERSION: ci
+          POSTGRES_DB: abc_prospect
+          POSTGRES_USER: abc_prospect
+          POSTGRES_PASSWORD: ci-compose-only-password
+          DATABASE_URL: postgresql+psycopg://abc_prospect:ci-compose-only-password@db:5432/abc_prospect
+          APP_SECRET_KEY: ci-production-secret-with-more-than-32-characters
+        run: |
+          docker compose -f compose.production.yaml config --quiet
+          docker build --tag abc-prospect:ci .
       - name: Prepare database
         run: python -m alembic upgrade head
       - name: Test
