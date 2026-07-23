@@ -180,6 +180,8 @@ O escopo aprovado está em [`docs/phase-1b.md`](docs/phase-1b.md). A implementa�
 
 **Fora do escopo:** expansão antes de evidência e automação baseada apenas em volume.
 
+**Situação:** protocolo e instrumentação preparados em 2026-07-23. Execução do piloto, feedback e decisão final permanecem pendentes; o projeto não é declarado concluído antecipadamente.
+
 Ao cumprir esses critérios, o ABC Prospect interno é considerado concluído. Melhorias posteriores serão tratadas como manutenção ou novos projetos, sem reabrir automaticamente o roadmap principal.
 
 ## Produto futuro separado — geração de websites ou demonstrações

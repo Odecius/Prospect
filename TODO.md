@@ -21,6 +21,8 @@ Este arquivo acompanha ações concretas próximas. A sequência de produto est�
 - [ ] Configurar quotas, alertas de faturação, restrições da chave e validação jurídica profissional antes da produção.
 - [x] Preparar Compose de produção conservador, readiness, cabeçalhos defensivos e runbook.
 - [ ] Aprovar servidor, acesso privado, proxy HTTPS, secret manager, RPO e RTO antes do primeiro deploy.
+- [x] Preparar protocolo, métricas e interface da validação comercial da Sprint 15.
+- [ ] Executar piloto real, registrar feedback e tomar a decisão final da Sprint 15.
 
 - [x] Concluir e aprovar a revisão cruzada da documentação.
 - [x] Remover da tentativa inicial tudo que excede o escopo da Fase 1A.

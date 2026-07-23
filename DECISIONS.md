@@ -240,6 +240,16 @@ As decisões iniciais de duplicidade, taxonomia e privacidade foram aprovadas em
 
 1. **Critérios de validação:** métricas e período de teste para decidir se a prospecção ficou mais rápida, consistente e útil.
 
+## 2026-07-23 — Protocolo conservador da Sprint 15
+
+**Descrição:** a validação usa período explícito, empresas distintas, denominadores visíveis, cronometragem manual sem dados de terceiros, feedback estruturado e revisão humana estratificada do score. A amostra operacional inicial é de 14 dias, no mínimo 20 empresas revisadas, 15 pontuadas e 8 elegíveis contatadas.
+
+**Motivo:** separar evidência de uso de métricas de vaidade e impedir que o sistema declare seu próprio sucesso.
+
+**Alternativas consideradas:** concluir o projeto apenas por cobertura funcional; usar volume de cadastros ou contatos como sucesso; gerar dados fictícios para preencher a amostra.
+
+**Impacto:** a instrumentação pode ser concluída no repositório, mas os 4% finais dependem de piloto real, feedback e decisão humana. Amostra insuficiente resulta em `INCONCLUSIVO`; incidentes críticos prevalecem sobre desempenho comercial.
+
 ## 2026-07-20 — Fase 1A restrita à infraestrutura
 
 **Descrição:** A Fase 1A implementa somente estrutura de diretórios, ambiente Python, configuração, FastAPI, `/health`, OpenAPI, PostgreSQL/SQLAlchemy, Alembic sem migrations, Docker, Compose, testes, lint, formatação e logging seguro.

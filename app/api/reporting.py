@@ -1,4 +1,5 @@
 import uuid
+from datetime import datetime
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException
@@ -25,6 +26,23 @@ class DashboardResponse(BaseModel):
     by_pipeline: dict[str, int]
 
 
+class ValidationSnapshotResponse(BaseModel):
+    started_at: datetime
+    ended_at: datetime
+    companies_created: int
+    companies_scored: int
+    companies_with_activity: int
+    companies_contacted: int
+    companies_replied: int
+    companies_with_meeting: int
+    companies_progressed: int
+    companies_won: int
+    companies_marked_do_not_contact: int
+    scored_with_positive_progression: int
+    contact_response_rate: float | None
+    score_progression_rate: float | None
+
+
 class ExportPayload(BaseModel):
     query: str | None = Field(default=None, max_length=200)
     category_id: uuid.UUID | None = None
@@ -42,6 +60,20 @@ def dashboard(
     service: Annotated[ReportingService, Depends(get_reporting_service)],
 ) -> DashboardResponse:
     return DashboardResponse(**service.dashboard())
+
+
+@router.get("/validation", response_model=ValidationSnapshotResponse)
+def validation_snapshot(
+    started_at: datetime,
+    ended_at: datetime,
+    _user: Annotated[User, Depends(require_current_user)],
+    service: Annotated[ReportingService, Depends(get_reporting_service)],
+) -> ValidationSnapshotResponse:
+    try:
+        snapshot = service.validation_snapshot(started_at, ended_at)
+    except ReportingValidationError as error:
+        raise HTTPException(status_code=422, detail=str(error)) from error
+    return ValidationSnapshotResponse(**snapshot)
 
 
 @router.post("/companies.csv")

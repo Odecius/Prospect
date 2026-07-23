@@ -24,7 +24,9 @@ button.compact { min-height: 2rem; padding: .3rem .55rem; margin: .4rem .4rem 0 
 .toolbar { margin-bottom: 1rem; }
 .dashboard { margin-bottom: 1rem; }
 .dashboard-heading { display: flex; justify-content: space-between; align-items: start; gap: 1rem; }
-.metrics { display: grid; grid-template-columns: repeat(6, minmax(100px, 1fr)); gap: .65rem; }
+.validation { margin-bottom: 1rem; }
+.validation form { display: grid; grid-template-columns: 1fr 1fr auto; align-items: end; margin-bottom: 1rem; }
+.metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: .65rem; }
 .metric { padding: .75rem; border-radius: .5rem; background: #eef4fa; }
 .metric strong { display: block; font-size: 1.4rem; }
 .pipeline-summary { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .75rem; }
@@ -56,4 +58,4 @@ footer img { width: min(220px, 70vw); height: auto; }
 @media (max-width: 800px) { .metrics { grid-template-columns: repeat(2, 1fr); } .dashboard-heading { display: block; } }
 @media (max-width: 800px) { .toolbar form { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 800px) { .external-search form { grid-template-columns: 1fr 1fr; } }
-@media (max-width: 480px) { .toolbar form, .external-search form { grid-template-columns: 1fr; } .actions button { flex: 1 1 100%; } }
+@media (max-width: 480px) { .toolbar form, .external-search form, .validation form { grid-template-columns: 1fr; } .actions button { flex: 1 1 100%; } }

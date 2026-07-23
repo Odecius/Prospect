@@ -14,7 +14,7 @@ A prospecção manual dispersa informações entre buscas, anotações e contato
 
 ## Status atual
 
-As Sprints 1 a 14 estão implementadas e validadas, totalizando 96% do Produto Interno. Além da fundação, autenticação e cadastro, a aplicação oferece contatos, duplicidade revisável, pesquisa, score explicável, pipeline, interface responsiva, Google Places API (New), auditoria controlada de websites, conteúdo comercial assistido, dashboard e exportação CSV manual e auditada. A preparação operacional inclui configuração de produção restritiva, readiness, cabeçalhos defensivos e runbook; o deploy real continua bloqueado pelas decisões externas de infraestrutura.
+As Sprints 1 a 14 estão implementadas e validadas, totalizando 96% do Produto Interno. Além da fundação, autenticação e cadastro, a aplicação oferece contatos, duplicidade revisável, pesquisa, score explicável, pipeline, interface responsiva, Google Places API (New), auditoria controlada de websites, conteúdo comercial assistido, dashboard e exportação CSV manual e auditada. A preparação operacional inclui configuração de produção restritiva, readiness, cabeçalhos defensivos e runbook. A instrumentação da Sprint 15 está pronta, mas o piloto e a decisão final ainda não foram executados.
 
 ## Stack planejada
 
@@ -71,7 +71,7 @@ O MVP estará concluído quando uma pessoa autenticada puder:
 9. operar com bloqueios como `DO_NOT_CONTACT` efetivamente aplicados;
 10. utilizar o sistema de forma segura e estável.
 
-Os itens 1–9 possuem base implementada, com dashboard e exportação manual controlada. A preparação operacional de software foi concluída; o provisionamento real e a validação de uso permanecem dependentes de infraestrutura e da Sprint 15. O progresso aceito é 96%.
+Os itens 1–9 possuem base implementada, com dashboard e exportação manual controlada. A preparação operacional de software e o protocolo de validação foram concluídos. O progresso aceito permanece em 96% até o piloto real, o feedback e a decisão final da Sprint 15.
 
 ## Arquitetura e dados
 

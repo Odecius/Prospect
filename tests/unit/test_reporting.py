@@ -1,4 +1,5 @@
 import uuid
+from datetime import UTC, datetime, timedelta
 
 import pytest
 
@@ -15,6 +16,20 @@ class ReportingRepositoryFake:
 
     def dashboard(self) -> dict:
         return {"total_active": 2}
+
+    def validation_counts(self, _started_at: datetime, _ended_at: datetime) -> dict[str, int]:
+        return {
+            "companies_created": 24,
+            "companies_scored": 20,
+            "companies_with_activity": 18,
+            "companies_contacted": 10,
+            "companies_replied": 4,
+            "companies_with_meeting": 2,
+            "companies_progressed": 8,
+            "companies_won": 1,
+            "companies_marked_do_not_contact": 2,
+            "scored_with_positive_progression": 6,
+        }
 
     def export_rows(self, *filters: object) -> tuple[list[tuple], int]:
         self.filters = filters
@@ -63,3 +78,27 @@ def test_export_rejects_unknown_pipeline_status() -> None:
         ReportingService(ReportingRepositoryFake()).export_csv(
             ExportFilters(pipeline_status="UNKNOWN"), User(id=uuid.uuid4())
         )
+
+
+def test_validation_snapshot_calculates_only_reproducible_rates() -> None:
+    started_at = datetime(2026, 7, 1, tzinfo=UTC)
+    snapshot = ReportingService(ReportingRepositoryFake()).validation_snapshot(
+        started_at, started_at + timedelta(days=14)
+    )
+
+    assert snapshot["companies_created"] == 24
+    assert snapshot["contact_response_rate"] == 0.4
+    assert snapshot["score_progression_rate"] == 0.3
+
+
+@pytest.mark.parametrize(
+    ("started_at", "ended_at", "message"),
+    [
+        (datetime(2026, 7, 1), datetime(2026, 7, 2), "fuso horário"),
+        (datetime(2026, 7, 2, tzinfo=UTC), datetime(2026, 7, 1, tzinfo=UTC), "posterior"),
+        (datetime(2026, 1, 1, tzinfo=UTC), datetime(2026, 7, 1, tzinfo=UTC), "90 dias"),
+    ],
+)
+def test_validation_snapshot_rejects_ambiguous_periods(started_at: datetime, ended_at: datetime, message: str) -> None:
+    with pytest.raises(ReportingValidationError, match=message):
+        ReportingService(ReportingRepositoryFake()).validation_snapshot(started_at, ended_at)

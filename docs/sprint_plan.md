@@ -235,6 +235,8 @@ Os pesos poderão ser recalibrados antes de uma sprint começar, desde que o tot
 
 **Critérios de aceite:** resultados suficientes e documentados; pendências críticas resolvidas; decisão de continuar, corrigir ou interromper registrada; Produto Interno declarado 100% concluído.
 
+**Situação:** protocolo, métricas reproduzíveis, interface e critérios de decisão preparados em 2026-07-23. O piloto não foi executado e não há decisão final; portanto, nenhum percentual foi incorporado e o progresso permanece em 96%.
+
 ## Encerramento de cada sprint
 
 Cada entrega final de sprint deve informar:

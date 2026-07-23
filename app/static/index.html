@@ -27,6 +27,16 @@
         <div id="dashboard-metrics" class="metrics" aria-live="polite"></div>
         <div id="dashboard-pipeline" class="pipeline-summary" aria-label="Empresas por estado do pipeline"></div>
       </section>
+      <section class="card validation" aria-labelledby="validation-title">
+        <h2 id="validation-title">Validação comercial</h2>
+        <p>Retrato descritivo do período. As taxas não provam causalidade nem tomam decisões automaticamente.</p>
+        <form id="validation-form">
+          <label>Início <input id="validation-start" type="date" required></label>
+          <label>Até (inclusive) <input id="validation-end" type="date" required></label>
+          <button type="submit">Calcular período</button>
+        </form>
+        <div id="validation-metrics" class="metrics" aria-live="polite"></div>
+      </section>
       <section class="card toolbar" aria-label="Pesquisa de empresas">
         <form id="search-form">
           <label>Pesquisar <input id="search-query" maxlength="200" placeholder="Nome, cidade ou CNPJ"></label>

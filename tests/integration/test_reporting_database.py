@@ -1,11 +1,13 @@
 import os
 import uuid
+from datetime import UTC, datetime, timedelta
 
 import pytest
 from sqlalchemy.orm import Session
 
 from app.database.models import (
     Category,
+    CommercialActivity,
     Company,
     Contact,
     ContactType,
@@ -22,6 +24,7 @@ pytestmark = pytest.mark.skipif(os.getenv("RUN_DATABASE_TESTS") != "true", reaso
 def test_reporting_queries_reconcile_against_postgresql() -> None:
     engine = create_database_engine(os.environ["DATABASE_URL"])
     suffix = uuid.uuid4().hex
+    observed_at = datetime.now(UTC)
     with Session(engine) as session:
         user = User(
             email_normalized=f"reporting-{suffix}@example.invalid",
@@ -70,6 +73,16 @@ def test_reporting_queries_reconcile_against_postgresql() -> None:
                     components={},
                     explanation="Dado fictício.",
                     calculated_by_user_id=user.id,
+                    calculated_at=observed_at - timedelta(minutes=1),
+                ),
+                CommercialActivity(
+                    company_id=blocked_company.id,
+                    activity_type="STATUS_CHANGE",
+                    previous_status=PipelineStatus.NEW.value,
+                    new_status=PipelineStatus.QUALIFIED.value,
+                    notes="Progressão fictícia para validar a consulta.",
+                    performed_by_user_id=user.id,
+                    created_at=observed_at,
                 ),
             ]
         )
@@ -78,6 +91,10 @@ def test_reporting_queries_reconcile_against_postgresql() -> None:
         repository = ReportingRepository(session)
         dashboard = repository.dashboard()
         rows, total = repository.export_rows(None, category.id, "PE", None)
+        validation = repository.validation_counts(
+            observed_at - timedelta(days=1),
+            observed_at + timedelta(days=1),
+        )
 
         assert dashboard["total_active"] >= 2
         assert dashboard["do_not_contact"] >= 1
@@ -85,5 +102,8 @@ def test_reporting_queries_reconcile_against_postgresql() -> None:
         assert dashboard["with_score"] >= 1
         assert total == 2
         assert {row[0] for row in rows} == {"Empresa com site", "Empresa sem site"}
+        assert validation["companies_scored"] >= 1
+        assert validation["companies_progressed"] >= 1
+        assert validation["scored_with_positive_progression"] >= 1
         session.rollback()
     engine.dispose()

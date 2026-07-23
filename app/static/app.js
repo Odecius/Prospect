@@ -35,6 +35,15 @@ function setAuthenticated(authenticated) {
   show(byId("login-panel"), !authenticated);
   show(byId("app-panel"), authenticated);
   show(byId("logout"), authenticated);
+  if (authenticated && !byId("validation-start").value) setDefaultValidationPeriod();
+}
+
+function setDefaultValidationPeriod() {
+  const end = new Date();
+  const start = new Date(end);
+  start.setUTCDate(start.getUTCDate() - 13);
+  byId("validation-start").value = start.toISOString().slice(0, 10);
+  byId("validation-end").value = end.toISOString().slice(0, 10);
 }
 
 async function loadReferencesAndCompanies() {
@@ -120,6 +129,34 @@ function renderDashboard(data) {
   const pipeline = byId("dashboard-pipeline"); pipeline.replaceChildren();
   for (const [status, count] of Object.entries(data.by_pipeline).sort()) {
     const item = document.createElement("span"); item.textContent = `${status}: ${count}`; pipeline.append(item);
+  }
+}
+
+async function loadValidationSnapshot() {
+  const startedAt = `${byId("validation-start").value}T00:00:00Z`;
+  const inclusiveEnd = new Date(`${byId("validation-end").value}T00:00:00Z`);
+  inclusiveEnd.setUTCDate(inclusiveEnd.getUTCDate() + 1);
+  const params = new URLSearchParams({ started_at: startedAt, ended_at: inclusiveEnd.toISOString() });
+  const data = await api(`/api/reporting/validation?${params}`);
+  const percentage = (value) => value === null ? "—" : `${(value * 100).toFixed(1)}%`;
+  const metrics = [
+    ["Empresas criadas", data.companies_created],
+    ["Com score", data.companies_scored],
+    ["Com atividade", data.companies_with_activity],
+    ["Contatadas", data.companies_contacted],
+    ["Responderam", data.companies_replied],
+    ["Com reunião", data.companies_with_meeting],
+    ["Avançaram", data.companies_progressed],
+    ["Ganhas", data.companies_won],
+    ["Não contatar", data.companies_marked_do_not_contact],
+    ["Resposta/contato", percentage(data.contact_response_rate)],
+    ["Progressão/com score", percentage(data.score_progression_rate)]
+  ];
+  const container = byId("validation-metrics"); container.replaceChildren();
+  for (const [label, value] of metrics) {
+    const card = document.createElement("div"); card.className = "metric";
+    const number = document.createElement("strong"); number.textContent = value; card.append(number);
+    const text = document.createElement("span"); text.textContent = label; card.append(text); container.append(card);
   }
 }
 
@@ -407,6 +444,10 @@ byId("contact-form").addEventListener("submit", async (event) => {
   } catch (error) { notify(error.body?.detail || "Erro ao adicionar contato."); }
 });
 byId("search-form").addEventListener("submit", async (event) => { event.preventDefault(); currentPage = 1; await loadReferencesAndCompanies(); });
+byId("validation-form").addEventListener("submit", async (event) => {
+  event.preventDefault();
+  try { await loadValidationSnapshot(); } catch (error) { notify(error.body?.detail || "Validação indisponível."); }
+});
 byId("previous-page").addEventListener("click", async () => { currentPage -= 1; await loadReferencesAndCompanies(); });
 byId("next-page").addEventListener("click", async () => { currentPage += 1; await loadReferencesAndCompanies(); });
 byId("external-search-form").addEventListener("submit", async (event) => { event.preventDefault(); externalCursor = null; try { await searchExternal(); } catch (error) { notify(error.body?.detail || "Pesquisa externa indisponível."); } });

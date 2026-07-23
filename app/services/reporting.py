@@ -2,6 +2,7 @@ import csv
 import io
 import uuid
 from dataclasses import dataclass
+from datetime import datetime, timedelta
 
 from app.database.models import ExportAudit, PipelineStatus, User
 from app.domain.normalization import normalize_state_code, normalize_text
@@ -29,6 +30,25 @@ class ReportingService:
 
     def dashboard(self) -> dict:
         return self.repository.dashboard()
+
+    def validation_snapshot(self, started_at: datetime, ended_at: datetime) -> dict:
+        if started_at.tzinfo is None or ended_at.tzinfo is None:
+            raise ReportingValidationError("O período deve informar fuso horário.")
+        if ended_at <= started_at:
+            raise ReportingValidationError("O fim do período deve ser posterior ao início.")
+        if ended_at - started_at > timedelta(days=90):
+            raise ReportingValidationError("O período de validação deve ter no máximo 90 dias.")
+
+        counts = self.repository.validation_counts(started_at, ended_at)
+        return {
+            "started_at": started_at,
+            "ended_at": ended_at,
+            **counts,
+            "contact_response_rate": self._rate(counts["companies_replied"], counts["companies_contacted"]),
+            "score_progression_rate": self._rate(
+                counts["scored_with_positive_progression"], counts["companies_scored"]
+            ),
+        }
 
     def export_csv(self, filters: ExportFilters, actor: User) -> str:
         query = normalize_text(filters.query) if filters.query else None
@@ -84,3 +104,7 @@ class ReportingService:
     def _safe_cell(value: str) -> str:
         normalized = " ".join(value.split())
         return f"'{normalized}" if normalized.lstrip().startswith(("=", "+", "-", "@")) else normalized
+
+    @staticmethod
+    def _rate(numerator: int, denominator: int) -> float | None:
+        return round(numerator / denominator, 4) if denominator else None
