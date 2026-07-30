@@ -14,7 +14,7 @@ A prospecção manual dispersa informações entre buscas, anotações e contato
 
 ## Status atual
 
-As Sprints 1 a 3 estão implementadas e validadas com Docker Desktop e PostgreSQL real. A base contém autenticação administrativa local e o fluxo operacional mínimo para cadastrar, consultar, editar e arquivar empresas com categoria, cidade, UF, origem e estado inicial `NEW`.
+As Sprints 1 a 14 estão implementadas e validadas, totalizando 96% do Produto Interno. Além da fundação, autenticação e cadastro, a aplicação oferece contatos, duplicidade revisável, pesquisa, score explicável, pipeline, interface responsiva, Google Places API (New), auditoria controlada de websites, conteúdo comercial assistido, dashboard e exportação CSV manual e auditada. A preparação operacional inclui configuração de produção restritiva, readiness, cabeçalhos defensivos e runbook. A instrumentação da Sprint 15 está pronta, mas o piloto e a decisão final ainda não foram executados.
 
 ## Stack planejada
 
@@ -37,21 +37,41 @@ React e outros frameworks frontend não fazem parte do plano inicial.
 - score de oportunidade simples, versionado e explicável;
 - histórico de atividades comerciais;
 - prevenção e tratamento de possíveis duplicidades;
+- diagnóstico comercial e rascunhos de proposta assistidos por IA, sempre sujeitos a revisão humana;
+- dashboard de prospecção, segmentação e exportação ou cópia manual;
 - interface responsiva com o selo oficial da ABC Solutions no rodapé.
 
 ## Fora do escopo inicial
 
 - coleta automatizada ou scraping de plataformas externas;
 - envio automático ou em massa de mensagens;
-- geração de websites, demonstrações ou propostas;
-- IA generativa;
+- geração de websites, landing pages, demonstrações, código, logos ou qualquer publicação/hosting;
+- envio automático de mensagens ou propostas e tomada autônoma de decisões comerciais;
+- envio automático ou em massa de conteúdo gerado por IA;
 - microsserviços, Kubernetes, Redis e filas;
 - oferta pública ou modelo SaaS antes de um novo projeto formal;
 - deploy de produção antes da Fase 12.
 
 ## Evolução planejada
 
-O desenvolvimento seguirá fases pequenas. As Fases 1 a 13 compõem o produto interno e a conclusão da Fase 13 representa 100% do escopo principal. A eventual evolução para SaaS é um projeto futuro independente. Consulte [ROADMAP.md](ROADMAP.md).
+O desenvolvimento seguirá fases pequenas. As Fases 1 a 13 compõem o produto interno e a conclusão da Fase 13 representa 100% do escopo principal. Um eventual gerador de websites ou demonstrações é outro produto, com responsabilidade, arquitetura e repositório próprios; não integra este roadmap nem seu percentual. A eventual evolução do ABC Prospect para SaaS também depende de um projeto futuro independente. Consulte [ROADMAP.md](ROADMAP.md).
+
+## Critérios de conclusão do MVP
+
+O MVP estará concluído quando uma pessoa autenticada puder:
+
+1. localizar ou cadastrar potenciais clientes;
+2. verificar a existência e a adequação básica da presença digital;
+3. classificar a oportunidade;
+4. consultar score acompanhado de justificativa;
+5. gerar diagnóstico comercial;
+6. gerar rascunho de proposta;
+7. editar, aprovar ou rejeitar o rascunho;
+8. consultar o histórico das ações;
+9. operar com bloqueios como `DO_NOT_CONTACT` efetivamente aplicados;
+10. utilizar o sistema de forma segura e estável.
+
+Os itens 1–9 possuem base implementada, com dashboard e exportação manual controlada. A preparação operacional de software e o protocolo de validação foram concluídos. O progresso aceito permanece em 96% até o piloto real, o feedback e a decisão final da Sprint 15.
 
 ## Arquitetura e dados
 
@@ -67,13 +87,13 @@ O desenvolvimento seguirá fases pequenas. As Fases 1 a 13 compõem o produto in
 
 ## Operação e desenvolvimento
 
-As instruções operacionais estão em `docs/`. O Compose, os healthchecks, o acesso HTTP local, a migration de autenticação e o ciclo de login/sessão/logout foram validados com PostgreSQL real. O deployment permanece planejado para a Fase 12.
+As instruções operacionais estão em `docs/`. O Compose local e o de produção, os healthchecks, o acesso HTTP local, migrations, backup/restauração descartável e o ciclo de login/sessão/logout foram validados com PostgreSQL real. Nenhum deploy em servidor foi realizado.
 
 ## Branding
 
-A futura interface deverá exibir no rodapé o selo oficial da ABC Solutions, centralizado e responsivo, com texto alternativo descritivo e a assinatura **“Developed by Abc Solutions | Built with quality and care”**.
+A interface exibe no rodapé o selo oficial da ABC Solutions, centralizado e responsivo, com texto alternativo descritivo e a assinatura **“Developed by Abc Solutions | Built with quality and care”**.
 
-O asset de referência está atualmente em `C:\Projetos\Abc\developed by abc solutions.png`. Ele não foi copiado nesta fase; a futura cópia deverá ser mantida localmente neste repositório e sua origem registrada.
+O selo oficial está mantido localmente em `app/static/assets/abc-solutions-footer.png`, com origem registrada em `docs/branding.md`.
 
 ## Referência de desenvolvimento
 

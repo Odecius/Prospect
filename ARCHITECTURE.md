@@ -4,6 +4,8 @@
 
 Construir uma aplicação web interna simples, segura e evolutiva, mantendo API, regras de negócio, persistência e interface claramente separadas dentro de um único deploy.
 
+O limite de responsabilidade é estrito: o ABC Prospect apoia prospecção e trabalho comercial. Ele não cria websites, landing pages, demos, código, logos, hosting nem publicações. Um eventual gerador desse tipo será outro produto, com arquitetura e repositório próprios.
+
 ## Estilo adotado
 
 Será usado um **monólito modular** em FastAPI. Essa abordagem reduz custo operacional no MVP e preserva limites internos que permitem evolução sem introduzir microsserviços prematuramente.
@@ -85,7 +87,7 @@ Configuração tipada, carregada de variáveis de ambiente. Arquivos `.env` são
 
 PostgreSQL será a fonte transacional. SQLAlchemy fará o mapeamento e Alembic controlará migrations pequenas, revisáveis e aplicadas explicitamente. Migrations não serão executadas automaticamente na inicialização da aplicação em produção.
 
-O desenho inicial está em [DATA_MODEL.md](DATA_MODEL.md). A Fase 1A foi encerrada com metadata vazia; após a aprovação da Fase 1B, foi adicionada uma única revision exclusiva para `users`. Migrations comerciais permanecem proibidas até a fase correspondente ser aprovada.
+O desenho vigente está em [DATA_MODEL.md](DATA_MODEL.md). As migrations são pequenas, explícitas e lineares; a cadeia validada alcança `20260723_0010`. Novas entidades permanecem proibidas até a sprint correspondente ser autorizada.
 
 ## Testes
 
@@ -105,7 +107,7 @@ O Compose local define a aplicação e um PostgreSQL isolado, com healthchecks, 
 
 Uma interface operacional mínima poderá acompanhar as fases iniciais quando for necessária para executar e validar o cadastro manual. Essa interface deve permanecer simples, acessível e renderizada no servidor, sem antecipar trabalho de identidade visual ou um sistema de design completo.
 
-A Fase 6 continua responsável pela consolidação da experiência interna: navegação, responsividade, estados visuais, acessibilidade abrangente e aplicação do branding oficial. A existência de formulários mínimos antes dessa fase não significa que os critérios de conclusão da Fase 6 estejam atendidos.
+A Fase 6 consolidou navegação, responsividade, estados visuais, acessibilidade e branding oficial. Novos fluxos devem preservar esses critérios.
 
 ## Preparação para Ubuntu Server
 
@@ -113,8 +115,14 @@ O deploy futuro deverá usar containers sem privilégios, proxy reverso com HTTP
 
 ## Interface e branding
 
-O rodapé da futura interface deverá apresentar o selo oficial ABC Solutions centralizado, responsivo e com texto alternativo descritivo. A assinatura é **“Developed by Abc Solutions | Built with quality and care”**. O asset somente será copiado na fase de implementação da interface.
+O rodapé apresenta o selo oficial ABC Solutions centralizado, responsivo e com texto alternativo descritivo. A assinatura é **“Developed by Abc Solutions | Built with quality and care”** e o asset é local.
 
 ## Complexidade deliberadamente evitada
 
 Não serão introduzidos microsserviços, Kubernetes, Redis, filas, SPA ou abstrações de integração sem um caso de uso aprovado e medido.
+
+## IA para rascunhos
+
+O fluxo segue `API -> MessageDraftService -> MessageDraftProvider -> OpenAIResponsesClient`. O serviço controla minimização, `DO_NOT_CONTACT`, estados e persistência; o adaptador conhece somente o protocolo externo. Não há fila, agente, tool calling, memória ou mecanismo de envio.
+
+Na Sprint 12, esse limite poderá ser estendido a diagnósticos comerciais e rascunhos de proposta estruturados, reutilizando o mesmo workflow humano e sem adicionar capacidade de envio, publicação ou criação de sites.

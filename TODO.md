@@ -4,6 +4,26 @@ Este arquivo acompanha ações concretas próximas. A sequência de produto est�
 
 ## Alta prioridade — próxima fase
 
+- [x] Adicionar CI de pull request com lint, testes e round trip das migrations em PostgreSQL descartável.
+
+- [x] Revisar e aprovar `docs/sprint-4-proposal.md`.
+- [x] Implementar e validar a Sprint 4: contatos, fontes avançadas, revisão e mesclagem auditada.
+- [x] Implementar a Sprint 5: pesquisa e filtros.
+- [x] Implementar as Sprints 6–8: score, pipeline e interface consolidada.
+- [x] Aprovar e implementar Google Places API (New) na Sprint 9 com persistência conservadora.
+- [x] Definir e implementar a auditoria controlada de websites da Sprint 10.
+- [x] Definir e implementar rascunhos de IA com revisão humana na Sprint 11.
+- [x] Retirar geração de websites/demonstrações do roadmap ativo e registrar o limite arquitetural.
+- [x] Definir e implementar diagnóstico comercial e rascunho de proposta da Sprint 12 sem envio ou publicação.
+- [x] Definir e implementar indicadores, limites e campos da exportação manual da Sprint 13.
+- [ ] Configurar chave restrita, teto de custo, alertas e validação jurídica antes de habilitar IA em produção.
+- [ ] Confirmar proxy ou controle de saída antes de habilitar auditorias em produção.
+- [ ] Configurar quotas, alertas de faturação, restrições da chave e validação jurídica profissional antes da produção.
+- [x] Preparar Compose de produção conservador, readiness, cabeçalhos defensivos e runbook.
+- [ ] Aprovar servidor, acesso privado, proxy HTTPS, secret manager, RPO e RTO antes do primeiro deploy.
+- [x] Preparar protocolo, métricas e interface da validação comercial da Sprint 15.
+- [ ] Executar piloto real, registrar feedback e tomar a decisão final da Sprint 15.
+
 - [x] Concluir e aprovar a revisão cruzada da documentação.
 - [x] Remover da tentativa inicial tudo que excede o escopo da Fase 1A.
 - [x] Implementar a infraestrutura técnica autorizada da Fase 1A.
@@ -23,18 +43,19 @@ Este arquivo acompanha ações concretas próximas. A sequência de produto est�
 
 ## Média prioridade
 
-- [ ] Validar a fórmula inicial do score e seus pesos antes da Fase 4.
-- [ ] Definir transições detalhadas, reaberturas, atividades e encerramentos antes da Fase 5.
-- [ ] Definir estratégia de backup e restauração para o servidor Ubuntu.
-- [ ] Desenhar a consolidação responsiva da interface para a Fase 6.
-- [ ] Copiar o selo oficial para um asset local somente na implementação da interface e registrar sua origem.
+- [x] Validar a fórmula inicial do score e seus pesos antes da Fase 4.
+- [x] Definir transições detalhadas, reaberturas, atividades e encerramentos antes da Fase 5.
+- [x] Definir estratégia e testar backup/restauração em PostgreSQL descartável; parametrizar retenção no servidor.
+- [x] Desenhar e validar a consolidação responsiva da interface da Fase 6.
+- [x] Copiar o selo oficial para asset local e registrar sua origem.
 
 ## Baixa prioridade / futuro
 
 - [ ] Avaliar provedores e termos de uso para fontes externas.
-- [ ] Definir metodologia de auditoria de websites.
-- [ ] Avaliar IA com revisão humana e proteção de dados.
+- [x] Definir metodologia de auditoria de websites.
+- [x] Avaliar IA com revisão humana e proteção de dados.
 - [ ] Avaliar eventual projeto SaaS somente após a conclusão formal da Fase 13.
+- [ ] Tratar eventual gerador de websites somente como produto futuro, com decisão e repositório separados.
 
 ## Concluído
 

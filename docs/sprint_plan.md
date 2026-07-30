@@ -30,8 +30,8 @@ O percentual representa entregas aceitas do Produto Interno, e não quantidade d
 | 9 | Fontes externas autorizadas | 7% | 67% |
 | 10 | Auditoria de websites | 7% | 74% |
 | 11 | IA para rascunhos | 6% | 80% |
-| 12 | Demo Websites | 5% | 85% |
-| 13 | Propostas comerciais | 5% | 90% |
+| 12 | Diagnóstico e rascunho de proposta | 5% | 85% |
+| 13 | Dashboard, segmentação e exportação manual | 5% | 90% |
 | 14 | Deploy seguro | 6% | 96% |
 | 15 | Validação comercial e encerramento | 4% | 100% |
 
@@ -87,6 +87,8 @@ Os pesos poderão ser recalibrados antes de uma sprint começar, desde que o tot
 
 **Critérios de aceite:** CNPJ e referências repetidos são tratados; casos ambíguos não são mesclados automaticamente; proveniência e decisões permanecem rastreáveis; fluxo completo da Fase 2 é aprovado.
 
+**Situação:** concluída e aceita em 2026-07-21. Contatos normalizados, proveniência avançada, candidatos persistentes, revisão humana, mesclagem auditada, API, interface, migration reversível e PostgreSQL real foram validados; o progresso geral incorporado é 29%.
+
 ## Sprint 5 — Pesquisa e filtros
 
 **Roadmap:** Fase 3.
@@ -96,6 +98,8 @@ Os pesos poderão ser recalibrados antes de uma sprint começar, desde que o tot
 **Entregas:** pesquisa textual; filtros combináveis; ordenação; paginação; índices; preservação dos filtros na navegação.
 
 **Critérios de aceite:** resultados corretos e reproduzíveis; consultas cumprem o volume de teste acordado; paginação e filtros possuem testes.
+
+**Situação:** concluída e aceita em 2026-07-21; progresso geral 36%.
 
 ## Sprint 6 — Score de oportunidade
 
@@ -109,6 +113,8 @@ Os pesos poderão ser recalibrados antes de uma sprint começar, desde que o tot
 
 **Critérios de aceite:** exemplos são validados; avaliações antigas não são sobrescritas; ausência de dados é explícita; resultado é explicável e testado.
 
+**Situação:** concluída e aceita em 2026-07-21 com fórmula `v1-human-40-30-30`; progresso geral 44%.
+
 ## Sprint 7 — Histórico e pipeline
 
 **Roadmap:** Fase 5.
@@ -121,6 +127,8 @@ Os pesos poderão ser recalibrados antes de uma sprint começar, desde que o tot
 
 **Critérios de aceite:** toda ação possui ator e horário; transições inválidas são recusadas; `DO_NOT_CONTACT` impede abordagem; arquivamento preserva histórico.
 
+**Situação:** concluída e aceita em 2026-07-21; progresso geral 52%.
+
 ## Sprint 8 — Interface interna
 
 **Roadmap:** Fase 6.
@@ -130,6 +138,8 @@ Os pesos poderão ser recalibrados antes de uma sprint começar, desde que o tot
 **Entregas:** navegação; formulários acessíveis; estados visuais; responsividade; CSS; branding e selo oficial.
 
 **Critérios de aceite:** fluxos funcionam por teclado; desktop, tablet e celular são verificados; não há overflow; branding, alt text e assinatura estão corretos.
+
+**Situação:** concluída e aceita em 2026-07-21, validada em 375, 768 e 1440 px; progresso geral 60%.
 
 ## Sprint 9 — Fontes externas autorizadas
 
@@ -143,6 +153,8 @@ Os pesos poderão ser recalibrados antes de uma sprint começar, desde que o tot
 
 **Critérios de aceite:** termos e quotas são respeitados; falhas não corrompem dados; importações e mesclagens exigem confirmação humana.
 
+**Situação:** concluída e aceita em 2026-07-21 com Google Places API (New), pesquisa temporária, limites, atribuição, revisão humana e persistência exclusiva do Place ID; progresso geral 67%.
+
 ## Sprint 10 — Auditoria de websites
 
 **Roadmap:** Fase 8.
@@ -152,6 +164,8 @@ Os pesos poderão ser recalibrados antes de uma sprint começar, desde que o tot
 **Entregas:** critérios versionados; execução controlada; snapshots; limites por domínio; explicação dos resultados.
 
 **Critérios de aceite:** auditorias são reproduzíveis; falhas técnicas são diferenciadas de ausência ou baixa qualidade; nenhum comportamento de pentest é introduzido.
+
+**Situação:** concluída e aceita em 2026-07-22 com consulta exclusiva da página inicial cadastrada, limites de rede e tamanho, bloqueio de destinos privados, snapshots imutáveis e resultados explicáveis; progresso geral 74%.
 
 ## Sprint 11 — IA para rascunhos
 
@@ -165,29 +179,35 @@ Os pesos poderão ser recalibrados antes de uma sprint começar, desde que o tot
 
 **Critérios de aceite:** nenhuma mensagem é enviada automaticamente; dados enviados ao provedor são conhecidos; revisão humana é obrigatória e auditável.
 
-## Sprint 12 — Demo Websites
+**Situação:** concluída e aceita em 2026-07-22 com OpenAI Responses API desativada por padrão, `store=false`, contexto empresarial minimizado, saída estruturada, histórico imutável e revisão humana sem qualquer operação de envio; progresso geral 80%.
+
+## Sprint 12 — Diagnóstico comercial e rascunho de proposta
 
 **Roadmap:** Fase 10.
 
-**Objetivo:** gerar demonstrações controladas para oportunidades selecionadas.
+**Objetivo:** converter dados empresariais, score e auditorias existentes em diagnóstico explicável e rascunho de proposta para revisão humana.
 
-**Dependências:** armazenamento, acesso, expiração, remoção e direitos aprovados.
+**Dependências:** taxonomia dos tipos de rascunho, campos permitidos, prompt versionado, critérios de fundamentação e formato de cópia manual definidos.
 
-**Entregas:** templates; criação isolada; revisão; expiração; remoção; atribuição de assets.
+**Entregas:** extensão conservadora de `generated_messages`; diagnóstico e proposta estruturados; referências às evidências utilizadas; revisão, edição, aprovação e rejeição; cópia manual; testes sem chamadas reais.
 
-**Critérios de aceite:** demonstração não se confunde com site oficial; publicação exige aprovação; direitos e ciclo de vida são rastreáveis.
+**Critérios de aceite:** nenhum conteúdo é enviado ou publicado; toda afirmação é revisável e ligada a dados conhecidos; `DO_NOT_CONTACT` bloqueia geração e aprovação; versões e atores são auditáveis; dados pessoais e conteúdo remoto não são enviados desnecessariamente.
 
-## Sprint 13 — Propostas comerciais
+**Situação:** concluída e aceita em 2026-07-22 reutilizando `generated_messages`, com três tipos controlados, score minimizado, referências locais de evidência, interface de revisão, bloqueio de tipos fora do escopo e nenhuma migration ou operação de envio/publicação; progresso geral 85%.
+
+## Sprint 13 — Dashboard, segmentação e exportação manual
 
 **Roadmap:** Fase 11.
 
-**Objetivo:** criar e acompanhar propostas versionadas.
+**Objetivo:** fechar o fluxo diário do MVP com visão operacional, filtros e saída manual controlada.
 
-**Dependências:** modelo comercial, numeração, estados, armazenamento e aprovação definidos.
+**Dependências:** indicadores, campos exportáveis, limites de volume, perfis autorizados e trilha de auditoria definidos.
 
-**Entregas:** propostas; versões; itens; valores; validade; documento protegido.
+**Entregas:** dashboard do funil e qualidade de dados; segmentação por filtros existentes; lista priorizada explicável; exportação CSV minimizada e cópia manual; registro do ator e horário.
 
-**Critérios de aceite:** valores e versões são auditáveis; envio exige revisão; acesso e armazenamento são protegidos.
+**Critérios de aceite:** totais são reconciliáveis; filtros e ordenação são reproduzíveis; exportação exige ação humana e autorização; não existe envio, campanha ou cadência; `DO_NOT_CONTACT` é destacado e preservado.
+
+**Situação:** concluída e aceita em 2026-07-23 com indicadores reconciliáveis, filtros por categoria/UF/pipeline, exportação CSV limitada e minimizada, proteção contra fórmulas, trilha `export_audits`, teste PostgreSQL real e nenhum envio; progresso geral 90%.
 
 ## Sprint 14 — Deploy seguro
 
@@ -201,6 +221,8 @@ Os pesos poderão ser recalibrados antes de uma sprint começar, desde que o tot
 
 **Critérios de aceite:** restore e rollback são testados; PostgreSQL não é público; acesso é restrito; checklist pós-deploy passa.
 
+**Situação:** preparação de software concluída em 2026-07-23, incorporando 6% e elevando o progresso geral a 96%. Compose restritivo, imagem sem root, secrets obrigatórios, porta somente em localhost, PostgreSQL interno, readiness, cabeçalhos, rotação de logs, runbook e restauração em banco descartável foram validados. Nenhum deploy real foi executado; servidor, proxy HTTPS, acesso privado, secret manager, RPO/RTO e checklist no host permanecem portões operacionais explícitos.
+
 ## Sprint 15 — Validação comercial e encerramento
 
 **Roadmap:** Fase 13.
@@ -212,6 +234,8 @@ Os pesos poderão ser recalibrados antes de uma sprint começar, desde que o tot
 **Entregas:** período de uso; métricas; feedback; avaliação do score; melhorias priorizadas; decisão final.
 
 **Critérios de aceite:** resultados suficientes e documentados; pendências críticas resolvidas; decisão de continuar, corrigir ou interromper registrada; Produto Interno declarado 100% concluído.
+
+**Situação:** protocolo, métricas reproduzíveis, interface e critérios de decisão preparados em 2026-07-23. O piloto não foi executado e não há decisão final; portanto, nenhum percentual foi incorporado e o progresso permanece em 96%.
 
 ## Encerramento de cada sprint
 

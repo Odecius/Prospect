@@ -33,7 +33,7 @@ Campos comuns previstos, quando aplicáveis: `id`, `created_at`, `updated_at` e 
 
 **Opcionais:** `legal_name`, `trade_name`, `tax_id_normalized` (CNPJ), `description`, `address_line`, `district`, `postal_code`, `latitude`, `longitude`, `rating`, `review_count`, `has_website`, `website_quality_status`, `notes`, `archived_at`.
 
-**Relacionamentos:** uma categoria obrigatória; uma ou mais referências de fonte, sendo ao menos uma obrigatória desde o cadastro; muitos contatos, auditorias, scores, atividades, mensagens, demonstrações e propostas.
+**Relacionamentos:** uma categoria obrigatória; uma ou mais referências de fonte, sendo ao menos uma obrigatória desde o cadastro; muitos contatos, auditorias, scores, atividades e rascunhos assistidos.
 
 **Índices:** CNPJ normalizado; nome normalizado; cidade/UF/categoria; status do funil; `rating`; `review_count`; `has_website`; busca textual combinada.
 
@@ -95,35 +95,35 @@ No cadastro manual, a origem obrigatória será representada por uma referência
 
 **Finalidade:** preservar avaliações pontuais da presença e qualidade do website.
 
-**Obrigatórios:** `id`, `company_id`, `audit_version`, `status`, `audited_at`, `created_at`.
+**Obrigatórios:** `id`, `company_id`, `contact_id`, `requested_url`, `status`, `findings`, `performed_by_user_id`, `created_at`.
 
-**Opcionais:** `website_url`, `overall_score`, `criteria_results` (JSONB versionado), `summary`, `error_code`, `duration_ms`.
+**Opcionais:** `final_url`, `http_status`, `error_code`, `duration_ms`.
 
-**Relacionamentos:** empresa; usuário ou processo responsável.
+**Relacionamentos:** empresa, contato `WEBSITE` e usuário responsável.
 
-**Índices e restrições:** empresa/data; status; score em faixa definida; JSON validado por versão; cada execução é imutável após finalizada, salvo correção auditada.
+**Índices e restrições:** empresa/data; estados `COMPLETED` e `FAILED`; cada execução é imutável. HTML, cabeçalhos brutos e score automático não são armazenados.
 
 ## Scores (`opportunity_scores`)
 
 **Finalidade:** registrar avaliações de oportunidade explicáveis ao longo do tempo.
 
-**Obrigatórios:** `id`, `company_id`, `score_value`, `score_version`, `components` (JSONB), `calculated_at`, `created_at`.
+**Obrigatórios:** `id`, `company_id`, `formula_version`, `components` (JSONB), `explanation`, `calculated_by_user_id`, `calculated_at`.
 
-**Opcionais:** `reason_summary`, `website_audit_id`, `calculated_by_user_id`.
+**Opcionais:** `total`, que permanece nulo enquanto algum componente estiver ausente.
 
 **Relacionamentos:** empresa; auditoria e usuário opcionais.
 
 **Índices e restrições:** empresa/data; valor em faixa aprovada; versão obrigatória; componentes validados; avaliações históricas não são sobrescritas. O score atual será obtido pela avaliação mais recente válida.
 
-O score não é necessário para criar, editar, qualificar ou pesquisar uma empresa. Ele será calculado somente na Fase 4, depois que a fórmula, os pesos, as faixas e o tratamento de dados ausentes forem aprovados. Até então, empresas existirão normalmente sem registros em `opportunity_scores`.
+O score não é necessário para criar, editar, qualificar ou pesquisar uma empresa. A fórmula v1 humana usa adequação 40%, reputação 30% e lacuna digital 30%; consulte `docs/sprint-6-score-policy.md`.
 
 ## Atividades comerciais (`commercial_activities`)
 
 **Finalidade:** registrar o histórico cronológico de pesquisa, tentativa de contato, resposta, reunião e mudança de etapa.
 
-**Obrigatórios:** `id`, `company_id`, `activity_type`, `occurred_at`, `created_by_user_id`, `created_at`.
+**Obrigatórios:** `id`, `company_id`, `activity_type`, `notes`, `performed_by_user_id`, `created_at`.
 
-**Opcionais:** `contact_id`, `channel`, `summary`, `outcome`, `next_action_at`, `metadata` limitada e validada.
+**Opcionais:** `previous_status`, `new_status`, `outcome` e `next_action_at`.
 
 **Relacionamentos:** empresa, usuário e contato opcional.
 
@@ -131,39 +131,25 @@ O score não é necessário para criar, editar, qualificar ou pesquisar uma empr
 
 ## Mensagens geradas (`generated_messages`)
 
-**Finalidade:** armazenar rascunhos futuros produzidos com assistência de IA, sempre sujeitos a revisão humana.
+**Finalidade:** armazenar rascunhos produzidos com assistência de IA, sempre sujeitos a revisão humana.
 
-**Obrigatórios:** `id`, `company_id`, `channel`, `status`, `content`, `prompt_template_version`, `created_at`, `created_by_user_id`.
+**Obrigatórios:** `id`, `company_id`, `status`, `draft_type`, `provider`, `model`, `prompt_version`, `generated_content`, `input_snapshot`, `usage`, `requested_by_user_id`, `created_at`.
 
-**Opcionais:** `contact_id`, `provider`, `model`, `input_fingerprint`, `reviewed_at`, `reviewed_by_user_id`, `rejection_reason`, `sent_activity_id`.
+**Opcionais:** `reviewed_content`, `reviewed_at`, `reviewed_by_user_id`, `review_reason`.
 
-**Relacionamentos:** empresa, contato, autores/revisores e atividade de envio opcional.
+**Relacionamentos:** empresa e usuários solicitante/revisor. Não existe relacionamento de envio.
 
-**Índices e restrições:** empresa/status/data; status controlado; envio exige revisão humana registrada; não armazenar prompts com segredos ou dados excessivos; nenhuma implementação no MVP inicial.
+**Índices e restrições:** empresa/data; estados `DRAFT`, `APPROVED` e `REJECTED`; tipos ativos limitados a mensagens, diagnósticos comerciais e rascunhos de proposta aprovados; revisão imutável; `DO_NOT_CONTACT` bloqueia geração e aprovação; não existem estados ou operações de envio, publicação ou criação de website.
 
-## Propostas (`proposals`)
+## Auditorias de exportação (`export_audits`)
 
-**Finalidade:** versionar propostas comerciais futuras.
+**Finalidade:** registrar operações manuais de exportação sem armazenar o arquivo produzido.
 
-**Obrigatórios:** `id`, `company_id`, `proposal_number`, `version`, `status`, `currency`, `created_at`, `created_by_user_id`.
+**Obrigatórios:** `id`, `export_type`, `filters`, `fields`, `row_count`, `performed_by_user_id`, `created_at`.
 
-**Opcionais:** `contact_id`, `title`, `scope`, `amount`, `valid_until`, `document_path`, `approved_at`, `sent_at`, `accepted_at`, `rejected_at`.
+**Relacionamentos:** usuário responsável pela ação.
 
-**Relacionamentos:** empresa, contato, usuário e possíveis atividades.
-
-**Índices e restrições:** `(proposal_number, version)` único; valor não negativo; moeda ISO; transições de estado validadas; arquivos fora do banco com armazenamento e acesso definidos antes da implementação.
-
-## Artefatos de demonstração (`demo_artifacts`)
-
-**Finalidade:** registrar futuras demonstrações associadas a oportunidades selecionadas, sem confundi-las com o website oficial da empresa.
-
-**Obrigatórios previstos:** `id`, `company_id`, `status`, `artifact_type`, `storage_reference`, `created_at`, `created_by_user_id`.
-
-**Opcionais previstos:** `title`, `template_version`, `expires_at`, `published_at`, `removed_at`, `reviewed_at`, `reviewed_by_user_id`, `rights_or_attribution_note`.
-
-**Relacionamentos:** empresa e usuários responsáveis pela criação e revisão.
-
-**Restrições:** publicação exige revisão humana; localização e acesso devem ser protegidos; expiração e remoção devem ser rastreáveis; direitos de marca, conteúdo e assets precisam ser registrados antes da publicação. O armazenamento definitivo será decidido somente na Fase 10.
+**Restrições:** quantidade não negativa; filtros e campos minimizados; conteúdo do CSV não é persistido; não existe destino, envio ou agendamento associado.
 
 ## Prevenção de empresas duplicadas
 
@@ -190,9 +176,9 @@ Cadastros incompletos não devem ser bloqueados apenas por nomes iguais. A polí
 ## Pontos pendentes
 
 - necessidade futura de papéis além do usuário administrador inicial;
-- escala e fórmula do score;
+- avaliação futura da fórmula do score com uso real;
 - taxonomia e governança de categorias;
-- transições e regras de reabertura do funil;
+- eventual ajuste da matriz de transições após uso real;
 - política de retenção/exclusão;
 - limites de similaridade e regras de merge;
 - armazenamento futuro de documentos de proposta.

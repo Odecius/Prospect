@@ -3,14 +3,15 @@
 ## Resumo para retomada
 
 - Projeto: ABC Prospect.
-- Estado: Sprints 1 a 3 concluídas e validadas com Docker Desktop e PostgreSQL real. Cadastro essencial, taxonomia inicial, origem, duplicidade forte, auditoria básica e interface operacional estão implementados.
-- Objetivo imediato: Sprint 4 — contatos, fontes avançadas e candidatos persistentes de duplicidade, após aprovação detalhada do escopo.
+- Estado: Sprints 1 a 13 concluídas e validadas, totalizando 90%. Dashboard e exportação manual auditada completam o fluxo funcional de prospecção; integrações permanecem simuladas nos testes.
+- Objetivo imediato: Sprint 14, preparação segura para operação interna; antes de produção, concluir infraestrutura, backups, controles de custo, saída de rede e validações jurídicas aplicáveis.
 - Operação pendente: a pessoa responsável deve criar a conta administrativa real pelo comando documentado em `docs/setup.md`; a conta fictícia usada nos testes foi removida.
 - Arquitetura escolhida: monólito modular FastAPI + PostgreSQL.
 - Interface planejada: operação mínima nas fases iniciais; consolidação responsiva e branding na Fase 6, com Jinja2, HTML, CSS e JavaScript simples.
 - Escopo principal: Fases 1 a 13; SaaS é um projeto futuro independente.
 - Foco inicial: uso interno e empresas brasileiras.
 - Contato comercial: sempre revisado e iniciado por pessoa; sem envio em massa.
+- Limite arquitetural: o ABC Prospect não gera sites, landing pages, demos, código, logos nem publicações. Um eventual gerador é outro produto, com arquitetura e repositório próprios.
 
 ## Leitura obrigatória
 
@@ -23,10 +24,11 @@ Leia `AI_GUIDELINES.md`, `PROJECT_CONTEXT.md`, `docs/glossary.md` e `docs/busine
 - Não fazer commit, push ou deploy sem solicitação explícita.
 - Não criar integrações externas nem assumir permissão de scraping.
 - Não armazenar segredos ou dados reais em exemplos/testes.
+- Avançar sprints sem solicitar aprovações ordinárias; interromper somente diante de segurança, privacidade, credenciais, perda de dados ou efeito externo relevante.
 
 ## Branding
 
-O selo ainda não foi copiado. Quando a interface for implementada, copiar o asset oficial para este repositório com origem documentada e inseri-lo no rodapé centralizado e responsivo, com texto alternativo e assinatura oficial.
+O selo oficial já está armazenado localmente, com origem documentada, e é exibido no rodapé responsivo da interface.
 
 ## Decisões e bloqueios
 

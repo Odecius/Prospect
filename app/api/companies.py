@@ -1,7 +1,7 @@
 import uuid
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, Query, status
 from pydantic import BaseModel, Field
 from sqlalchemy.orm import Session
 
@@ -33,6 +33,8 @@ class CompanyPayload(BaseModel):
     source_id: uuid.UUID
     tax_id: str | None = Field(default=None, max_length=30)
     source_url: str | None = Field(default=None, max_length=2048)
+    source_external_id: str | None = Field(default=None, max_length=300)
+    source_raw_name: str | None = Field(default=None, max_length=300)
     confirm_possible_duplicate: bool = False
 
 
@@ -46,6 +48,13 @@ class CompanyResponse(BaseModel):
     country_code: str
     pipeline_status: str
     archived: bool
+
+
+class CompanySearchResponse(BaseModel):
+    items: list[CompanyResponse]
+    total: int
+    page: int
+    page_size: int
 
 
 def get_company_service(session: Annotated[Session, Depends(get_database_session)]) -> CompanyService:
@@ -106,6 +115,30 @@ def list_companies(
     service: Annotated[CompanyService, Depends(get_company_service)],
 ) -> list[CompanyResponse]:
     return [company_response(item) for item in service.list_companies()]
+
+
+@router.get("/companies-search", response_model=CompanySearchResponse)
+def search_companies(
+    _user: Annotated[User, Depends(require_current_user)],
+    service: Annotated[CompanyService, Depends(get_company_service)],
+    query: str | None = Query(default=None, max_length=200),
+    category_id: uuid.UUID | None = None,
+    state_code: str | None = Query(default=None, min_length=2, max_length=2),
+    pipeline_status: str | None = None,
+    include_archived: bool = False,
+    sort: str = Query(default="newest", pattern="^(name|newest|oldest|city)$"),
+    page: int = Query(default=1, ge=1),
+    page_size: int = Query(default=25, ge=1, le=100),
+) -> CompanySearchResponse:
+    try:
+        items, total = service.search_companies(
+            query, category_id, state_code, pipeline_status, include_archived, sort, page, page_size
+        )
+    except (ValueError, CompanyValidationError) as error:
+        raise HTTPException(status_code=422, detail=str(error)) from error
+    return CompanySearchResponse(
+        items=[company_response(item) for item in items], total=total, page=page, page_size=page_size
+    )
 
 
 @router.get("/companies/{company_id}", response_model=CompanyResponse)

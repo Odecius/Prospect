@@ -1,6 +1,6 @@
 import pytest
 
-from app.domain.normalization import normalize_cnpj, normalize_state_code, normalize_text
+from app.domain.normalization import normalize_cnpj, normalize_contact, normalize_state_code, normalize_text
 
 
 def test_text_normalization_is_stable_for_duplicate_comparison() -> None:
@@ -18,3 +18,16 @@ def test_cnpj_normalization_validates_check_digits() -> None:
     assert normalize_cnpj("") is None
     with pytest.raises(ValueError, match="CNPJ inválido"):
         normalize_cnpj("11.111.111/1111-11")
+
+
+@pytest.mark.parametrize(
+    ("contact_type", "value", "expected"),
+    [
+        ("PHONE", "(11) 99999-0000", "+11999990000"),
+        ("EMAIL", " Comercial@Exemplo.COM ", "comercial@exemplo.com"),
+        ("WEBSITE", "www.Exemplo.com/", "https://exemplo.com"),
+        ("INSTAGRAM", "https://instagram.com/Minha.Empresa/", "minha.empresa"),
+    ],
+)
+def test_contact_normalization(contact_type: str, value: str, expected: str) -> None:
+    assert normalize_contact(contact_type, value) == expected

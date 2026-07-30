@@ -6,7 +6,7 @@ O ABC Prospect será uma aplicação interna da ABC Solutions para organizar a i
 
 ## Estado
 
-Em 2026-07-20, as Sprints 1 a 3 estão implementadas e validadas. Além da infraestrutura e autenticação, existem categorias controladas, cadastro empresarial mínimo, origem obrigatória, CNPJ opcional validado, duplicidade conservadora, auditoria básica, arquivamento e interface operacional. As migrations `20260720_0001` e `20260720_0002` aplicam e revertem em PostgreSQL real.
+Em 2026-07-23, as Sprints 1 a 13 estão implementadas e validadas, totalizando 90%. Além da infraestrutura, autenticação e cadastro, existem contatos, duplicidade revisável, pesquisa, score explicável, pipeline, interface responsiva, Google Places API (New), auditoria controlada de websites, conteúdo comercial revisável, dashboard e exportação CSV manual auditada. As migrations formam uma cadeia linear até `20260723_0010`.
 
 ## Usuário e mercado iniciais
 
@@ -25,7 +25,7 @@ Em 2026-07-20, as Sprints 1 a 3 estão implementadas e validadas. Além da infra
 
 ## Limites atuais
 
-Não fazem parte das fases iniciais: scraping, IA, geração de demonstrações, propostas, envio em massa ou infraestrutura complexa. O produto interno termina na Fase 13; SaaS é um projeto futuro independente e não integra o escopo principal.
+Permanecem fora do escopo: scraping, pentest, envio em massa, criação ou publicação de websites/landing pages/demonstrações e infraestrutura complexa. A IA atua somente como assistente comercial para mensagens, diagnósticos e rascunhos de proposta com revisão humana. O produto interno termina na Fase 13; qualquer gerador de websites pertence a produto e repositório futuros separados, e SaaS depende de projeto independente.
 
 ## Decisões operacionais vigentes
 

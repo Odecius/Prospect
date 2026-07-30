@@ -114,13 +114,33 @@ As decisões seguem o formato do `ABC-Development-Standard`. Itens ainda não ap
 
 ## 2026-07-19 — Branding oficial no rodapé
 
-**Descrição:** A futura interface exibirá no rodapé o selo oficial ABC Solutions, centralizado e responsivo, com texto alternativo e a assinatura **“Developed by Abc Solutions | Built with quality and care”**.
+**Descrição:** A interface exibe no rodapé o selo oficial ABC Solutions, centralizado e responsivo, com texto alternativo e a assinatura **“Developed by Abc Solutions | Built with quality and care”**.
 
 **Motivo:** Cumprir a identidade visual oficial.
 
 **Alternativas consideradas:** Somente texto ou ausência de branding.
 
-**Impacto:** O asset `C:\Projetos\Abc\developed by abc solutions.png` será copiado para este repositório apenas na fase de interface. Nesta etapa ele não foi copiado.
+**Impacto:** O asset foi copiado para `app/static/assets/abc-solutions-footer.png` durante a Sprint 8 e sua origem está registrada.
+
+## D-016 — Auditoria de websites limitada à página inicial
+
+**Estado:** Implementada em 2026-07-22.
+
+**Decisão:** Auditar somente contatos `WEBSITE` ativos já cadastrados, com uma navegação controlada da página inicial. Persistir apenas métricas e sinais imutáveis, sem HTML, sem pentest e sem alteração automática de score ou pipeline.
+
+**Motivo:** Produzir evidência comercial explicável com baixo impacto e reduzir SSRF, carga indevida e interpretações excessivas.
+
+**Consequência:** A produção exige controle de saída confirmado; resultados descrevem apenas o instante e a página observados.
+
+## D-017 — IA limitada a rascunhos revisáveis
+
+**Estado:** Implementada em 2026-07-22.
+
+**Decisão:** Usar OpenAI Responses API com `gpt-5.6-luna`, `store=false`, saída estruturada e contexto empresarial minimizado. O sistema pode gerar, editar durante a revisão, aprovar ou rejeitar; não pode enviar mensagens.
+
+**Motivo:** Obter assistência de redação com custo controlado sem delegar decisão comercial nem ampliar a coleta de dados pessoais.
+
+**Consequência:** A funcionalidade permanece desativada sem chave/configuração e bloqueada para `DO_NOT_CONTACT`; uso em produção exige validação jurídica e financeira.
 
 ## 2026-07-19 — Documentação com responsabilidades separadas
 
@@ -178,6 +198,16 @@ As decisões seguem o formato do `ABC-Development-Standard`. Itens ainda não ap
 
 **Impacto:** A possível evolução para SaaS é um projeto futuro independente, não uma Fase 14 obrigatória. Melhorias posteriores ao produto interno serão classificadas como manutenção ou novos projetos.
 
+## 2026-07-22 — Limite entre prospecção e geração de websites
+
+**Descrição:** O ABC Prospect é um sistema de prospecção e apoio comercial. Geração automática de websites ou demonstrações pertence a um produto futuro separado, com responsabilidade, arquitetura e repositório próprios.
+
+**Motivo:** manter o MVP focado no fluxo de identificar, qualificar, diagnosticar e apoiar a abordagem humana de prospects, evitando risco jurídico, operacional e arquitetural de um website builder.
+
+**Alternativas consideradas:** manter Demo Websites na Sprint 12; tratar a geração como módulo opcional do monólito; retirar integralmente esse produto do planejamento ativo.
+
+**Impacto:** a antiga Fase/Sprint de Demo Websites, `demo_artifacts`, publicação, hosting, templates de sites e permissões relacionadas deixam o roadmap ativo. A Sprint 12 passa a fechar a lacuna de diagnóstico comercial e rascunho de proposta; qualquer futuro gerador exigirá decisão, projeto e repositório independentes. Nenhum código, migration ou tabela implementada precisou ser removido.
+
 ## Decisões pendentes por fase
 
 As pendências abaixo bloqueiam somente a fase indicada e não impedem trabalhos aprovados de fases anteriores.
@@ -200,7 +230,7 @@ As decisões iniciais de duplicidade, taxonomia e privacidade foram aprovadas em
 
 ### Antes de iniciar a Fase 10
 
-1. **Demonstrações:** armazenamento, controle de acesso, expiração, remoção, publicação e direitos de uso.
+1. **Diagnóstico e proposta:** tipos estruturados, evidências mínimas, campos permitidos, formato de saída manual e validação jurídica de produção.
 
 ### Antes de iniciar a Fase 12
 
@@ -209,6 +239,16 @@ As decisões iniciais de duplicidade, taxonomia e privacidade foram aprovadas em
 ### Antes de iniciar a Fase 13
 
 1. **Critérios de validação:** métricas e período de teste para decidir se a prospecção ficou mais rápida, consistente e útil.
+
+## 2026-07-23 — Protocolo conservador da Sprint 15
+
+**Descrição:** a validação usa período explícito, empresas distintas, denominadores visíveis, cronometragem manual sem dados de terceiros, feedback estruturado e revisão humana estratificada do score. A amostra operacional inicial é de 14 dias, no mínimo 20 empresas revisadas, 15 pontuadas e 8 elegíveis contatadas.
+
+**Motivo:** separar evidência de uso de métricas de vaidade e impedir que o sistema declare seu próprio sucesso.
+
+**Alternativas consideradas:** concluir o projeto apenas por cobertura funcional; usar volume de cadastros ou contatos como sucesso; gerar dados fictícios para preencher a amostra.
+
+**Impacto:** a instrumentação pode ser concluída no repositório, mas os 4% finais dependem de piloto real, feedback e decisão humana. Amostra insuficiente resulta em `INCONCLUSIVO`; incidentes críticos prevalecem sobre desempenho comercial.
 
 ## 2026-07-20 — Fase 1A restrita à infraestrutura
 
@@ -229,3 +269,27 @@ As decisões iniciais de duplicidade, taxonomia e privacidade foram aprovadas em
 **Alternativas consideradas:** taxonomia livre ou extensa; inclusão imediata de contatos; bloqueio por qualquer semelhança; mesclagem automática.
 
 **Impacto:** CNPJ exato repetido bloqueia o cadastro; nome igual na mesma cidade/UF gera aviso confirmável; contatos e sinais avançados ficam para a Sprint 4. A base legal definitiva e os prazos permanecem sujeitos a validação jurídica antes da produção. A especificação completa está em `docs/sprint-3-policies.md`.
+
+## 2026-07-21 — Autonomia de execução e Sprint 4
+
+**Descrição:** o responsável autorizou o avanço autónomo das sprints sem novas confirmações funcionais rotineiras. A proposta conservadora da Sprint 4 foi aprovada; interrupções continuam obrigatórias para segurança, privacidade, credenciais, dados reais, ações destrutivas ou efeitos externos relevantes.
+
+**Motivo:** reduzir interrupções sem eliminar os limites de segurança e proteção de dados.
+
+**Impacto:** contatos corporativos, fontes avançadas, candidatos persistentes e mesclagem auditada podem ser implementados com dados fictícios. Uso de dados pessoais reais e produção permanecem bloqueados até validação jurídica profissional.
+
+## 2026-07-21 — Autonomia até 70%, score v1 e pipeline
+
+**Descrição:** o responsável autorizou avanço sem aprovações ordinárias até o último marco que não exceda 70%. Foram adotados score humano `v1-human-40-30-30` e matriz conservadora de pipeline documentados nas Sprints 6 e 7.
+
+**Motivo:** permitir evolução contínua mantendo explicabilidade, histórico e revisão humana.
+
+**Impacto:** Sprints 5–8 podem ser concluídas até 60%. A Sprint 9 não pode presumir uma fonte externa: seleção, termos, base legal, credenciais e quotas constituem bloqueio grave e exigem decisão específica.
+
+## 2026-07-21 — Google Places API (New)
+
+**Descrição:** Google Places API (New), endpoint Text Search oficial, foi aprovada como primeira fonte externa. Resultados são temporários e somente o Place ID é persistido após revisão humana.
+
+**Motivo:** reduzir entrada manual usando uma API oficial sem scraping, importação em massa ou armazenamento incompatível com as políticas Google.
+
+**Impacto:** a chave permanece exclusivamente no backend; Field Mask explícita, paginação, timeout, retries e rate limit controlam custo. Rating, endereço, website e demais conteúdos Google não são gravados. Produção exige quotas, alertas, restrição de chave e validação jurídica profissional.

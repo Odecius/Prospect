@@ -1,5 +1,92 @@
 # Changelog
 
+## 2026-07-23 — Dashboard e exportação manual (Sprint 13)
+
+- adicionados indicadores reconciliáveis de pipeline, website, score, auditoria e conteúdo aprovado;
+- ampliada a segmentação da interface por categoria, UF e estado do pipeline;
+- adicionada exportação CSV manual limitada a 500 empresas e somente sete campos empresariais mínimos;
+- protegidas células textuais contra fórmulas de planilha e preservado `DO_NOT_CONTACT`;
+- criada trilha `export_audits` com filtros, campos, quantidade, ator e horário, sem armazenar o arquivo;
+- adicionados migration reversível, testes unitários, funcionais e integração PostgreSQL real;
+- progresso geral elevado de 85% para 90%.
+
+## 2026-07-22 — Gate de integração contínua
+
+- adicionado GitHub Actions para Ruff, pytest e ciclo completo de migrations em PostgreSQL descartável;
+- configuradas permissões mínimas de leitura, timeout e cancelamento de execuções obsoletas;
+- mantidas integrações externas desativadas e usadas somente credenciais efêmeras de CI;
+- validado localmente o ciclo banco vazio → head → base → head sem tocar no banco de desenvolvimento.
+
+## 2026-07-22 — Diagnóstico e rascunho de proposta (Sprint 12)
+
+- adicionados `COMMERCIAL_DIAGNOSTIC` e `PROPOSAL_DRAFT` ao workflow humano existente;
+- incorporados score minimizado e referências locais das evidências utilizadas;
+- ajustado o prompt por finalidade, proibindo preço, prazo, website, código, publicação e envio inventados;
+- adicionadas ações separadas na interface, mantendo edição, aprovação e rejeição auditáveis;
+- preservados `DO_NOT_CONTACT`, limites, `store=false` e ausência de chamadas reais nos testes;
+- reutilizada a tabela existente, sem migration ou entidade desnecessária;
+- progresso geral elevado de 80% para 85%.
+
+## 2026-07-22 — Correção de escopo e planejamento do MVP
+
+- auditados código, migrations, modelos, serviços, endpoints, interface, testes e documentação contra o escopo de prospecção;
+- confirmado que nenhum gerador de websites, landing pages ou demos foi implementado;
+- removidos do planejamento ativo a Fase/Sprint Demo Websites, `demo_artifacts` e o modelo completo de propostas/documentos;
+- registrada a decisão de que eventual geração de websites pertence a produto, arquitetura e repositório separados;
+- redefinida a Sprint 12 para diagnóstico comercial e rascunho de proposta com revisão humana;
+- redefinida a Sprint 13 para dashboard, segmentação e exportação/cópia manual;
+- mantidos 80% concluídos e o total planejado em 100%, pois nenhum trabalho concluído foi invalidado.
+
+## 2026-07-22 — Rascunhos comerciais assistidos por IA (Sprint 11)
+
+- adicionado adaptador desacoplado para OpenAI Responses API com `gpt-5.6-luna` configurável;
+- configurados `store=false`, saída estruturada estrita, limite de tokens, timeout, retry e rate limit;
+- minimizado o contexto externo para nome/categoria/localidade e sinais booleanos permitidos;
+- adicionados rascunhos imutáveis com modelo, prompt, uso, ator e snapshot auditável;
+- implementadas revisão, edição, aprovação e rejeição humanas sem qualquer mecanismo de envio;
+- `DO_NOT_CONTACT` bloqueia geração e aprovação;
+- integração permanece desativada sem chave e configuração explícita;
+- adicionadas API, interface, migration, política e testes com provedor simulado;
+- progresso geral elevado de 74% para 80%.
+
+## 2026-07-22 — Auditoria controlada de websites (Sprint 10)
+
+- adicionados snapshots imutáveis de auditoria vinculados ao website cadastrado e ao ator;
+- implementada consulta única da página inicial, sem JavaScript, assets, links ou comportamento de pentest;
+- adicionados bloqueio de redes privadas/reservadas, portas restritas, limite de redirecionamentos, timeout, tamanho máximo, rate limit e cooldown;
+- persistidos somente status, duração e sinais explicáveis, sem HTML ou cabeçalhos brutos;
+- auditoria automaticamente desativada em produção até confirmação de controle de saída;
+- adicionadas API, interface, migration reversível, política e testes;
+- progresso geral elevado de 67% para 74%.
+
+## 2026-07-21 — Google Places API (New) (Sprint 9)
+
+- implementadas abstração de provedor, cliente HTTP oficial, serviço e API interna;
+- adicionadas busca por termo/cidade/UF/região, paginação assinada, timeout, retry e limite de chamadas;
+- adicionada revisão humana com vinculação exclusiva do Place ID, sem persistir conteúdo Google restrito;
+- adicionadas atribuição Google Maps, páginas de termos/privacidade e documentação de custo/conformidade;
+- adicionada migration reversível da fonte Google e testes totalmente simulados;
+- progresso geral elevado de 60% para 67%.
+
+## 2026-07-21 — Pesquisa, score, pipeline e interface (Sprints 5–8)
+
+- adicionadas pesquisa normalizada, filtros, ordenação, paginação e índices;
+- adicionado score humano v1, explicável, versionado e histórico;
+- adicionadas atividades, próximos passos e transições auditadas com proteção `DO_NOT_CONTACT`;
+- consolidada a interface responsiva, acessível e com branding oficial local;
+- validados 31 testes, Ruff, PostgreSQL, migrations e breakpoints móvel, tablet e desktop;
+- progresso geral elevado de 29% para 60%; Sprint 9 bloqueada por avaliação jurídica e técnica obrigatória da fonte.
+
+## 2026-07-21 — Contatos, fontes e duplicidade (Sprint 4)
+
+- adicionados contatos corporativos normalizados para telefone, email, website e Instagram, com invalidação lógica e contato principal por tipo;
+- ampliada a proveniência com identificador externo, nome observado e última verificação;
+- adicionados candidatos persistentes de duplicidade, sinais explicáveis e revisão humana obrigatória;
+- implementada mesclagem explícita e auditada, sem exclusão física, preservando contatos e fontes conflitantes no cadastro arquivado;
+- adicionadas API e interface operacional para contatos, revisão e mesclagem;
+- validados Ruff, 23 testes, ciclo reversível da migration `20260721_0003`, PostgreSQL real e endpoint de saúde;
+- incorporados os 8% da Sprint 4, totalizando 29% do Produto Interno.
+
 ## 2026-07-20 — Cadastro essencial (Sprint 3)
 
 - aprovadas e documentadas as políticas conservadoras de taxonomia, privacidade/LGPD e duplicidade;

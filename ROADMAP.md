@@ -26,9 +26,9 @@ A avaliação de uma possível evolução para SaaS é uma iniciativa futura ind
 
 Os demais entregáveis da Fase 1, incluindo autenticação mínima, dependem de autorização posterior e não fazem parte da Fase 1A.
 
-### Fase 1B — Autenticação local proposta
+### Fase 1B — Autenticação local
 
-O escopo proposto está em [`docs/phase-1b.md`](docs/phase-1b.md). A implementação ainda não está autorizada e depende da validação da Fase 1A com PostgreSQL real.
+O escopo aprovado está em [`docs/phase-1b.md`](docs/phase-1b.md). A implementação foi concluída e validada com PostgreSQL real em 2026-07-20.
 
 ## Fase 2 — Cadastro manual de empresas
 
@@ -126,29 +126,33 @@ O escopo proposto está em [`docs/phase-1b.md`](docs/phase-1b.md). A implementa�
 
 **Fora do escopo:** envio automático, campanhas em massa e decisão autônoma.
 
-## Fase 10 — Geração de demonstrações
+## Fase 10 — Diagnóstico comercial e rascunho de proposta
 
-**Objetivo:** criar demonstrações simples e claramente identificadas para oportunidades selecionadas.
+**Objetivo:** transformar evidências já registradas em diagnóstico comercial explicável e rascunho de proposta para revisão humana.
 
-**Entregáveis:** templates aprovados; geração isolada; revisão humana; expiração/remoção; atribuição de assets.
+**Entregáveis:** tipos e prompts versionados; contexto empresarial minimizado; diagnóstico e proposta em formato estruturado; edição, aprovação e rejeição auditáveis; cópia manual.
 
-**Critérios de conclusão:** conteúdo não se confunde com site oficial do prospect; direitos de uso são respeitados; publicação requer aprovação.
+**Critérios de conclusão:** cada afirmação deriva de dados e auditorias identificáveis; nenhuma saída é enviada ou publicada; revisão humana é obrigatória; `DO_NOT_CONTACT` é respeitado; versões permanecem auditáveis.
 
-**Riscos:** uso indevido de marca/conteúdo, custo e exposição acidental.
+**Riscos:** alucinação, inferência indevida, exposição de dados, tom inadequado e proposta comercial inconsistente.
 
-**Fora do escopo:** publicação automática e substituição de produção do cliente.
+**Fora do escopo:** geração de sites, landing pages, código, logos, publicação, envio automático, precificação autônoma, assinatura ou aceite.
 
-## Fase 11 — Propostas comerciais
+**Situação:** concluída em 2026-07-22 pela Sprint 12, sem nova entidade e com revisão humana obrigatória.
 
-**Objetivo:** gerar e acompanhar propostas versionadas.
+## Fase 11 — Dashboard, segmentação e exportação manual
 
-**Entregáveis:** modelo; numeração/versões; itens e valores; PDF ou formato aprovado; estados e validade.
+**Objetivo:** consolidar a operação diária do MVP sem introduzir automação de contato.
 
-**Critérios de conclusão:** valores e versões são auditáveis; documento é revisado antes de envio; acesso é protegido.
+**Entregáveis:** indicadores do funil e da qualidade dos dados; filtros úteis à prospecção; lista priorizada explicável; exportação limitada e cópia manual com auditoria e respeito ao acesso.
 
-**Riscos:** inconsistência comercial, dados pessoais e documentos expostos.
+**Critérios de conclusão:** indicadores reconciliam com os registros; filtros são reproduzíveis; exportações exigem ação humana, aplicam minimização e não incluem envio; `DO_NOT_CONTACT` permanece visível e respeitado.
 
-**Fora do escopo:** assinatura eletrônica, faturamento e aceite automático.
+**Riscos:** exportação excessiva, interpretação incorreta dos indicadores e exposição de dados pessoais.
+
+**Fora do escopo:** BI genérico, campanhas, cadências, disparos, CRM completo ou automação de decisões.
+
+**Situação:** concluída em 2026-07-23 pela Sprint 13, com exportação manual minimizada e auditada.
 
 ## Fase 12 — Deploy no servidor
 
@@ -162,6 +166,8 @@ O escopo proposto está em [`docs/phase-1b.md`](docs/phase-1b.md). A implementa�
 
 **Fora do escopo:** Kubernetes, alta disponibilidade complexa e deploy multi-região.
 
+**Situação:** preparação de software concluída em 2026-07-23 pela Sprint 14. Artefatos e recuperação foram validados sem tocar servidor ou dados reais. O deploy efetivo depende das decisões externas e do checklist no host.
+
 ## Fase 13 — Validação comercial
 
 **Objetivo:** medir se o produto melhora a seleção e o acompanhamento de prospects.
@@ -174,7 +180,13 @@ O escopo proposto está em [`docs/phase-1b.md`](docs/phase-1b.md). A implementa�
 
 **Fora do escopo:** expansão antes de evidência e automação baseada apenas em volume.
 
+**Situação:** protocolo e instrumentação preparados em 2026-07-23. Execução do piloto, feedback e decisão final permanecem pendentes; o projeto não é declarado concluído antecipadamente.
+
 Ao cumprir esses critérios, o ABC Prospect interno é considerado concluído. Melhorias posteriores serão tratadas como manutenção ou novos projetos, sem reabrir automaticamente o roadmap principal.
+
+## Produto futuro separado — geração de websites ou demonstrações
+
+Qualquer ferramenta para gerar websites, landing pages, demonstrações, código, logos, hosting ou publicação pertence a um produto futuro separado do ABC Prospect. Ela exigirá responsabilidade de produto, arquitetura, avaliação jurídica e repositório próprios. Não há sprint ativa, entidade, endpoint, migration ou percentual reservado para esse produto neste roadmap.
 
 ## Projeto futuro — Possível evolução para SaaS
 

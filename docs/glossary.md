@@ -4,7 +4,7 @@ Este glossário estabelece o significado dos termos usados no ABC Prospect. Toda
 
 ## Empresa
 
-Organização cadastrada como objeto central da prospecção. Possui nome, categoria, cidade, UF, origem e estado do pipeline obrigatórios. Pode reunir contatos, evidências, atividades, scores, auditorias, demonstrações e propostas.
+Organização cadastrada como objeto central da prospecção. Possui nome, categoria, cidade, UF, origem e estado do pipeline obrigatórios. Pode reunir contatos, evidências, atividades, scores, auditorias e rascunhos comerciais assistidos.
 
 ## Lead
 
@@ -56,11 +56,7 @@ Canal de comunicação corporativo ou dado de uma pessoa vinculada à empresa, c
 
 ## Proposta
 
-Documento comercial versionado que descreve escopo, valores, validade e estado de uma oferta feita a uma empresa. Deve ser revisado antes do envio e permanecer auditável.
-
-## Demo Website
-
-Demonstração de website criada para uma oportunidade selecionada. Deve ser claramente identificada como demonstração, não pode se confundir com o website oficial da empresa e exige revisão, controle de acesso, expiração, remoção e respeito a direitos de uso.
+Rascunho comercial assistido e versionado, preparado para revisão humana. No MVP, não constitui documento enviado, aceite, faturamento ou decisão final e não possui automação de envio.
 
 ## Produto Interno
 
@@ -73,4 +69,3 @@ Possível produto futuro multiempresa e multi-tenant. Não integra o escopo, o p
 ## MVP
 
 Menor versão do Produto Interno capaz de validar, com segurança e uso real, se o processo de prospecção ficou mais rápido, consistente e útil. MVP não significa ausência de autenticação, proteção de dados, rastreabilidade ou revisão humana.
-
