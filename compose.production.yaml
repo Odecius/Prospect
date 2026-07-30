@@ -2,14 +2,15 @@ name: abc-prospect-production
 
 services:
   db:
-    image: postgres:17.5-alpine
+    container_name: abc-prospect-db
+    image: postgres:17.5-alpine@sha256:6567bca8d7bc8c82c5922425a0baee57be8402df92bae5eacad5f01ae9544daa
     restart: unless-stopped
     environment:
       POSTGRES_DB: ${POSTGRES_DB:?POSTGRES_DB is required}
       POSTGRES_USER: ${POSTGRES_USER:?POSTGRES_USER is required}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD is required}
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - ${POSTGRES_DATA_PATH:?POSTGRES_DATA_PATH is required}:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
       interval: 10s
@@ -27,6 +28,7 @@ services:
         max-file: "5"
 
   app:
+    container_name: abc-prospect-app
     image: ${APP_IMAGE:?APP_IMAGE must identify an immutable image}
     restart: unless-stopped
     environment:
@@ -47,8 +49,6 @@ services:
     depends_on:
       db:
         condition: service_healthy
-    ports:
-      - "127.0.0.1:${APP_PORT:-8000}:8000"
     healthcheck:
       test:
         - CMD
@@ -60,8 +60,10 @@ services:
       retries: 5
       start_period: 15s
     networks:
-      - frontend
-      - backend
+      proxy:
+        aliases:
+          - abc-prospect-app
+      backend:
     read_only: true
     tmpfs:
       - /tmp:size=64m,mode=1777
@@ -76,10 +78,8 @@ services:
         max-file: "5"
 
 networks:
-  frontend:
-    driver: bridge
+  proxy:
+    external: true
+    name: proxy
   backend:
     internal: true
-
-volumes:
-  postgres_data:

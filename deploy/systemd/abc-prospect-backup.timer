@@ -1,0 +1,11 @@
+[Unit]
+Description=Run ABC Prospect PostgreSQL backup daily
+
+[Timer]
+OnCalendar=*-*-* 03:30:00 Europe/London
+Persistent=true
+AccuracySec=1min
+Unit=abc-prospect-backup.service
+
+[Install]
+WantedBy=timers.target

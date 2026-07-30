@@ -1,5 +1,11 @@
 # Changelog
 
+## Em desenvolvimento
+
+- adaptado o Compose de produção para as redes `proxy` e `backend`, sem portas publicadas;
+- adicionados backup diário, retenção de 30 dias e verificação de restauração descartável;
+- documentado o bloqueio de acesso até confirmação do CIDR local no servidor HP.
+
 ## 2026-07-23 — Dashboard e exportação manual (Sprint 13)
 
 - adicionados indicadores reconciliáveis de pipeline, website, score, auditoria e conteúdo aprovado;

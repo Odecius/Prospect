@@ -1,0 +1,15 @@
+[Unit]
+Description=ABC Prospect PostgreSQL backup
+Requires=docker.service
+After=docker.service
+
+[Service]
+Type=oneshot
+User=odecio
+Group=odecio
+EnvironmentFile=/srv/stacks/apps/prospect/prospect.env
+Environment=STACK_DIR=/srv/stacks/apps/prospect
+WorkingDirectory=/srv/stacks/apps/prospect
+ExecStart=/srv/stacks/apps/prospect/backup-postgres.sh
+Nice=10
+UMask=0077
