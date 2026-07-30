@@ -52,7 +52,7 @@ th, td { padding: .7rem; border-bottom: 1px solid #e3e7eb; text-align: left; ver
 td .actions button { min-height: 2.2rem; padding: .35rem .6rem; }
 tr.archived { opacity: .6; }
 footer { text-align: center; padding: 2rem 1rem; color: #465463; }
-footer img { width: min(520px, 92vw); height: auto; }
+footer img { width: min(900px, 96vw); height: auto; }
 .legal { max-width: 780px; line-height: 1.6; }
 @media (max-width: 800px) { .grid, .lower-grid { grid-template-columns: 1fr; } .shell { margin-top: 1rem; } }
 @media (max-width: 800px) { .metrics { grid-template-columns: repeat(2, 1fr); } .dashboard-heading { display: block; } }
