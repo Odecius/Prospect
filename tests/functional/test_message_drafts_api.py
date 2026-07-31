@@ -1,5 +1,6 @@
 import uuid
 from datetime import UTC, datetime
+from decimal import Decimal
 
 from fastapi.testclient import TestClient
 
@@ -7,6 +8,7 @@ from app.api.authentication import require_csrf_token, require_current_user
 from app.api.message_drafts import get_message_draft_service
 from app.database.models import GeneratedMessage, MessageDraftStatus, User, UserStatus
 from app.main import create_app
+from app.services.message_drafts import AIUsageToday
 
 
 class DraftServiceFake:
@@ -30,6 +32,9 @@ class DraftServiceFake:
     def list_drafts(self, company_id: uuid.UUID) -> list[GeneratedMessage]:
         self.draft.company_id = company_id
         return [self.draft]
+
+    def usage_today(self) -> AIUsageToday:
+        return AIUsageToday(3, 20, Decimal("0.001234"), "gpt-5.6-luna")
 
     def generate(
         self, company_id: uuid.UUID, actor: User, draft_type: str = "COMMERCIAL_INTRODUCTION"
@@ -81,3 +86,15 @@ def test_generate_commercial_diagnostic() -> None:
         )
     assert response.status_code == 201
     assert response.json()["draft_type"] == "COMMERCIAL_DIAGNOSTIC"
+
+
+def test_ai_usage_today() -> None:
+    with client() as test_client:
+        response = test_client.get("/api/ai-usage/today")
+    assert response.status_code == 200
+    assert response.json() == {
+        "calls": 3,
+        "limit": 20,
+        "estimated_cost_usd": 0.001234,
+        "model": "gpt-5.6-luna",
+    }

@@ -98,6 +98,9 @@ class OpenAIResponsesClient:
             for key in ("input_tokens", "output_tokens", "total_tokens")
             if isinstance(usage.get(key), int)
         }
+        input_details = usage.get("input_tokens_details")
+        if isinstance(input_details, dict) and isinstance(input_details.get("cached_tokens"), int):
+            safe_usage["cached_input_tokens"] = max(0, int(input_details["cached_tokens"]))
         return DraftGeneration(subject.strip(), body.strip(), safety_notes[:5], "openai", self.model, safe_usage)
 
     def _post(self, payload: dict) -> dict:

@@ -18,6 +18,7 @@ def test_interface_contains_accessible_navigation_branding_and_operational_contr
     assert 'id="website-audit-title"' in response.text
     assert "Não executa JavaScript" in response.text
     assert 'id="ai-draft-title"' in response.text
+    assert 'id="ai-usage-today"' in response.text
     assert "Nada é enviado" in response.text
     assert 'id="validation-form"' in response.text
     assert "não provam causalidade" in response.text

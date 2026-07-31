@@ -47,9 +47,9 @@ function setDefaultValidationPeriod() {
 }
 
 async function loadReferencesAndCompanies() {
-  const [categories, sources, searchResult, candidates, dashboard] = await Promise.all([
+  const [categories, sources, searchResult, candidates, dashboard, aiUsage] = await Promise.all([
     api("/api/categories"), api("/api/sources"), searchCompanies(), api("/api/duplicate-candidates"),
-    api("/api/reporting/dashboard")
+    api("/api/reporting/dashboard"), api("/api/ai-usage/today")
   ]);
   fillSelect(byId("category"), categories);
   fillSelect(byId("search-category"), categories, "Todas");
@@ -59,6 +59,14 @@ async function loadReferencesAndCompanies() {
   renderPager(searchResult);
   renderCandidates(candidates);
   renderDashboard(dashboard);
+  renderAIUsage(aiUsage);
+}
+
+function renderAIUsage(data) {
+  const container = byId("ai-usage-today"); container.replaceChildren();
+  const heading = document.createElement("strong"); heading.textContent = "IA hoje"; container.append(heading);
+  const calls = document.createElement("span"); calls.textContent = `Chamadas: ${data.calls} / ${data.limit}`; container.append(calls);
+  const cost = document.createElement("span"); cost.textContent = `Custo estimado: US$ ${Number(data.estimated_cost_usd).toFixed(6)}`; container.append(cost);
 }
 
 async function searchCompanies() {
@@ -249,6 +257,7 @@ async function generateMessageDraft(company, draftType) {
   try {
     await api(`/api/companies/${company.id}/message-drafts`, { method: "POST", body: JSON.stringify({ draft_type: draftType }) });
     notify("Rascunho gerado. Revise antes de qualquer uso."); await selectCompanyDrafts(company);
+    renderAIUsage(await api("/api/ai-usage/today"));
   } catch (error) { notify(error.body?.detail || "Geração de IA indisponível."); }
 }
 

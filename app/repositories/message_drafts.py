@@ -1,4 +1,5 @@
 import uuid
+from datetime import datetime
 
 from sqlalchemy import select
 from sqlalchemy.orm import Session
@@ -43,6 +44,31 @@ class MessageDraftRepository:
                 .order_by(GeneratedMessage.created_at.desc(), GeneratedMessage.id.desc())
                 .limit(50)
             )
+        )
+
+    def list_openai_created_since(self, started_at: datetime) -> list[GeneratedMessage]:
+        return list(
+            self.session.scalars(
+                select(GeneratedMessage)
+                .where(
+                    GeneratedMessage.provider == "openai",
+                    GeneratedMessage.created_at >= started_at,
+                )
+                .order_by(GeneratedMessage.created_at.asc(), GeneratedMessage.id.asc())
+            )
+        )
+
+    def has_diagnostic_for_company(self, company_id: uuid.UUID) -> bool:
+        return (
+            self.session.scalar(
+                select(GeneratedMessage.id)
+                .where(
+                    GeneratedMessage.company_id == company_id,
+                    GeneratedMessage.draft_type == "COMMERCIAL_DIAGNOSTIC",
+                )
+                .limit(1)
+            )
+            is not None
         )
 
     def add(self, draft: GeneratedMessage) -> None:

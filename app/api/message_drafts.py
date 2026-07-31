@@ -12,7 +12,14 @@ from app.database.models import GeneratedMessage, MessageDraftStatus, User
 from app.database.session import get_database_session
 from app.repositories.message_drafts import MessageDraftRepository
 from app.services.external_search import RequestLimiter
-from app.services.message_drafts import DraftReviewInput, MessageDraftService, MessageDraftValidationError
+from app.services.message_drafts import (
+    AIDailyLimitExceededError,
+    AIUsageToday,
+    DiagnosticLimitExceededError,
+    DraftReviewInput,
+    MessageDraftService,
+    MessageDraftValidationError,
+)
 
 router = APIRouter(prefix="/api", tags=["AI message drafts"])
 _settings = get_settings()
@@ -47,6 +54,13 @@ class DraftCreatePayload(BaseModel):
     draft_type: str = Field(default="COMMERCIAL_INTRODUCTION", max_length=40)
 
 
+class AIUsageTodayResponse(BaseModel):
+    calls: int
+    limit: int
+    estimated_cost_usd: float
+    model: str
+
+
 def get_message_draft_service(
     session: Annotated[Session, Depends(get_database_session)],
 ) -> MessageDraftService:
@@ -63,6 +77,9 @@ def get_message_draft_service(
         provider,
         _limiter,
         settings.ai_drafts_available,
+        settings.openai_input_price_per_million_usd,
+        settings.openai_cached_input_price_per_million_usd,
+        settings.openai_output_price_per_million_usd,
     )
 
 
@@ -94,6 +111,20 @@ def list_message_drafts(
     return [response(item) for item in service.list_drafts(company_id)]
 
 
+@router.get("/ai-usage/today", response_model=AIUsageTodayResponse)
+def get_ai_usage_today(
+    _user: Annotated[User, Depends(require_current_user)],
+    service: Annotated[MessageDraftService, Depends(get_message_draft_service)],
+) -> AIUsageTodayResponse:
+    usage: AIUsageToday = service.usage_today()
+    return AIUsageTodayResponse(
+        calls=usage.calls,
+        limit=usage.limit,
+        estimated_cost_usd=float(usage.estimated_cost_usd),
+        model=usage.model,
+    )
+
+
 @router.post(
     "/companies/{company_id}/message-drafts",
     response_model=DraftResponse,
@@ -109,6 +140,10 @@ def create_message_draft(
     try:
         draft_type = payload.draft_type if payload else "COMMERCIAL_INTRODUCTION"
         return response(service.generate(company_id, user, draft_type))
+    except AIDailyLimitExceededError as error:
+        raise HTTPException(status_code=429, detail=str(error)) from error
+    except DiagnosticLimitExceededError as error:
+        raise HTTPException(status_code=409, detail=str(error)) from error
     except MessageDraftValidationError as error:
         raise HTTPException(status_code=422, detail=str(error)) from error
     except OpenAIConfigurationError as error:
