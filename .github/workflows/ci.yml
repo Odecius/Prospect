@@ -61,9 +61,11 @@ jobs:
           POSTGRES_DB: abc_prospect
           POSTGRES_USER: abc_prospect
           POSTGRES_PASSWORD: ci-compose-only-password
+          POSTGRES_DATA_PATH: ${{ runner.temp }}/abc-prospect-postgres
           DATABASE_URL: postgresql+psycopg://abc_prospect:ci-compose-only-password@db:5432/abc_prospect
           APP_SECRET_KEY: ci-production-secret-with-more-than-32-characters
         run: |
+          mkdir -p "$POSTGRES_DATA_PATH"
           docker compose -f compose.production.yaml config --quiet
           docker build --tag abc-prospect:ci .
       - name: Prepare database
