@@ -1,7 +1,7 @@
 import uuid
-from datetime import datetime
+from datetime import date, datetime
 
-from sqlalchemy import select
+from sqlalchemy import select, text
 from sqlalchemy.orm import Session
 
 from app.database.models import Category, Company, GeneratedMessage, OpportunityScore, WebsiteAudit
@@ -57,6 +57,16 @@ class MessageDraftRepository:
                 .order_by(GeneratedMessage.created_at.asc(), GeneratedMessage.id.asc())
             )
         )
+
+    def acquire_generation_locks(self, usage_day: date, diagnostic_company_id: uuid.UUID | None) -> None:
+        lock_names = [f"abc-prospect:ai-usage:{usage_day.isoformat()}"]
+        if diagnostic_company_id is not None:
+            lock_names.append(f"abc-prospect:ai-diagnostic:{diagnostic_company_id}")
+        for lock_name in lock_names:
+            self.session.execute(
+                text("SELECT pg_advisory_xact_lock(hashtextextended(:lock_name, 0))"),
+                {"lock_name": lock_name},
+            )
 
     def has_diagnostic_for_company(self, company_id: uuid.UUID) -> bool:
         return (

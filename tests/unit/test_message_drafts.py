@@ -65,6 +65,9 @@ class RepositoryFake:
     def list_openai_created_since(self, _started_at):
         return self.today
 
+    def acquire_generation_locks(self, _usage_day, _diagnostic_company_id) -> None:
+        pass
+
     def has_diagnostic_for_company(self, _company_id: uuid.UUID) -> bool:
         return self.has_diagnostic
 
@@ -127,9 +130,7 @@ def test_cost_uses_cached_input_rate_when_available() -> None:
 def test_cost_conservatively_prices_all_input_when_cache_detail_is_absent() -> None:
     repository = RepositoryFake()
     current = service(repository)
-    assert current._estimate_cost({"input_tokens": 1000, "output_tokens": 100}) == pytest.approx(
-        Decimal("0.00032")
-    )
+    assert current._estimate_cost({"input_tokens": 1000, "output_tokens": 100}) == pytest.approx(Decimal("0.00032"))
 
 
 def test_only_one_diagnostic_per_company() -> None:

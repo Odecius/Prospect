@@ -1,6 +1,6 @@
 import uuid
 from dataclasses import dataclass
-from datetime import UTC, datetime
+from datetime import UTC, date, datetime
 from decimal import Decimal
 from zoneinfo import ZoneInfo
 
@@ -71,7 +71,7 @@ class MessageDraftService:
         return self.repository.list_for_company(company_id)
 
     def usage_today(self) -> AIUsageToday:
-        drafts = self.repository.list_openai_created_since(self._start_of_today_utc())
+        drafts = self.repository.list_openai_created_since(self._today_window()[1])
         cost = sum((self._stored_or_estimated_cost(item) for item in drafts), Decimal("0"))
         return AIUsageToday(len(drafts), AI_DAILY_CALL_LIMIT, cost, self.provider.model)
 
@@ -82,7 +82,16 @@ class MessageDraftService:
             raise MessageDraftValidationError("Geração de rascunhos por IA não está configurada.")
         if draft_type not in DRAFT_TYPES:
             raise MessageDraftValidationError("Tipo de rascunho inválido.")
-        usage = self.usage_today()
+        usage_day, started_at = self._today_window()
+        diagnostic_company_id = company_id if draft_type == "COMMERCIAL_DIAGNOSTIC" else None
+        self.repository.acquire_generation_locks(usage_day, diagnostic_company_id)
+        drafts_today = self.repository.list_openai_created_since(started_at)
+        usage = AIUsageToday(
+            len(drafts_today),
+            AI_DAILY_CALL_LIMIT,
+            sum((self._stored_or_estimated_cost(item) for item in drafts_today), Decimal("0")),
+            self.provider.model,
+        )
         if usage.calls >= usage.limit:
             raise AIDailyLimitExceededError(
                 "Limite diário de IA atingido (20/20). Novas gerações estarão disponíveis amanhã."
@@ -167,9 +176,10 @@ class MessageDraftService:
         return draft
 
     @staticmethod
-    def _start_of_today_utc() -> datetime:
+    def _today_window() -> tuple[date, datetime]:
         local_now = datetime.now(AI_USAGE_TIMEZONE)
-        return local_now.replace(hour=0, minute=0, second=0, microsecond=0).astimezone(UTC)
+        started_at = local_now.replace(hour=0, minute=0, second=0, microsecond=0).astimezone(UTC)
+        return local_now.date(), started_at
 
     def _estimate_cost(self, usage: dict) -> Decimal:
         input_tokens = max(0, int(usage.get("input_tokens", 0)))

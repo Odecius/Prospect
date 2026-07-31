@@ -8,7 +8,7 @@ from app.api.authentication import require_csrf_token, require_current_user
 from app.api.message_drafts import get_message_draft_service
 from app.database.models import GeneratedMessage, MessageDraftStatus, User, UserStatus
 from app.main import create_app
-from app.services.message_drafts import AIUsageToday
+from app.services.message_drafts import AIDailyLimitExceededError, AIUsageToday, DiagnosticLimitExceededError
 
 
 class DraftServiceFake:
@@ -52,12 +52,22 @@ class DraftServiceFake:
         return self.draft
 
 
-def client() -> TestClient:
+class DailyLimitServiceFake(DraftServiceFake):
+    def generate(self, company_id: uuid.UUID, actor: User, draft_type: str = "COMMERCIAL_INTRODUCTION"):
+        raise AIDailyLimitExceededError("Limite diário de IA atingido (20/20).")
+
+
+class DiagnosticLimitServiceFake(DraftServiceFake):
+    def generate(self, company_id: uuid.UUID, actor: User, draft_type: str = "COMMERCIAL_INTRODUCTION"):
+        raise DiagnosticLimitExceededError("Esta empresa já possui um diagnóstico.")
+
+
+def client(service_factory=DraftServiceFake) -> TestClient:
     user = User(id=uuid.uuid4(), status=UserStatus.ACTIVE)
     application = create_app()
     application.dependency_overrides[require_current_user] = lambda: user
     application.dependency_overrides[require_csrf_token] = lambda: None
-    application.dependency_overrides[get_message_draft_service] = DraftServiceFake
+    application.dependency_overrides[get_message_draft_service] = service_factory
     return TestClient(application)
 
 
@@ -98,3 +108,18 @@ def test_ai_usage_today() -> None:
         "estimated_cost_usd": 0.001234,
         "model": "gpt-5.6-luna",
     }
+
+
+def test_daily_limit_returns_429() -> None:
+    with client(DailyLimitServiceFake) as test_client:
+        response = test_client.post(f"/api/companies/{uuid.uuid4()}/message-drafts")
+    assert response.status_code == 429
+
+
+def test_duplicate_diagnostic_returns_409() -> None:
+    with client(DiagnosticLimitServiceFake) as test_client:
+        response = test_client.post(
+            f"/api/companies/{uuid.uuid4()}/message-drafts",
+            json={"draft_type": "COMMERCIAL_DIAGNOSTIC"},
+        )
+    assert response.status_code == 409
