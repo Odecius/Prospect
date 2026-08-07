@@ -27,7 +27,12 @@ def test_responses_request_is_stateless_structured_and_minimized() -> None:
                         ],
                     }
                 ],
-                "usage": {"input_tokens": 50, "output_tokens": 20, "total_tokens": 70},
+                "usage": {
+                    "input_tokens": 50,
+                    "input_tokens_details": {"cached_tokens": 10},
+                    "output_tokens": 20,
+                    "total_tokens": 70,
+                },
             },
         )
 
@@ -42,7 +47,12 @@ def test_responses_request_is_stateless_structured_and_minimized() -> None:
     assert "tools" not in captured
     assert "Empresa Fictícia" in captured["input"]
     assert result.subject == "Uma ideia"
-    assert result.usage == {"input_tokens": 50, "output_tokens": 20, "total_tokens": 70}
+    assert result.usage == {
+        "input_tokens": 50,
+        "output_tokens": 20,
+        "total_tokens": 70,
+        "cached_input_tokens": 10,
+    }
 
 
 def test_missing_key_is_rejected_before_network() -> None:

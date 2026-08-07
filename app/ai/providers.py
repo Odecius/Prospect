@@ -13,4 +13,6 @@ class DraftGeneration:
 
 
 class MessageDraftProvider(Protocol):
+    model: str
+
     def generate(self, business_context: dict) -> DraftGeneration: ...

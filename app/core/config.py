@@ -1,3 +1,4 @@
+from decimal import Decimal
 from functools import lru_cache
 
 from pydantic import Field, model_validator
@@ -31,6 +32,11 @@ class Settings(BaseSettings):
     ai_drafts_enabled: bool = False
     openai_api_key: str | None = None
     openai_model: str = "gpt-5.6-luna"
+    # Standard, short-context prices per 1M tokens, verified 2026-07-31.
+    # Source: https://developers.openai.com/api/docs/pricing
+    openai_input_price_per_million_usd: Decimal = Field(default=Decimal("0.20"), ge=0)
+    openai_cached_input_price_per_million_usd: Decimal = Field(default=Decimal("0.02"), ge=0)
+    openai_output_price_per_million_usd: Decimal = Field(default=Decimal("1.20"), ge=0)
     openai_timeout_seconds: float = Field(default=15.0, ge=3, le=30)
     openai_max_retries: int = Field(default=1, ge=0, le=2)
     openai_max_output_tokens: int = Field(default=300, ge=100, le=800)

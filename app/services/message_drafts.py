@@ -1,6 +1,8 @@
 import uuid
 from dataclasses import dataclass
-from datetime import UTC, datetime
+from datetime import UTC, date, datetime
+from decimal import Decimal
+from zoneinfo import ZoneInfo
 
 from app.ai.providers import MessageDraftProvider
 from app.database.models import GeneratedMessage, MessageDraftStatus, PipelineStatus, User, WebsiteAuditStatus
@@ -12,10 +14,30 @@ DRAFT_TYPES = {
     "COMMERCIAL_DIAGNOSTIC": "commercial-diagnostic-v1",
     "PROPOSAL_DRAFT": "proposal-draft-v1",
 }
+AI_DAILY_CALL_LIMIT = 20
+AI_USAGE_TIMEZONE = ZoneInfo("Europe/London")
+OPENAI_PRICING_SOURCE = "https://developers.openai.com/api/docs/pricing"
+OPENAI_PRICING_VERIFIED_ON = "2026-07-31"
 
 
 class MessageDraftValidationError(Exception):
     pass
+
+
+class AIDailyLimitExceededError(MessageDraftValidationError):
+    pass
+
+
+class DiagnosticLimitExceededError(MessageDraftValidationError):
+    pass
+
+
+@dataclass(frozen=True)
+class AIUsageToday:
+    calls: int
+    limit: int
+    estimated_cost_usd: Decimal
+    model: str
 
 
 @dataclass(frozen=True)
@@ -33,14 +55,25 @@ class MessageDraftService:
         provider: MessageDraftProvider,
         limiter: RequestLimiter,
         enabled: bool,
+        input_price_per_million_usd: Decimal = Decimal("0.20"),
+        cached_input_price_per_million_usd: Decimal = Decimal("0.02"),
+        output_price_per_million_usd: Decimal = Decimal("1.20"),
     ) -> None:
         self.repository = repository
         self.provider = provider
         self.limiter = limiter
         self.enabled = enabled
+        self.input_price_per_million_usd = input_price_per_million_usd
+        self.cached_input_price_per_million_usd = cached_input_price_per_million_usd
+        self.output_price_per_million_usd = output_price_per_million_usd
 
     def list_drafts(self, company_id: uuid.UUID) -> list[GeneratedMessage]:
         return self.repository.list_for_company(company_id)
+
+    def usage_today(self) -> AIUsageToday:
+        drafts = self.repository.list_openai_created_since(self._today_window()[1])
+        cost = sum((self._stored_or_estimated_cost(item) for item in drafts), Decimal("0"))
+        return AIUsageToday(len(drafts), AI_DAILY_CALL_LIMIT, cost, self.provider.model)
 
     def generate(
         self, company_id: uuid.UUID, actor: User, draft_type: str = "COMMERCIAL_INTRODUCTION"
@@ -49,6 +82,24 @@ class MessageDraftService:
             raise MessageDraftValidationError("Geração de rascunhos por IA não está configurada.")
         if draft_type not in DRAFT_TYPES:
             raise MessageDraftValidationError("Tipo de rascunho inválido.")
+        usage_day, started_at = self._today_window()
+        diagnostic_company_id = company_id if draft_type == "COMMERCIAL_DIAGNOSTIC" else None
+        self.repository.acquire_generation_locks(usage_day, diagnostic_company_id)
+        drafts_today = self.repository.list_openai_created_since(started_at)
+        usage = AIUsageToday(
+            len(drafts_today),
+            AI_DAILY_CALL_LIMIT,
+            sum((self._stored_or_estimated_cost(item) for item in drafts_today), Decimal("0")),
+            self.provider.model,
+        )
+        if usage.calls >= usage.limit:
+            raise AIDailyLimitExceededError(
+                "Limite diário de IA atingido (20/20). Novas gerações estarão disponíveis amanhã."
+            )
+        if draft_type == "COMMERCIAL_DIAGNOSTIC" and self.repository.has_diagnostic_for_company(company_id):
+            raise DiagnosticLimitExceededError(
+                "Esta empresa já possui um diagnóstico. Durante os testes, é permitido somente um por empresa."
+            )
         try:
             self.limiter.consume(str(actor.id))
         except ExternalSearchValidationError as error:
@@ -92,6 +143,16 @@ class MessageDraftService:
             }
             evidence_refs.append(f"opportunity_score:{score.id}")
         generated = self.provider.generate(context)
+        recorded_usage = dict(generated.usage)
+        recorded_usage["estimated_cost_usd"] = float(self._estimate_cost(recorded_usage))
+        recorded_usage["cost_estimate"] = {
+            "input_usd_per_million": str(self.input_price_per_million_usd),
+            "cached_input_usd_per_million": str(self.cached_input_price_per_million_usd),
+            "output_usd_per_million": str(self.output_price_per_million_usd),
+            "source": OPENAI_PRICING_SOURCE,
+            "verified_on": OPENAI_PRICING_VERIFIED_ON,
+            "cached_input_policy": "API detail when available; otherwise full input price",
+        }
         draft = GeneratedMessage(
             company_id=company_id,
             status=MessageDraftStatus.DRAFT,
@@ -106,13 +167,39 @@ class MessageDraftService:
                 "evidence_refs": evidence_refs,
             },
             input_snapshot=context,
-            usage=generated.usage,
+            usage=recorded_usage,
             requested_by_user_id=actor.id,
             created_at=datetime.now(UTC),
         )
         self.repository.add(draft)
         self.repository.commit()
         return draft
+
+    @staticmethod
+    def _today_window() -> tuple[date, datetime]:
+        local_now = datetime.now(AI_USAGE_TIMEZONE)
+        started_at = local_now.replace(hour=0, minute=0, second=0, microsecond=0).astimezone(UTC)
+        return local_now.date(), started_at
+
+    def _estimate_cost(self, usage: dict) -> Decimal:
+        input_tokens = max(0, int(usage.get("input_tokens", 0)))
+        cached_input_tokens = min(input_tokens, max(0, int(usage.get("cached_input_tokens", 0))))
+        regular_input_tokens = input_tokens - cached_input_tokens
+        output_tokens = max(0, int(usage.get("output_tokens", 0)))
+        return (
+            Decimal(regular_input_tokens) * self.input_price_per_million_usd
+            + Decimal(cached_input_tokens) * self.cached_input_price_per_million_usd
+            + Decimal(output_tokens) * self.output_price_per_million_usd
+        ) / Decimal(1_000_000)
+
+    def _stored_or_estimated_cost(self, draft: GeneratedMessage) -> Decimal:
+        stored = draft.usage.get("estimated_cost_usd")
+        if isinstance(stored, int | float | str):
+            try:
+                return Decimal(str(stored))
+            except ArithmeticError:
+                pass
+        return self._estimate_cost(draft.usage)
 
     def review(self, draft_id: uuid.UUID, data: DraftReviewInput, actor: User) -> GeneratedMessage:
         draft = self.repository.get_draft(draft_id)

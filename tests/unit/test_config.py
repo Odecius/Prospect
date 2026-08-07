@@ -1,3 +1,5 @@
+from decimal import Decimal
+
 import pytest
 from pydantic import ValidationError
 
@@ -20,6 +22,9 @@ def test_settings_load_infrastructure_values() -> None:
     assert settings.website_audit_available is True
     assert settings.ai_drafts_available is False
     assert settings.openai_model == "gpt-5.6-luna"
+    assert settings.openai_input_price_per_million_usd == Decimal("0.20")
+    assert settings.openai_cached_input_price_per_million_usd == Decimal("0.02")
+    assert settings.openai_output_price_per_million_usd == Decimal("1.20")
 
 
 def test_production_audit_requires_confirmed_egress_control() -> None:
