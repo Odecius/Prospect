@@ -1,100 +1,98 @@
 # ABC Prospect
 
-> Developed by Abc Solutions | Built with quality and care
+An internal commercial prospecting application built with FastAPI and PostgreSQL.
 
-## Visão geral
+## Project Overview
 
-O **ABC Prospect** é uma ferramenta interna da ABC Solutions para localizar, cadastrar, avaliar e organizar empresas com boa reputação e presença digital fraca, especialmente empresas sem website.
+ABC Prospect brings company research, qualification and follow-up into one controlled workflow. It helps identify organizations with strong reputations but weak digital presence, while keeping commercial decisions and AI-assisted content under human review.
 
-O projeto é independente do website institucional e dos demais projetos da ABC Solutions. Nenhum código ou dado de outro projeto faz parte deste repositório.
+The project is an internal tool, not a public SaaS product or an automated outreach platform.
 
-## Problema
+## Problem It Solves
 
-A prospecção manual dispersa informações entre buscas, anotações e contatos, dificultando priorização e acompanhamento. O ABC Prospect deverá reunir evidências comerciais, calcular oportunidades de forma explicável e preservar a revisão humana antes de qualquer abordagem.
+Manual prospecting spreads evidence across searches, notes and disconnected contact records. ABC Prospect centralizes this information, makes prioritization explainable and preserves an audit trail for important actions.
 
-## Status atual
+## Features
 
-As Sprints 1 a 14 estão implementadas e validadas, totalizando 96% do Produto Interno. Além da fundação, autenticação e cadastro, a aplicação oferece contatos, duplicidade revisável, pesquisa, score explicável, pipeline, interface responsiva, Google Places API (New), auditoria controlada de websites, conteúdo comercial assistido, dashboard e exportação CSV manual e auditada. A preparação operacional inclui configuração de produção restritiva, readiness, cabeçalhos defensivos e runbook. A instrumentação da Sprint 15 está pronta, mas o piloto e a decisão final ainda não foram executados.
+- Authenticated internal access
+- Company and contact management
+- Search, filtering and duplicate review
+- Commercial pipeline and activity history
+- Versioned, explainable opportunity scoring
+- Google Places integration with explicit human confirmation
+- Controlled website assessments
+- AI-assisted commercial diagnostics and drafts
+- Mandatory human review before approval
+- Dashboard and manually triggered CSV export
+- Audit records for sensitive workflows
 
-## Stack planejada
+The application does not scrape platforms, send bulk messages, publish generated content or make autonomous commercial decisions.
 
-- Python e FastAPI;
-- PostgreSQL;
-- SQLAlchemy e Alembic;
-- pytest;
-- Docker e Docker Compose;
-- configuração por variáveis de ambiente;
-- Jinja2, HTML, CSS e JavaScript simples para a interface interna.
+## Technology Stack
 
-React e outros frameworks frontend não fazem parte do plano inicial.
+- Python and FastAPI
+- PostgreSQL
+- SQLAlchemy and Alembic
+- pytest
+- Docker and Docker Compose
+- Jinja2, HTML, CSS and JavaScript
+- Google Places API integration
+- OpenAI Responses API adapter, disabled by default
 
-## Escopo do produto interno
+## Architecture
 
-- acesso autenticado para uso interno;
-- cadastro e edição manual de empresas e contatos, com categoria, cidade, UF e origem obrigatórias;
-- funil comercial iniciado em `NEW`;
-- filtros e pesquisa;
-- score de oportunidade simples, versionado e explicável;
-- histórico de atividades comerciais;
-- prevenção e tratamento de possíveis duplicidades;
-- diagnóstico comercial e rascunhos de proposta assistidos por IA, sempre sujeitos a revisão humana;
-- dashboard de prospecção, segmentação e exportação ou cópia manual;
-- interface responsiva com o selo oficial da ABC Solutions no rodapé.
+ABC Prospect is a modular monolith with separate API, service, repository and persistence responsibilities. Database changes use a linear Alembic migration chain. External providers are behind adapters so tests can use deterministic fakes and integrations can remain disabled by default.
 
-## Fora do escopo inicial
+See [ARCHITECTURE.md](ARCHITECTURE.md), [DATA_MODEL.md](DATA_MODEL.md) and [docs/traceability.md](docs/traceability.md).
 
-- coleta automatizada ou scraping de plataformas externas;
-- envio automático ou em massa de mensagens;
-- geração de websites, landing pages, demonstrações, código, logos ou qualquer publicação/hosting;
-- envio automático de mensagens ou propostas e tomada autônoma de decisões comerciais;
-- envio automático ou em massa de conteúdo gerado por IA;
-- microsserviços, Kubernetes, Redis e filas;
-- oferta pública ou modelo SaaS antes de um novo projeto formal;
-- deploy de produção antes da Fase 12.
+## Explainable Scoring and AI
 
-## Evolução planejada
+Opportunity scores are versioned and retain their components so a reviewer can understand how a result was produced. Scores support prioritization but do not automate commercial decisions.
 
-O desenvolvimento seguirá fases pequenas. As Fases 1 a 13 compõem o produto interno e a conclusão da Fase 13 representa 100% do escopo principal. Um eventual gerador de websites ou demonstrações é outro produto, com responsabilidade, arquitetura e repositório próprios; não integra este roadmap nem seu percentual. A eventual evolução do ABC Prospect para SaaS também depende de um projeto futuro independente. Consulte [ROADMAP.md](ROADMAP.md).
+AI-assisted drafts use minimized business context, structured outputs and immutable history. Contact details, free-form notes and other unnecessary data are excluded from provider context. Generated material must be reviewed, edited and explicitly approved by a person; the system never sends it automatically.
 
-## Critérios de conclusão do MVP
+## Security
 
-O MVP estará concluído quando uma pessoa autenticada puder:
+- Password hashing and authenticated sessions
+- Restrictive production configuration
+- Defensive HTTP headers and readiness checks
+- External integrations disabled unless explicitly configured
+- Environment-based secrets outside source control
+- Rate and usage controls for AI-assisted operations
+- Auditability for exports and generated content
+- Non-root production container configuration
 
-1. localizar ou cadastrar potenciais clientes;
-2. verificar a existência e a adequação básica da presença digital;
-3. classificar a oportunidade;
-4. consultar score acompanhado de justificativa;
-5. gerar diagnóstico comercial;
-6. gerar rascunho de proposta;
-7. editar, aprovar ou rejeitar o rascunho;
-8. consultar o histórico das ações;
-9. operar com bloqueios como `DO_NOT_CONTACT` efetivamente aplicados;
-10. utilizar o sistema de forma segura e estável.
+See [SECURITY.md](SECURITY.md) and the public policy documents under `docs/`.
 
-Os itens 1–9 possuem base implementada, com dashboard e exportação manual controlada. A preparação operacional de software e o protocolo de validação foram concluídos. O progresso aceito permanece em 96% até o piloto real, o feedback e a decisão final da Sprint 15.
+## Testing
 
-## Arquitetura e dados
+The test suite covers domain rules, authentication, search, duplicate handling, scoring, pipeline transitions, provider adapters, AI safeguards, reporting and database behavior. PostgreSQL and Alembic integration checks complement unit and functional tests.
 
-- Arquitetura proposta: [ARCHITECTURE.md](ARCHITECTURE.md)
-- Modelo de dados: [DATA_MODEL.md](DATA_MODEL.md)
-- Contexto consolidado: [PROJECT_CONTEXT.md](PROJECT_CONTEXT.md)
-- Decisões: [DECISIONS.md](DECISIONS.md)
-- Segurança: [SECURITY.md](SECURITY.md)
-- Rastreabilidade entre decisões, dados e fases: [docs/traceability.md](docs/traceability.md)
-- Glossário oficial: [docs/glossary.md](docs/glossary.md)
-- Regras de negócio centralizadas: [docs/business_rules.md](docs/business_rules.md)
-- Plano de execução em sprints: [docs/sprint_plan.md](docs/sprint_plan.md)
+```bash
+pytest
+```
 
-## Operação e desenvolvimento
+## Current Status
 
-As instruções operacionais estão em `docs/`. O Compose local e o de produção, os healthchecks, o acesso HTTP local, migrations, backup/restauração descartável e o ciclo de login/sessão/logout foram validados com PostgreSQL real. Nenhum deploy em servidor foi realizado.
+- Core internal workflow and operational software preparation are implemented and validated.
+- The commercial-validation protocol and supporting instrumentation are ready.
+- A real pilot, user feedback and the final product decision remain pending.
+- Production deployment has not been performed.
 
-## Branding
+The repository deliberately avoids presenting a completion percentage as a substitute for these remaining real-world validation steps.
 
-A interface exibe no rodapé o selo oficial da ABC Solutions, centralizado e responsivo, com texto alternativo descritivo e a assinatura **“Developed by Abc Solutions | Built with quality and care”**.
+## Key Lessons Learned
 
-O selo oficial está mantido localmente em `app/static/assets/abc-solutions-footer.png`, com origem registrada em `docs/branding.md`.
+- Explainability is essential when software supports prioritization.
+- AI-generated content needs minimized context, explicit review and an immutable history.
+- External search results should remain provisional until a person confirms them.
+- Audit trails matter for exports, merges and commercial-content decisions.
+- Operational readiness and real-world product validation are different milestones.
 
-## Referência de desenvolvimento
+## Documentation
 
-Este projeto segue o `ABC-Development-Standard`, consultado somente para padrões de processo, documentação, arquitetura, segurança, testes e identidade visual.
+- [Roadmap](ROADMAP.md)
+- [Project context](PROJECT_CONTEXT.md)
+- [Business rules](docs/business_rules.md)
+- [Testing](docs/testing.md)
+- [Commercial validation protocol](docs/sprint-15-commercial-validation.md)
